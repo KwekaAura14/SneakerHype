@@ -3,22 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Sneaker Hype | Unseen Studio — World's Toughest</title>
-  <!-- UNIQUE FAVICON -->
+  <title>Sneaker Hype | Unseen Studio — AI Edition</title>
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      cursor: none;
+    }
+
     body {
       background: #050505;
       font-family: 'Inter', sans-serif;
       color: #ffffff;
       overflow-x: hidden;
     }
-    /* ========== EPIC LOADING SCREEN - WORLD'S TOUGHEST ========== */
+
+    /* Smooth Custom Cursor - Unseen Style */
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: #e63946;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10001;
+      transition: transform 0.08s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .cursor-outline {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid rgba(230,57,70,0.6);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1.1), width 0.2s, height 0.2s, border-color 0.2s;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Loading Screen - Ultra Smooth */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -33,111 +64,81 @@
       align-items: center;
       transition: opacity 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.2);
     }
-    .loading-container {
-      text-align: center;
-      position: relative;
-    }
     .loading-logo {
-      font-size: 4rem;
-      font-weight: 900;
-      letter-spacing: 12px;
-      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946);
-      background-size: 300% 300%;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 3rem;
-      animation: loadingGlow 1.5s ease infinite, gradientShift 3s ease infinite;
-    }
-    @keyframes loadingGlow {
-      0%, 100% { text-shadow: 0 0 20px rgba(230,57,70,0.5); }
-      50% { text-shadow: 0 0 50px rgba(230,57,70,0.8), 0 0 20px #ffb347; }
+      margin-bottom: 2rem;
     }
     .loading-bar-container {
-      width: 320px;
-      height: 3px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 3px;
+      width: 280px;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
       overflow: hidden;
-      margin: 1.5rem auto;
-      position: relative;
     }
     .loading-bar {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, #e63946, #ffb347, #e63946);
-      background-size: 200% 100%;
-      border-radius: 3px;
-      animation: loadingBarShine 0.8s linear infinite;
-    }
-    @keyframes loadingBarShine {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 200% 0%; }
+      background: #e63946;
+      transition: width 0.1s linear;
     }
     .loading-percent {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 4px;
-      margin-top: 1rem;
-      color: #e63946;
-      font-family: monospace;
-    }
-    .loading-sneaker {
-      margin-top: 2rem;
-      font-size: 3rem;
-      animation: loadingSneakerBounce 0.6s ease infinite alternate;
-    }
-    @keyframes loadingSneakerBounce {
-      from { transform: translateY(0px) rotate(0deg); }
-      to { transform: translateY(-15px) rotate(10deg); }
-    }
-    .loading-dots {
-      display: flex;
-      gap: 12px;
-      margin-top: 2rem;
-    }
-    .loading-dots span {
-      width: 8px;
-      height: 8px;
-      background: #e63946;
-      border-radius: 50%;
-      animation: loadingDotPulse 0.8s ease infinite alternate;
-    }
-    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes loadingDotPulse {
-      from { transform: scale(1); opacity: 0.4; }
-      to { transform: scale(1.5); opacity: 1; }
-    }
-    .loading-quote {
-      margin-top: 2.5rem;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       letter-spacing: 2px;
-      color: rgba(255,255,255,0.3);
-      font-style: italic;
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.4);
     }
-    /* Music Control */
-    .music-control {
-      position: fixed; bottom: 25px; right: 25px; width: 55px; height: 55px; border-radius: 50%;
-      background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); border: 1.5px solid rgba(230,57,70,0.7);
-      color: #e63946; cursor: pointer; z-index: 10001; display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; transition: all 0.3s; box-shadow: 0 0 20px rgba(230,57,70,0.4);
+
+    /* Navigation - Minimal Unseen */
+    .nav-unseen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      mix-blend-mode: difference;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
-    .music-control:hover { transform: scale(1.15); background: #e63946; color: white; border-color: white; box-shadow: 0 0 30px #e63946; }
-    /* Custom Cursor */
-    .cursor-dot { width: 6px; height: 6px; background: #e63946; border-radius: 50%; position: fixed; pointer-events: none; z-index: 10001; box-shadow: 0 0 5px #e63946; }
-    .cursor-outline { width: 50px; height: 50px; border: 2px solid rgba(230,57,70,0.6); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: 0.1s; backdrop-filter: blur(2px); }
-    /* Navigation */
-    .nav-premium {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 2rem 5rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: difference; transition: all 0.4s;
+    .nav-unseen.scrolled {
+      padding: 1rem 4rem;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(20px);
+      mix-blend-mode: normal;
     }
-    .nav-premium.scrolled { padding: 1rem 5rem; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px); mix-blend-mode: normal; border-bottom: 1px solid rgba(230,57,70,0.2); }
-    .logo-premium { font-size: 1.1rem; font-weight: 600; letter-spacing: 6px; color: white; text-transform: uppercase; }
-    .logo-premium span { font-weight: 900; color: #e63946; text-shadow: 0 0 10px #e63946; }
-    .nav-links-premium { display: flex; gap: 3rem; }
-    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: 500; transition: 0.3s; }
-    .nav-links-premium a:hover { color: #e63946; text-shadow: 0 0 8px #e63946; }
-    /* Hero */
+    .logo-unseen {
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 6px;
+      color: white;
+      text-transform: uppercase;
+    }
+    .logo-unseen span {
+      font-weight: 700;
+      color: #e63946;
+    }
+    .nav-links-unseen {
+      display: flex;
+      gap: 3rem;
+    }
+    .nav-links-unseen a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      font-weight: 300;
+      transition: opacity 0.3s;
+    }
+    .nav-links-unseen a:hover { opacity: 0.6; }
+
+    /* Hero Section - Unseen Style */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -147,245 +148,450 @@
       background: #000000;
       overflow: hidden;
     }
-    .hero-bg-glow {
+    .hero-bg {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.15), transparent 70%);
-      animation: breathe 6s ease-in-out infinite;
+      background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.08), transparent 70%);
     }
-    @keyframes breathe { 0%,100%{ opacity: 0.4; transform: scale(1); } 50%{ opacity: 0.8; transform: scale(1.05); } }
+    .hero-content {
+      text-align: center;
+      z-index: 2;
+    }
     .hero-title {
-      font-size: 8rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946);
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: gradientShift 6s ease infinite;
+      font-size: 6rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: white;
+      opacity: 0;
+      transform: translateY(30px);
     }
-    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .hero-sub { font-size: 0.8rem; letter-spacing: 12px; text-transform: uppercase; margin-top: 1.5rem; opacity: 0.5; font-weight: 300; }
-    .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-size: 0.8rem; letter-spacing: 3px; opacity: 0.5; cursor: pointer; animation: bounce 2s infinite; }
-    @keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(12px); } }
+    .hero-title span {
+      color: #e63946;
+    }
+    .hero-sub {
+      font-size: 0.7rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-top: 1.5rem;
+      opacity: 0.4;
+      font-weight: 300;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      opacity: 0.3;
+      cursor: pointer;
+    }
+
     /* Main Content */
-    .main-container { background: #050505; padding: 6rem 5rem; opacity: 0; }
-    .search-wrapper { max-width: 550px; margin: 0 auto 4rem; border-bottom: 2px solid rgba(230,57,70,0.3); position: relative; transition: 0.3s; }
-    .search-wrapper:hover { border-bottom-color: #e63946; }
-    .search-wrapper input { width: 100%; background: transparent; border: none; padding: 1.2rem 0; color: white; font-size: 1rem; outline: none; letter-spacing: 2px; font-weight: 500; }
-    .search-wrapper input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 2px; }
-    .search-wrapper i { position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: #e63946; font-size: 1.1rem; }
-    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 5rem; }
-    .filter { background: transparent; border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 2rem; border-radius: 60px; font-size: 0.75rem; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; color: rgba(255,255,255,0.6); font-weight: 500; }
-    .filter:hover, .filter.active { background: #e63946; border-color: #e63946; color: white; transform: translateY(-3px); box-shadow: 0 5px 20px rgba(230,57,70,0.4); }
-    .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
-    .brand-card { background: #0a0a0a; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.05); border-radius: 32px; position: relative; overflow: hidden; }
-    .brand-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(230,57,70,0.1), transparent); transition: left 0.6s; }
-    .brand-card:hover::before { left: 100%; }
-    .brand-card:hover { transform: translateY(-12px); border-color: #e63946; box-shadow: 0 25px 40px -15px rgba(230,57,70,0.3); }
-    .brand-icon { font-size: 4rem; margin-bottom: 1rem; color: #e63946; transition: transform 0.3s; }
-    .brand-card:hover .brand-icon { transform: scale(1.1); }
-    .brand-name { font-size: 1.4rem; font-weight: 700; letter-spacing: 2px; }
-    .brand-count { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 0.5rem; }
-    .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2rem; }
-    .model-card { background: #0a0a0a; overflow: hidden; border-radius: 28px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.5s; }
-    .model-card:hover { transform: translateY(-12px); border-color: #e63946; box-shadow: 0 25px 40px -15px rgba(230,57,70,0.3); }
-    .model-img { width: 100%; height: 280px; object-fit: cover; transition: transform 0.6s; background: #1a1a1a; }
-    .model-card:hover .model-img { transform: scale(1.05); }
-    .model-info { padding: 1.5rem; }
-    .model-name { font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; }
-    .model-price { color: #e63946; font-weight: 800; margin-top: 0.5rem; font-size: 1.3rem; }
-    .profit { font-size: 0.7rem; color: #2ecc71; margin-top: 0.3rem; font-weight: 500; }
-    .button-group { display: flex; gap: 12px; margin-top: 1rem; }
-    .buy-btn, .redirect-btn { flex: 1; padding: 0.9rem; border-radius: 60px; font-size: 0.75rem; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s; text-align: center; font-weight: 600; }
-    .buy-btn { background: #e63946; border: none; color: white; }
-    .buy-btn:hover { background: #ff5a6e; transform: scale(1.02); box-shadow: 0 5px 15px rgba(230,57,70,0.5); }
-    .redirect-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; text-decoration: none; display: inline-block; }
-    .redirect-btn:hover { background: rgba(255,255,255,0.1); border-color: #e63946; }
-    .back-btn { background: none; border: none; color: #e63946; font-size: 0.8rem; letter-spacing: 3px; cursor: pointer; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; transition: 0.3s; }
-    .back-btn:hover { gap: 15px; color: #ff5a6e; }
+    .main-container {
+      padding: 6rem 4rem;
+      background: #050505;
+    }
+
+    /* Search - Minimal */
+    .search-wrapper {
+      max-width: 500px;
+      margin: 0 auto 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .search-wrapper input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 1rem 0;
+      color: white;
+      font-size: 0.9rem;
+      outline: none;
+      letter-spacing: 1px;
+    }
+    .search-wrapper input::placeholder {
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 2px;
+    }
+    .search-wrapper i {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 4rem;
+    }
+    .filter {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: rgba(255,255,255,0.5);
+    }
+    .filter:hover, .filter.active {
+      background: #e63946;
+      border-color: #e63946;
+      color: white;
+    }
+
+    /* Brand Grid */
+    .brand-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: #1a1a1a;
+    }
+    .brand-card {
+      background: #0a0a0a;
+      padding: 3rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .brand-card:hover {
+      background: #111111;
+      transform: translateY(-4px);
+    }
+    .brand-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #e63946;
+    }
+    .brand-name {
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+    .brand-count {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.5rem;
+    }
+
+    /* Model Grid - AI Generated Art */
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1px;
+      background: #1a1a1a;
+    }
+    .model-card {
+      background: #0a0a0a;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+    }
+    .model-card:hover {
+      background: #111111;
+      transform: translateY(-4px);
+    }
+    .model-art {
+      width: 100%;
+      height: 280px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .model-card:hover .model-art {
+      transform: scale(1.03);
+    }
+    .model-info {
+      padding: 1.5rem;
+    }
+    .model-name {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .model-price {
+      color: #e63946;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+    .back-btn {
+      background: none;
+      border: none;
+      color: #e63946;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     /* Modal */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-content { background: #0f0f0f; max-width: 540px; width: 90%; padding: 2rem; border: 1px solid #e63946; border-radius: 40px; max-height: 90vh; overflow-y: auto; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group input, .form-group textarea { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #2a2a2a; color: white; border-radius: 30px; }
-    .payment-options { display: flex; gap: 1rem; margin: 1rem 0; }
-    .payment-opt { flex: 1; padding: 12px; text-align: center; border: 1px solid #2a2a2a; cursor: pointer; border-radius: 40px; transition: 0.3s; font-weight: 500; }
-    .payment-opt.selected { border-color: #e63946; background: rgba(230,57,70,0.2); color: #e63946; }
-    .submit { background: linear-gradient(135deg, #e63946, #c72a3a); color: white; width: 100%; padding: 14px; border: none; font-weight: 700; cursor: pointer; border-radius: 40px; margin-top: 1rem; font-size: 1rem; transition: 0.3s; }
-    .submit:hover { transform: scale(1.02); box-shadow: 0 5px 20px rgba(230,57,70,0.5); }
-    .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: white; }
-    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #e63946, #c72a3a); color: white; padding: 14px 32px; z-index: 2100; display: none; border-radius: 60px; font-size: 0.9rem; font-weight: bold; white-space: nowrap; box-shadow: 0 0 30px rgba(230,57,70,0.6); }
-    footer { text-align: center; padding: 3rem; border-top: 1px solid rgba(230,57,70,0.1); font-size: 0.7rem; letter-spacing: 2px; color: #444; }
-    @media (max-width: 768px) { .hero-title { font-size: 3rem; } .main-container { padding: 2rem 1.5rem; } .nav-links-premium { display: none; } .toast { white-space: normal; text-align: center; width: 90%; } }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #0f0f0f;
+      max-width: 500px;
+      width: 90%;
+      padding: 2rem;
+      border: 1px solid rgba(230,57,70,0.3);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      color: white;
+    }
+    .payment-options {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .payment-opt {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #2a2a2a;
+      cursor: pointer;
+    }
+    .payment-opt.selected {
+      border-color: #e63946;
+      background: rgba(230,57,70,0.1);
+    }
+    .submit {
+      background: #e63946;
+      color: white;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .close-modal {
+      float: right;
+      font-size: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #e63946;
+      color: white;
+      padding: 12px 28px;
+      z-index: 2100;
+      display: none;
+      font-size: 0.8rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: #333;
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 3rem; }
+      .main-container { padding: 2rem 1rem; }
+      .nav-links-unseen { display: none; }
+      .nav-unseen { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
 
-<!-- EPIC LOADING SCREEN -->
+<!-- Loading Screen -->
 <div id="loadingScreen" class="loading-screen">
-  <div class="loading-container">
-    <div class="loading-logo">SNEAKER HYPE</div>
-    <div class="loading-bar-container"><div class="loading-bar" id="loadingBar"></div></div>
-    <div class="loading-percent" id="loadingPercent">0%</div>
-    <div class="loading-sneaker"><i class="fas fa-shoe-prints"></i></div>
-    <div class="loading-dots"><span></span><span></span><span></span></div>
-    <div class="loading-quote">"IT'S NOT ABOUT THE SHOES, IT'S WHAT YOU DO IN THEM." — MJ</div>
-  </div>
+  <div class="loading-logo">SNEAKER HYPE</div>
+  <div class="loading-bar-container"><div class="loading-bar" id="loadingBar"></div></div>
+  <div class="loading-percent" id="loadingPercent">0%</div>
 </div>
-
-<div id="musicControl" class="music-control"><i class="fas fa-music"></i></div>
-<audio id="bgMusic" loop preload="auto">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8c8c8c8.mp3?filename=upbeat-lofi-112191.mp3" type="audio/mpeg">
-</audio>
 
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
 
-<nav class="nav-premium" id="nav">
-  <div class="logo-premium">SNEAKER<span>HYPE</span></div>
-  <div class="nav-links-premium"><a href="#">STUDIO</a><a href="#">ARCHIVE</a><a href="#">SHOP</a><a href="#">PROFIT</a></div>
+<nav class="nav-unseen" id="nav">
+  <div class="logo-unseen">SNEAKER<span>HYPE</span></div>
+  <div class="nav-links-unseen">
+    <a href="#">STUDIO</a>
+    <a href="#">ARCHIVE</a>
+    <a href="#">AI GENERATED</a>
+  </div>
 </nav>
 
 <section class="hero">
-  <div class="hero-bg-glow"></div>
+  <div class="hero-bg"></div>
   <div class="hero-content">
-    <h1 class="hero-title">SNEAKER HYPE</h1>
-    <p class="hero-sub">UNSEEN STUDIO · WORLD'S TOUGHEST</p>
+    <h1 class="hero-title">SNEAKER <span>HYPE</span></h1>
+    <p class="hero-sub">AI GENERATED · UNSEEN STUDIO</p>
     <div class="scroll-hint" id="scrollHint"><i class="fas fa-chevron-down"></i></div>
   </div>
 </section>
 
 <div class="main-container" id="mainContent">
   <div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="SEARCH BRAND OR MODEL...">
+    <input type="text" id="searchInput" placeholder="SEARCH BRAND...">
     <i class="fas fa-search"></i>
   </div>
   <div class="filters" id="filtersContainer"></div>
   <div id="brandsView"></div>
   <div id="modelsView" style="display:none;">
-    <button class="back-btn" id="backToBrandsBtn"><i class="fas fa-arrow-left"></i> BACK TO BRANDS</button>
+    <button class="back-btn" id="backToBrandsBtn"><i class="fas fa-arrow-left"></i> BACK</button>
     <div id="modelsGrid" class="model-grid"></div>
   </div>
 </div>
 
-<footer><p><i class="fas fa-crown"></i> SNEAKER HYPE — UNSEEN STUDIO | TOUGHER THAN EVER | 50+ MODELS</p></footer>
+<footer>
+  <p>SNEAKER HYPE — AI GENERATED ARTWORKS | UNSEEN STUDIO EDITION</p>
+</footer>
 
 <div id="checkoutModal" class="modal">
   <div class="modal-content">
     <button class="close-modal" id="closeCheckoutBtn">&times;</button>
-    <h3 style="margin-bottom: 1rem;"><i class="fas fa-credit-card"></i> COMPLETE ORDER</h3>
-    <div id="checkoutProductInfo" style="background:#1a1a1a; padding:1rem; border-radius:20px; margin:1rem 0;"></div>
+    <h3>Complete Order</h3>
+    <div id="checkoutProductInfo" style="background:#1a1a1a; padding:1rem; margin:1rem 0;"></div>
     <div class="form-group"><input type="text" id="fullName" placeholder="Full Name"></div>
-    <div class="form-group"><textarea id="address" rows="2" placeholder="Shipping Address (Street, City, ZIP)"></textarea></div>
+    <div class="form-group"><textarea id="address" rows="2" placeholder="Address"></textarea></div>
     <div class="form-group"><input type="email" id="email" placeholder="Email"></div>
-    <div class="payment-options"><div class="payment-opt selected" data-method="card">💳 CARD</div><div class="payment-opt" data-method="paypal">📘 PAYPAL</div></div>
+    <div class="payment-options"><div class="payment-opt selected" data-method="card">CARD</div><div class="payment-opt" data-method="paypal">PAYPAL</div></div>
     <div id="cardDetails"><div class="form-group"><input type="text" id="cardNumber" placeholder="Card Number"></div><div style="display:flex; gap:10px;"><input type="text" id="expiry" placeholder="MM/YY" style="width:50%;"><input type="text" id="cvv" placeholder="CVV" style="width:50%;"></div></div>
-    <button class="submit" id="submitOrderBtn">✅ PAY & PLACE ORDER</button>
-    <p style="font-size:0.6rem; text-align:center; margin-top:1rem;">Includes curation fee — ships worldwide</p>
+    <button class="submit" id="submitOrderBtn">PAY NOW</button>
   </div>
 </div>
-<div id="toast" class="toast">🎉 ORDER CONFIRMED! PROFIT ADDED. SHIPPING TO YOU.</div>
+<div id="toast" class="toast">ORDER CONFIRMED!</div>
 
 <script>
-  // ========== EPIC LOADING ON EVERY REFRESH ==========
+  // ========== SMOOTH LOADING ON REFRESH ==========
   let progress = 0;
   const interval = setInterval(() => {
-    progress += Math.random() * 12 + 3;
+    progress += Math.random() * 15 + 5;
     if (progress >= 100) { progress = 100; clearInterval(interval); 
       setTimeout(() => { 
         document.getElementById('loadingScreen').style.opacity = '0'; 
         setTimeout(() => { 
           document.getElementById('loadingScreen').style.display = 'none'; 
           document.getElementById('mainContent').style.opacity = '1'; 
-          gsap.from("#mainContent", { duration: 0.8, y: 40, opacity: 0, ease: "power3.out" });
-        }, 500); 
+          gsap.from("#mainContent", { duration: 0.8, y: 30, opacity: 0, ease: "power3.out" });
+        }, 500);
       }, 400);
     }
     document.getElementById('loadingBar').style.width = progress + '%';
     document.getElementById('loadingPercent').innerText = Math.floor(progress) + '%';
   }, 60);
 
-  // Music Control
-  const bgMusic = document.getElementById('bgMusic');
-  const musicControl = document.getElementById('musicControl');
-  let musicPlaying = false;
-  musicControl.addEventListener('click', () => {
-    if (musicPlaying) { bgMusic.pause(); musicPlaying = false; musicControl.innerHTML = '<i class="fas fa-music"></i>'; }
-    else { bgMusic.play(); musicPlaying = true; musicControl.innerHTML = '<i class="fas fa-pause"></i>'; }
-  });
-  document.body.addEventListener('click', function firstClick() { if (!musicPlaying) { bgMusic.play().catch(e=>{}); musicPlaying=true; musicControl.innerHTML='<i class="fas fa-pause"></i>'; } document.body.removeEventListener('click', firstClick); }, { once: true });
-  bgMusic.volume = 0.25;
+  // GSAP Hero Animations
+  gsap.to(".hero-title", { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 0.2 });
+  gsap.to(".hero-sub", { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 0.5 });
 
-  // ========== 50+ SHOE MODELS WITH WORKING IMAGES ==========
+  // Smooth Scroll
+  document.getElementById('scrollHint')?.addEventListener('click', () => {
+    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Navbar Scroll Effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ========== AI GENERATED SHOE ARTWORKS (DeepSeek style abstract sneaker art) ==========
+  // Each shoe gets a unique generative art background using CSS gradients and patterns
   const shoeModels = [
-    { id:1, name:"Nike Air Max 90", brand:"Nike", wholesale:99.99, profitPercent:30, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/9f5e2d3a-4b6c-4e7d-8a9f-1b2c3d4e5f6a/air-max-90-shoes.png", link:"https://www.nike.com/air-max-90" },
-    { id:2, name:"Nike LeBron XXI", brand:"Nike", wholesale:149.99, profitPercent:25, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/lebron-xxi-basketball-shoes.png", link:"https://www.nike.com/lebron-21" },
-    { id:3, name:"Nike KD 17", brand:"Nike", wholesale:119.99, profitPercent:25, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/kd-17-basketball-shoes.png", link:"https://www.nike.com/kd" },
-    { id:4, name:"Nike Dunk Low", brand:"Nike", wholesale:84.99, profitPercent:30, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/dunk-low-shoes.png", link:"https://www.nike.com/dunk" },
-    { id:5, name:"Nike Air Force 1", brand:"Nike", wholesale:79.99, profitPercent:27, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/air-force-1-07-shoes.png", link:"https://www.nike.com/air-force-1" },
-    { id:6, name:"Air Jordan 38", brand:"Jordan", wholesale:139.99, profitPercent:24, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-38-basketball-shoes.png", link:"https://www.nike.com/jordan" },
-    { id:7, name:"Jordan Tatum 2", brand:"Jordan", wholesale:129.99, profitPercent:23, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/tatum-2-basketball-shoes.png", link:"https://www.nike.com/tatum" },
-    { id:8, name:"Jordan 1 Retro High", brand:"Jordan", wholesale:139.99, profitPercent:22, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-1-retro-high-og-shoes.png", link:"https://www.nike.com/jordan" },
-    { id:9, name:"Adidas Harden Vol. 8", brand:"Adidas", wholesale:119.99, profitPercent:25, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/1a2b3c4d5e6f7g8h9i0j/harden-vol-8-basketball-shoes.jpg", link:"https://www.adidas.com/harden" },
-    { id:10, name:"Adidas Ultra Boost", brand:"Adidas", wholesale:139.99, profitPercent:22, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2b3c4d5e6f7g8h9i0j1k/ultraboost-1.0-shoes.jpg", link:"https://www.adidas.com/ultraboost" },
-    { id:11, name:"Yeezy Boost 350 V2", brand:"Adidas", wholesale:179.99, profitPercent:21, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/4d5e6f7g8h9i0j1k2l3m/yeezy-350-v2-shoes.jpg", link:"https://www.adidas.com/yeezy" },
-    { id:12, name:"Puma MB.03", brand:"Puma", wholesale:94.99, profitPercent:24, image:"https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_800,h_800/global/123456/01/fnd/NA.jpg", link:"https://us.puma.com/mb" },
-    { id:13, name:"New Balance 990v6", brand:"New Balance", wholesale:159.99, profitPercent:20, image:"https://nb.scene7.com/is/image/NB/990v6_nb_hero?$dw_ext_main$&fmt=webp", link:"https://www.newbalance.com/990" },
-    { id:14, name:"Converse All Star", brand:"Converse", wholesale:39.99, profitPercent:27, image:"https://converse.scene7.com/is/image/Converse/M9160C_001?$medium$", link:"https://www.converse.com" },
-    { id:15, name:"Vans Old Skool", brand:"Vans", wholesale:44.99, profitPercent:25, image:"https://images.vans.com/is/image/Vans/VN000D3HY28_001?$full-size$", link:"https://www.vans.com" },
-    { id:16, name:"Balenciaga Triple S", brand:"Luxury", wholesale:650.00, profitPercent:23, image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format", link:"https://www.balenciaga.com" },
-    { id:17, name:"Dior B23", brand:"Luxury", wholesale:920.00, profitPercent:23, image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", link:"https://www.dior.com" },
-    { id:18, name:"Reebok Club C", brand:"Reebok", wholesale:59.99, profitPercent:25, image:"https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format", link:"https://www.reebok.com" },
-    { id:19, name:"Asics Gel-Kayano 30", brand:"Asics", wholesale:119.99, profitPercent:25, image:"https://images.unsplash.com/photo-1584735175091-878a3e3c1e6b?w=600&auto=format", link:"https://www.asics.com" },
-    { id:20, name:"Crocs Classic", brand:"Crocs", wholesale:39.99, profitPercent:28, image:"https://images.unsplash.com/photo-1560769623-6ec6f4d0a29b?w=600&auto=format", link:"https://www.crocs.com" }
+    { id:1, name:"Nike Air Max 90", brand:"Nike", wholesale:99.99, profitPercent:30, artGradient:"linear-gradient(135deg, #ff6b6b, #c92a2a, #e63946)", link:"https://www.nike.com/air-max-90" },
+    { id:2, name:"Nike LeBron XXI", brand:"Nike", wholesale:149.99, profitPercent:25, artGradient:"radial-gradient(circle at 30% 40%, #ffb347, #e63946, #8b0000)", link:"https://www.nike.com/lebron-21" },
+    { id:3, name:"Nike KD 17", brand:"Nike", wholesale:119.99, profitPercent:25, artGradient:"linear-gradient(45deg, #2b2d42, #e63946, #ffb347)", link:"https://www.nike.com/kd" },
+    { id:4, name:"Nike Dunk Low", brand:"Nike", wholesale:84.99, profitPercent:30, artGradient:"radial-gradient(ellipse at top, #ffffff, #e63946)", link:"https://www.nike.com/dunk" },
+    { id:5, name:"Air Jordan 38", brand:"Jordan", wholesale:139.99, profitPercent:24, artGradient:"linear-gradient(135deg, #1a1a2e, #e63946, #16213e)", link:"https://www.nike.com/jordan" },
+    { id:6, name:"Jordan Tatum 2", brand:"Jordan", wholesale:129.99, profitPercent:23, artGradient:"radial-gradient(circle, #e63946, #ffb347, #c92a2a)", link:"https://www.nike.com/tatum" },
+    { id:7, name:"Jordan 1 Retro High", brand:"Jordan", wholesale:139.99, profitPercent:22, artGradient:"linear-gradient(120deg, #000000, #e63946, #ffb347)", link:"https://www.nike.com/jordan" },
+    { id:8, name:"Adidas Harden Vol. 8", brand:"Adidas", wholesale:119.99, profitPercent:25, artGradient:"repeating-linear-gradient(45deg, #e63946, #ffb347 30px, #1a1a2e 30px, #1a1a2e 60px)", link:"https://www.adidas.com/harden" },
+    { id:9, name:"Adidas Ultra Boost", brand:"Adidas", wholesale:139.99, profitPercent:22, artGradient:"radial-gradient(circle at 70% 20%, #ffffff, #e63946, #2b2d42)", link:"https://www.adidas.com/ultraboost" },
+    { id:10, name:"Yeezy Boost 350 V2", brand:"Adidas", wholesale:179.99, profitPercent:21, artGradient:"linear-gradient(90deg, #1a1a2e, #e63946, #ffb347, #1a1a2e)", link:"https://www.adidas.com/yeezy" },
+    { id:11, name:"Puma MB.03", brand:"Puma", wholesale:94.99, profitPercent:24, artGradient:"radial-gradient(ellipse at 20% 80%, #e63946, #ffb347, #c92a2a)", link:"https://us.puma.com/mb" },
+    { id:12, name:"New Balance 990v6", brand:"New Balance", wholesale:159.99, profitPercent:20, artGradient:"linear-gradient(135deg, #2d2d2d, #e63946, #4a4a4a)", link:"https://www.newbalance.com/990" },
+    { id:13, name:"Converse All Star", brand:"Converse", wholesale:39.99, profitPercent:27, artGradient:"radial-gradient(circle, #ffffff, #e63946, #8b0000)", link:"https://www.converse.com" },
+    { id:14, name:"Vans Old Skool", brand:"Vans", wholesale:44.99, profitPercent:25, artGradient:"repeating-radial-gradient(circle at 20% 30%, #e63946, #ffb347 15px, #1a1a2e 15px, #1a1a2e 30px)", link:"https://www.vans.com" },
+    { id:15, name:"Balenciaga Triple S", brand:"Luxury", wholesale:650.00, profitPercent:23, artGradient:"linear-gradient(180deg, #e63946, #ffb347, #c92a2a)", link:"https://www.balenciaga.com" },
+    { id:16, name:"Dior B23", brand:"Luxury", wholesale:920.00, profitPercent:23, artGradient:"radial-gradient(circle at 50% 50%, #1a1a2e, #e63946, #ffb347)", link:"https://www.dior.com" },
+    { id:17, name:"Reebok Club C", brand:"Reebok", wholesale:59.99, profitPercent:25, artGradient:"linear-gradient(45deg, #e63946, #ffb347, #c92a2a, #1a1a2e)", link:"https://www.reebok.com" },
+    { id:18, name:"Asics Gel-Kayano 30", brand:"Asics", wholesale:119.99, profitPercent:25, artGradient:"radial-gradient(ellipse at 60% 40%, #ffb347, #e63946, #2b2d42)", link:"https://www.asics.com" },
+    { id:19, name:"Crocs Classic", brand:"Crocs", wholesale:39.99, profitPercent:28, artGradient:"repeating-linear-gradient(0deg, #e63946, #ffb347 20px, #ffffff 20px, #ffffff 40px)", link:"https://www.crocs.com" },
+    { id:20, name:"Fila Disruptor", brand:"Fila", wholesale:64.99, profitPercent:27, artGradient:"radial-gradient(circle at 80% 20%, #e63946, #ffb347, #c92a2a)", link:"https://www.fila.com" }
   ];
 
   shoeModels.forEach(m => { m.retailPrice = m.wholesale * (1 + m.profitPercent / 100); m.profitAmount = m.retailPrice - m.wholesale; });
 
   const brandMap = new Map();
   shoeModels.forEach(m => { brandMap.set(m.brand, (brandMap.get(m.brand) || 0) + 1); });
-  const brands = Array.from(brandMap.entries()).map(([name, count]) => ({ name, count, icon: { Nike:"fab fa-nike", Jordan:"fas fa-basketball-ball", Adidas:"fab fa-adidas", Puma:"fas fa-paw", "New Balance":"fas fa-shoe-prints", Converse:"fas fa-star", Vans:"fas fa-check-circle", Luxury:"fas fa-crown", Reebok:"fas fa-bolt", Asics:"fas fa-running", Crocs:"fas fa-smile" }[name] || "fas fa-shoe-prints" }));
+  const brands = Array.from(brandMap.entries()).map(([name, count]) => ({ name, count, icon: { Nike:"fab fa-nike", Jordan:"fas fa-basketball-ball", Adidas:"fab fa-adidas", Puma:"fas fa-paw", "New Balance":"fas fa-shoe-prints", Converse:"fas fa-star", Vans:"fas fa-check-circle", Luxury:"fas fa-crown", Reebok:"fas fa-bolt", Asics:"fas fa-running", Crocs:"fas fa-smile", Fila:"fas fa-tshirt" }[name] || "fas fa-shoe-prints" }));
 
   let currentView = "brands", selectedBrand = "", currentSelectedModel = null, selectedPaymentMethod = "card", searchTerm = "";
   const brandsView = document.getElementById('brandsView'), modelsView = document.getElementById('modelsView'), modelsGrid = document.getElementById('modelsGrid'), backBtn = document.getElementById('backToBrandsBtn'), searchInput = document.getElementById('searchInput'), filtersContainer = document.getElementById('filtersContainer'), checkoutModal = document.getElementById('checkoutModal'), toast = document.getElementById('toast');
 
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.from(".hero-title", { duration: 1, y: 60, opacity: 0, ease: "power3.out" });
-  window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50); });
-  document.getElementById('scrollHint')?.addEventListener('click', () => { document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' }); });
-
   function renderBrands() {
     let filtered = brands.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
-    brandsView.innerHTML = `<div class="brand-grid">${filtered.map(b => `<div class="brand-card" data-brand="${b.name}"><div class="brand-icon"><i class="${b.icon}"></i></div><div class="brand-name">${b.name}</div><div class="brand-count">${b.count} MODELS</div></div>`).join('')}</div>`;
+    brandsView.innerHTML = `<div class="brand-grid">${filtered.map(b => `<div class="brand-card" data-brand="${b.name}"><div class="brand-icon"><i class="${b.icon}"></i></div><div class="brand-name">${b.name}</div><div class="brand-count">${b.count} MODELS · AI ART</div></div>`).join('')}</div>`;
     document.querySelectorAll('.brand-card').forEach(card => card.addEventListener('click', () => showModels(card.getAttribute('data-brand'))));
-    gsap.from(".brand-card", { duration: 0.6, y: 40, opacity: 0, stagger: 0.05 });
+    gsap.from(".brand-card", { duration: 0.5, y: 20, opacity: 0, stagger: 0.03, ease: "power2.out" });
   }
 
   function showModels(brandName) {
     selectedBrand = brandName;
     const models = shoeModels.filter(m => m.brand === brandName);
-    modelsGrid.innerHTML = models.map(m => `<div class="model-card"><img class="model-img" src="${m.image}" onerror="this.src='https://placehold.co/600x400/1a1a1a/e63946?text=${encodeURIComponent(m.name)}'" alt="${m.name}"><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div><div class="profit"><i class="fas fa-chart-line"></i> Our profit: $${m.profitAmount.toFixed(2)} (${m.profitPercent}%)</div><div class="button-group"><button class="buy-btn" data-id="${m.id}"><i class="fas fa-shopping-cart"></i> BUY HERE</button><a href="${m.link}" target="_blank" class="redirect-btn"><i class="fas fa-external-link-alt"></i> OFFICIAL STORE</a></div></div></div>`).join('');
-    document.querySelectorAll('.buy-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); const model = shoeModels.find(m => m.id === parseInt(btn.getAttribute('data-id'))); if(model) openCheckout(model); }));
+    modelsGrid.innerHTML = models.map(m => `<div class="model-card" data-id="${m.id}"><div class="model-art" style="background: ${m.artGradient};"></div><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div><div style="font-size:0.6rem; color:#2ecc71; margin-top:0.3rem;">AI GENERATED · profit $${m.profitAmount.toFixed(2)}</div></div></div>`).join('');
+    document.querySelectorAll('.model-card').forEach(card => card.addEventListener('click', () => { const model = shoeModels.find(m => m.id === parseInt(card.getAttribute('data-id'))); if(model) openCheckout(model); }));
     brandsView.style.display = 'none'; modelsView.style.display = 'block'; currentView = "models";
-    gsap.from(".model-card", { duration: 0.5, y: 40, opacity: 0, stagger: 0.05 });
+    gsap.from(".model-card", { duration: 0.5, y: 20, opacity: 0, stagger: 0.04, ease: "power2.out" });
   }
 
   function backToBrands() { brandsView.style.display = 'block'; modelsView.style.display = 'none'; currentView = "brands"; renderBrands(); }
-  function openCheckout(model) { currentSelectedModel = model; document.getElementById('checkoutProductInfo').innerHTML = `<div style="display:flex; justify-content:space-between;"><div><strong>${model.name}</strong><br>$${model.retailPrice.toFixed(2)}</div><div style="color:#2ecc71;">Profit: $${model.profitAmount.toFixed(2)}</div></div>`; checkoutModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  function openCheckout(model) { currentSelectedModel = model; document.getElementById('checkoutProductInfo').innerHTML = `<div><strong>${model.name}</strong><br>$${model.retailPrice.toFixed(2)}<br><span style="color:#2ecc71;">Profit: $${model.profitAmount.toFixed(2)}</span></div>`; checkoutModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
   function closeCheckout() { checkoutModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
-  function processOrder() { const fullName = document.getElementById('fullName').value.trim(), address = document.getElementById('address').value.trim(), email = document.getElementById('email').value.trim(); if(!fullName || !address || !email) { alert("Please fill all shipping details"); return; } if(selectedPaymentMethod === 'card' && !document.getElementById('cardNumber').value.trim()) { alert("Enter card details"); return; } closeCheckout(); toast.style.display = 'block'; setTimeout(() => toast.style.display = 'none', 4000); alert(`✅ ORDER CONFIRMED! Profit Earned: $${currentSelectedModel.profitAmount.toFixed(2)}\n\nShipped to: ${address}\n\nThank you for supporting Sneaker Hype!`); currentSelectedModel = null; }
+  function processOrder() { const fullName = document.getElementById('fullName').value.trim(), address = document.getElementById('address').value.trim(), email = document.getElementById('email').value.trim(); if(!fullName || !address || !email) { alert("Please fill all details"); return; } if(selectedPaymentMethod === 'card' && !document.getElementById('cardNumber').value.trim()) { alert("Enter card details"); return; } closeCheckout(); toast.style.display = 'block'; setTimeout(() => toast.style.display = 'none', 3000); alert(`✅ ORDER CONFIRMED!\n\n${currentSelectedModel.name}\nShipped to: ${address}\nProfit earned: $${currentSelectedModel.profitAmount.toFixed(2)}\n\nThank you!`); currentSelectedModel = null; }
 
   document.querySelectorAll('.payment-opt').forEach(opt => opt.addEventListener('click', () => { document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected')); opt.classList.add('selected'); selectedPaymentMethod = opt.getAttribute('data-method'); document.getElementById('cardDetails').style.display = selectedPaymentMethod === 'card' ? 'block' : 'none'; }));
   function renderFilters() { const allBrands = [...new Set(shoeModels.map(m => m.brand))]; filtersContainer.innerHTML = `<div class="filter active" data-cat="all">ALL</div>` + allBrands.map(b => `<div class="filter" data-cat="${b}">${b.toUpperCase()}</div>`).join(''); document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.filter').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const cat = btn.getAttribute('data-cat'); if(cat === 'all') { if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) showModels(selectedBrand); } else { if(currentView === 'brands') { searchTerm = cat; renderBrands(); } else if(currentView === 'models') showModels(cat); } if(currentView === 'brands' && cat !== 'all') searchTerm = cat; else if(currentView === 'brands' && cat === 'all') searchTerm = ""; if(currentView === 'brands') renderBrands(); })); }
-  searchInput.addEventListener('input', (e) => { searchTerm = e.target.value; if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) { const models = shoeModels.filter(m => m.brand === selectedBrand && m.name.toLowerCase().includes(searchTerm.toLowerCase())); modelsGrid.innerHTML = models.map(m => `<div class="model-card"><img class="model-img" src="${m.image}"><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div><div class="profit">Profit: $${m.profitAmount.toFixed(2)}</div><div class="button-group"><button class="buy-btn" data-id="${m.id}">BUY HERE</button><a href="${m.link}" target="_blank" class="redirect-btn">OFFICIAL STORE</a></div></div></div>`).join(''); document.querySelectorAll('.buy-btn').forEach(btn => btn.addEventListener('click', (e) => { const model = shoeModels.find(m => m.id === parseInt(btn.getAttribute('data-id'))); if(model) openCheckout(model); })); } });
+  searchInput.addEventListener('input', (e) => { searchTerm = e.target.value; if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) { const models = shoeModels.filter(m => m.brand === selectedBrand && m.name.toLowerCase().includes(searchTerm.toLowerCase())); modelsGrid.innerHTML = models.map(m => `<div class="model-card" data-id="${m.id}"><div class="model-art" style="background: ${m.artGradient};"></div><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div></div></div>`).join(''); document.querySelectorAll('.model-card').forEach(card => card.addEventListener('click', () => { const model = shoeModels.find(m => m.id === parseInt(card.getAttribute('data-id'))); if(model) openCheckout(model); })); } });
   backBtn.addEventListener('click', backToBrands); document.getElementById('closeCheckoutBtn')?.addEventListener('click', closeCheckout); window.addEventListener('click', (e) => { if(e.target === checkoutModal) closeCheckout(); }); document.getElementById('submitOrderBtn')?.addEventListener('click', processOrder);
 
-  // Custom Cursor
+  // Smooth Custom Cursor
   const dot = document.querySelector('.cursor-dot'), outline = document.querySelector('.cursor-outline');
-  document.addEventListener('mousemove', (e) => { dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; outline.style.left = e.clientX + 'px'; outline.style.top = e.clientY + 'px'; });
+  document.addEventListener('mousemove', (e) => { 
+    dot.style.left = e.clientX + 'px'; 
+    dot.style.top = e.clientY + 'px'; 
+    outline.style.left = e.clientX + 'px'; 
+    outline.style.top = e.clientY + 'px'; 
+  });
   document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; outline.style.opacity = '0'; });
   document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; outline.style.opacity = '1'; });
 
