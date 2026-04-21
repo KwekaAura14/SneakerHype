@@ -1,290 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Shoe Marketplace</title>
-    <style>
-        /* Basic Reset & Styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ShoeVerse - Basketball Shoe Market</title>
+<!-- Google Fonts for a modern look -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Reset & Basic Styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-        }
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0d0d0d;
+    color: #eee;
+  }
 
-        /* Header */
-        header {
-            background-color: #222;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-        }
+  /* Header */
+  header {
+    background-color: #111;
+    padding: 30px 20px;
+    text-align: center;
+    color: #ff2a00;
+  }
 
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
+  header h1 {
+    font-size: 3em;
+    letter-spacing: 2px;
+  }
 
-        /* Showcase */
-        .showcase {
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #ece9e6, #ffffff);
-        }
+  /* Showcase */
+  .showcase {
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #222, #000);
+  }
 
-        .showcase h2 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
+  .showcase h2 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #ff2a00;
+  }
 
-        .showcase p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
+  .showcase p {
+    font-size: 1.2em;
+    margin-bottom: 25px;
+  }
 
-        /* Search Bar */
-        .search-container {
-            margin: 20px auto;
-            max-width: 600px;
-            display: flex;
-        }
+  /* Search Bar */
+  .search-container {
+    margin: 20px auto;
+    max-width: 700px;
+    display: flex;
+  }
 
-        .search-container input[type="text"] {
-            flex: 1;
-            padding: 12px 20px;
-            font-size: 1em;
-            border: 2px solid #ccc;
-            border-radius: 4px 0 0 4px;
-        }
+  .search-container input[type="text"] {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px 0 0 5px;
+  }
 
-        .search-container button {
-            padding: 12px 20px;
-            border: none;
-            background-color: #222;
-            color: #fff;
-            font-size: 1em;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-        }
+  .search-container button {
+    padding: 15px 25px;
+    border: none;
+    background-color: #ff2a00;
+    color: #fff;
+    font-size: 1em;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-        /* Shoe Gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
+  .search-container button:hover {
+    background-color: #e62200;
+  }
 
-        .shoe-card {
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
+  /* Shoe Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 30px 20px;
+  }
 
-        .shoe-card:hover {
-            transform: scale(1.02);
-        }
+  .shoe-card {
+    background-color: #222;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
 
-        .shoe-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+  .shoe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.7);
+  }
 
-        .shoe-details {
-            padding: 15px;
-        }
+  .shoe-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #ff2a00;
+  }
 
-        .shoe-name {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
+  .shoe-details {
+    padding: 15px;
+    text-align: center;
+  }
 
-        .shoe-price {
-            color: #e91e63;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-        }
+  .shoe-name {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #fff;
+  }
 
-        /* Preview & Purchase */
-        .preview-section {
-            padding: 40px 20px;
-            background-color: #fff;
-        }
+  .shoe-price {
+    font-size: 1.2em;
+    color: #ff2a00;
+    margin-bottom: 15px;
+  }
 
-        .preview-title {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
+  .btn-preview {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ff2a00;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+  }
 
-        .preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
+  .btn-preview:hover {
+    background-color: #e62200;
+  }
 
-        .preview-image {
-            max-width: 300px;
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+  /* Preview & Purchase */
+  #previewSection {
+    padding: 50px 20px;
+    background-color: #111;
+    display: none; /* Hidden initially */
+  }
 
-        /* Payment Section */
-        .payment-section {
-            padding: 40px 20px;
-            background-color: #f9f9f9;
-        }
+  .preview-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 25px;
+    color: #ff2a00;
+  }
 
-        .payment-title {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
+  .preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-        /* Payment form */
-        .payment-form {
-            max-width: 400px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+  .preview-image {
+    max-width: 400px;
+    width: 90%;
+    border-radius: 15px;
+    border: 3px solid #ff2a00;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.8);
+  }
 
-        .payment-form input[type="text"],
-        .payment-form input[type="number"],
-        .payment-form input[type="email"] {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-        }
+  #buyButton {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff2a00;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-        .payment-form button {
-            width: 100%;
-            padding: 15px;
-            background-color: #222;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
+  #buyButton:hover {
+    background-color: #e62200;
+  }
 
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-        }
+  /* Payment Section */
+  #paymentSection {
+    display: none;
+    padding: 50px 20px;
+    background-color: #222;
+  }
 
-        /* Responsive adjustments */
-        @media(max-width: 768px) {
-            .showcase h2 {
-                font-size: 1.5em;
-            }
-        }
-    </style>
+  .payment-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 25px;
+    color: #ff2a00;
+  }
+
+  .payment-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #111;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.8);
+  }
+
+  .payment-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #333;
+    color: #fff;
+  }
+
+  .payment-form button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff2a00;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .payment-form button:hover {
+    background-color: #e62200;
+  }
+
+  /* Footer */
+  footer {
+    background-color: #111;
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 1em;
+    color: #888;
+    margin-top: 50px;
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 768px){
+    header h1 { font-size: 2em; }
+    .showcase h2 { font-size: 2em; }
+  }
+</style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <h1>ShoeVerse</h1>
-        <p>Your premier marketplace for buying and selling shoes</p>
-    </header>
+<!-- Header -->
+<header>
+  <h1>ShoeVerse</h1>
+</header>
 
-    <!-- Showcase -->
-    <section class="showcase">
-        <h2>Discover the Latest Shoes</h2>
-        <p>Explore a wide variety of shoes from top brands. Buy, sell, and showcase your style!</p>
-        <!-- Could add a carousel here for featured shoes -->
-    </section>
+<!-- Showcase -->
+<section class="showcase">
+  <h2>Unleash Your Basketball Style</h2>
+  <p>Discover the toughest and coolest basketball shoes. Buy, sell, and showcase your game!</p>
+</section>
 
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" placeholder="Search for shoes..."/>
-        <button>Search</button>
+<!-- Search -->
+<div class="search-container">
+  <input type="text" placeholder="Search for basketball shoes..." id="searchInput"/>
+  <button onclick="filterShoes()">Search</button>
+</div>
+
+<!-- Shoes Gallery with Basketball Shoes -->
+<section class="gallery" id="shoesGallery">
+  <!-- Example Basketball Shoes -->
+  <div class="shoe-card" data-name="Air Jordan 1 Retro">
+    <img src="https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a" alt="Air Jordan 1" class="shoe-image"/>
+    <div class="shoe-details">
+      <div class="shoe-name">Air Jordan 1 Retro</div>
+      <div class="shoe-price">$250</div>
+      <button class="btn-preview" onclick="showPreview('https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a')">Preview</button>
     </div>
+  </div>
+  <div class="shoe-card" data-name="Nike LeBron 18">
+    <img src="https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a" alt="LeBron 18" class="shoe-image"/>
+    <div class="shoe-details">
+      <div class="shoe-name">Nike LeBron 18</div>
+      <div class="shoe-price">$280</div>
+      <button class="btn-preview" onclick="showPreview('https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a')">Preview</button>
+    </div>
+  </div>
+  <div class="shoe-card" data-name="Kobe AD NXT">
+    <img src="https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a" alt="Kobe AD" class="shoe-image"/>
+    <div class="shoe-details">
+      <div class="shoe-name">Kobe AD NXT</div>
+      <div class="shoe-price">$230</div>
+      <button class="btn-preview" onclick="showPreview('https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a')">Preview</button>
+    </div>
+  </div>
+  <!-- Add more shoes here -->
+</section>
 
-    <!-- Shoes Gallery -->
-    <section class="gallery" id="shoesGallery">
-        <!-- Example Shoe Card -->
-        <div class="shoe-card">
-            <img src="https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a" alt="Sneaker" class="shoe-image"/>
-            <div class="shoe-details">
-                <div class="shoe-name">Sporty Sneaker</div>
-                <div class="shoe-price">$120</div>
-                <button onclick="showPreview('https://images.unsplash.com/photo-1603781573440-0b2f6b7a2e0a')">Preview</button>
-            </div>
-        </div>
-        <!-- Add more shoe cards as needed -->
-        <!-- You can dynamically generate these with JavaScript for more shoes -->
-    </section>
+<!-- Shoe Preview & Purchase -->
+<section id="previewSection">
+  <div class="preview-title">Shoe Preview</div>
+  <div class="preview-container">
+    <img src="" alt="Shoe Preview" class="preview-image" id="previewImage"/>
+  </div>
+  <button id="buyButton" onclick="showPayment()">Buy Now</button>
+</section>
 
-    <!-- Preview Section -->
-    <section class="preview-section" id="previewSection">
-        <div class="preview-title">Shoe Preview</div>
-        <div class="preview-container" id="previewContainer">
-            <!-- Preview Image will appear here -->
-        </div>
-        <button style="display:none; margin:20px auto; padding:10px 20px; font-size:1em; cursor:pointer;" id="buyButton" onclick="showPayment()">Buy Now</button>
-    </section>
+<!-- Payment -->
+<section id="paymentSection">
+  <div class="payment-title">Complete Your Purchase</div>
+  <form class="payment-form" id="paymentForm">
+    <input type="text" placeholder="Full Name" required />
+    <input type="email" placeholder="Email" required />
+    <input type="text" placeholder="Card Number" required />
+    <input type="text" placeholder="Expiration Date" required />
+    <input type="number" placeholder="CVV" required />
+    <button type="submit">Pay</button>
+  </form>
+</section>
 
-    <!-- Payment System -->
-    <section class="payment-section" id="paymentSection" style="display:none;">
-        <div class="payment-title">Complete Your Purchase</div>
-        <form class="payment-form" id="paymentForm">
-            <input type="text" placeholder="Full Name" required />
-            <input type="email" placeholder="Email" required />
-            <input type="number" placeholder="Card Number" required />
-            <input type="text" placeholder="Expiration Date" required />
-            <input type="number" placeholder="CVV" required />
-            <button type="submit">Pay</button>
-        </form>
-    </section>
+<!-- Footer -->
+<footer>
+  &copy; 2024 ShoeVerse - Basketball Shoes. All rights reserved.
+</footer>
 
-    <!-- Footer -->
-    <footer>
-        &copy; 2024 ShoeVerse. All rights reserved.
-    </footer>
+<script>
+  let selectedShoeImage = '';
 
-    <script>
-        // Function to show shoe preview
-        function showPreview(imageUrl) {
-            const previewContainer = document.getElementById('previewContainer');
-            previewContainer.innerHTML = '<img src="' + imageUrl + '" class="preview-image" />';
-            document.getElementById('buyButton').style.display = 'block';
-        }
+  // Filter shoes based on search input
+  function filterShoes() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const shoes = document.querySelectorAll('.shoe-card');
+    shoes.forEach(shoe => {
+      const name = shoe.dataset.name.toLowerCase();
+      if (name.includes(query)) {
+        shoe.style.display = 'block';
+      } else {
+        shoe.style.display = 'none';
+      }
+    });
+  }
 
-        // Function to show payment form
-        function showPayment() {
-            document.getElementById('paymentSection').style.display = 'block';
-            document.getElementById('previewSection').style.display = 'none';
-        }
+  // Show preview of selected shoe
+  function showPreview(imageUrl) {
+    document.getElementById('previewImage').src = imageUrl;
+    document.getElementById('previewSection').style.display = 'block';
+    document.getElementById('buyButton').style.display = 'block';
+    // Save the image URL for purchase
+    selectedShoeImage = imageUrl;
+  }
 
-        // Handle payment form submission
-        document.getElementById('paymentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Payment processing is not implemented in this demo.');
-            // Here you would integrate with a real payment API
-        });
-    </script>
+  // Show payment form
+  function showPayment() {
+    document.getElementById('paymentSection').style.display = 'block';
+    document.getElementById('previewSection').style.display = 'none';
+  }
+
+  // Handle payment form submission
+  document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Payment processing is simulated in this demo.');
+    // Reset views
+    document.getElementById('paymentSection').style.display = 'none';
+    document.getElementById('previewSection').style.display = 'none';
+    alert('Thank you for your purchase!');
+  });
+</script>
 </body>
 </html>
-
 
