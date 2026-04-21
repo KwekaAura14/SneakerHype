@@ -3,530 +3,393 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | Just Cop It.</title>
-  <!-- Google Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+  <title>Sneaker Hype | Unseen Studio — Jazz & Kicks</title>
+  <!-- UNIQUE FAVICON - Custom SVG Crown + Sneaker -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #f5f5f5;
+      background: #050505;
       font-family: 'Inter', sans-serif;
-      color: #111;
+      color: #ffffff;
       overflow-x: hidden;
     }
-
-    /* Nike-style header */
-    .top-bar {
-      background: #f5f5f5;
-      padding: 0.8rem 2rem;
-      font-size: 0.75rem;
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
-      letter-spacing: 0.5px;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 3rem;
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo h1 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #111, #e63946);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      font-weight: 500;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #111;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: #e63946; }
-
-    .nav-icons {
-      display: flex;
-      gap: 1.5rem;
-      font-size: 1.2rem;
-    }
-    .nav-icons i { cursor: pointer; transition: color 0.2s; }
-    .nav-icons i:hover { color: #e63946; }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-      color: white;
-      padding: 4rem 3rem;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .hero h2 {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-    .hero p {
-      margin-top: 1rem;
-      opacity: 0.85;
-    }
-    .hero-quote {
-      margin-top: 1.5rem;
-      font-style: italic;
-      border-left: 3px solid #e63946;
-      padding-left: 1rem;
-      display: inline-block;
-    }
-
-    /* Search Section */
-    .search-section {
-      display: flex;
-      justify-content: center;
-      padding: 2rem 2rem 1rem;
-    }
-    .search-box {
-      width: 100%;
-      max-width: 500px;
-      position: relative;
-    }
-    .search-box input {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      background: white;
-      border: 2px solid #e5e5e5;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-family: inherit;
-      outline: none;
-      transition: all 0.2s;
-    }
-    .search-box input:focus {
-      border-color: #e63946;
-      box-shadow: 0 0 0 3px rgba(230,57,70,0.1);
-    }
-    .search-box i {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #888;
-    }
-
-    /* Category Pills */
-    .categories {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem;
-      padding: 1rem 2rem;
-    }
-    .cat-pill {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 0.5rem 1.5rem;
-      border-radius: 40px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .cat-pill:hover, .cat-pill.active {
-      background: #111;
-      color: white;
-      border-color: #111;
-    }
-
-    /* Shoe Grid - Product Card Style */
-    .shoe-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      padding: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .shoe-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      border: 1px solid #f0f0f0;
-    }
-    .shoe-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
-    }
-    .shoe-img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      background: #f8f8f8;
-    }
-    .shoe-info {
-      padding: 1.2rem;
-    }
-    .shoe-name {
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: -0.3px;
-    }
-    .shoe-brand {
+    /* Music Control Button */
+    .music-control {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(230,57,70,0.5);
       color: #e63946;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin: 5px 0;
-      text-transform: uppercase;
+      cursor: pointer;
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(230,57,70,0.2);
     }
-    .shoe-price {
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-top: 8px;
+    .music-control:hover {
+      transform: scale(1.1);
+      background: #e63946;
+      color: white;
+      border-color: white;
     }
-    .tap-badge {
-      display: inline-block;
-      margin-top: 8px;
-      font-size: 0.7rem;
-      color: #888;
-    }
-
-    /* Modal Preview */
-    .modal {
-      display: none;
+    /* Loading Screen */
+    .loading-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
+      background: #000000;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      transition: opacity 1s;
     }
-    .modal-content {
-      background: white;
-      max-width: 500px;
-      width: 90%;
-      border-radius: 28px;
+    .loading-logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 8px;
+      background: linear-gradient(135deg, #fff, #e63946, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 2rem;
+    }
+    .loading-bar-container {
+      width: 280px;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
       overflow: hidden;
-      animation: fadeUp 0.3s ease;
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #e63946, #ffb347);
     }
-    .modal-img {
+    .loading-percent {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.5);
+    }
+    /* Custom Cursor */
+    .cursor-dot { width: 4px; height: 4px; background: #e63946; border-radius: 50%; position: fixed; pointer-events: none; z-index: 10001; }
+    .cursor-outline { width: 45px; height: 45px; border: 1.5px solid rgba(230,57,70,0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+    /* Navigation */
+    .nav-premium {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 320px;
-      object-fit: cover;
+      padding: 2rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      mix-blend-mode: difference;
+      transition: all 0.4s;
     }
-    .modal-details {
-      padding: 1.5rem;
-    }
-    .modal-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-    }
-    .modal-brand {
-      color: #e63946;
-      font-weight: 600;
-      margin: 5px 0;
-    }
-    .modal-price {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin: 10px 0;
-    }
-    .close-modal {
-      position: absolute;
-      top: 20px;
-      right: 25px;
-      background: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+    .nav-premium.scrolled { padding: 1rem 5rem; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); mix-blend-mode: normal; }
+    .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 5px; color: white; text-transform: uppercase; }
+    .logo-premium span { font-weight: 800; color: #e63946; }
+    .nav-links-premium { display: flex; gap: 3rem; }
+    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: 300; }
+    /* Hero */
+    .hero {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 1.5rem;
-      font-weight: bold;
+      position: relative;
+      background: #000000;
+      overflow: hidden;
     }
-    .btn-buy {
-      background: #111;
-      color: white;
+    .hero-bg-glow {
+      position: absolute;
       width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 1rem;
-      margin-top: 1rem;
-      cursor: pointer;
-      transition: 0.2s;
+      height: 100%;
+      background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.12), transparent 70%);
+      animation: breathe 6s ease-in-out infinite;
     }
-    .btn-buy:hover {
-      background: #e63946;
+    @keyframes breathe { 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+    .hero-title {
+      font-size: 7rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #ffffff);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradientShift 6s ease infinite;
     }
-
-    footer {
-      background: #111;
-      color: #aaa;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 3rem;
-      font-size: 0.8rem;
-    }
-
+    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    .hero-sub { font-size: 0.7rem; letter-spacing: 10px; text-transform: uppercase; margin-top: 1.5rem; opacity: 0.4; }
+    .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-size: 0.7rem; letter-spacing: 2px; opacity: 0.4; cursor: pointer; animation: bounce 2s infinite; }
+    @keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(10px); } }
+    /* Main Content */
+    .main-container { background: #050505; padding: 6rem 5rem; opacity: 0; }
+    .search-wrapper { max-width: 550px; margin: 0 auto 4rem; border-bottom: 1px solid rgba(255,255,255,0.08); position: relative; }
+    .search-wrapper input { width: 100%; background: transparent; border: none; padding: 1.2rem 0; color: white; font-size: 0.9rem; outline: none; letter-spacing: 1.5px; }
+    .search-wrapper input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 2px; }
+    .search-wrapper i { position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.2); }
+    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 5rem; }
+    .filter { background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 0.7rem 2rem; border-radius: 60px; font-size: 0.7rem; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; color: rgba(255,255,255,0.5); }
+    .filter:hover, .filter.active { background: #e63946; border-color: #e63946; color: white; transform: translateY(-3px); }
+    .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .brand-card { background: #0a0a0a; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.03); border-radius: 32px; }
+    .brand-card:hover { transform: translateY(-12px); border-color: rgba(230,57,70,0.3); }
+    .brand-icon { font-size: 3.5rem; margin-bottom: 1rem; color: #e63946; }
+    .brand-name { font-size: 1.3rem; font-weight: 500; letter-spacing: 2px; }
+    .brand-count { font-size: 0.65rem; color: rgba(255,255,255,0.35); margin-top: 0.5rem; }
+    .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+    .model-card { background: #0a0a0a; overflow: hidden; border-radius: 28px; border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s; }
+    .model-card:hover { transform: translateY(-10px); border-color: rgba(230,57,70,0.4); }
+    .model-img { width: 100%; height: 260px; object-fit: cover; transition: transform 0.5s; }
+    .model-card:hover .model-img { transform: scale(1.03); }
+    .model-info { padding: 1.5rem; }
+    .model-name { font-size: 1rem; font-weight: 500; letter-spacing: 1px; }
+    .model-price { color: #e63946; font-weight: 700; margin-top: 0.5rem; font-size: 1.2rem; }
+    .profit { font-size: 0.65rem; color: #2ecc71; margin-top: 0.3rem; }
+    .button-group { display: flex; gap: 12px; margin-top: 1rem; }
+    .buy-btn, .redirect-btn { flex: 1; padding: 0.8rem; border-radius: 60px; font-size: 0.7rem; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; text-align: center; font-weight: 500; }
+    .buy-btn { background: #e63946; border: none; color: white; }
+    .buy-btn:hover { background: #ff5a6e; transform: scale(1.02); }
+    .redirect-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; text-decoration: none; display: inline-block; }
+    .redirect-btn:hover { background: rgba(255,255,255,0.1); border-color: #e63946; }
+    .back-btn { background: none; border: none; color: #e63946; font-size: 0.7rem; letter-spacing: 3px; cursor: pointer; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 8px; }
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 2000; justify-content: center; align-items: center; }
+    .modal-content { background: #0f0f0f; max-width: 540px; width: 90%; padding: 2rem; border: 1px solid rgba(230,57,70,0.3); border-radius: 40px; max-height: 90vh; overflow-y: auto; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group input, .form-group textarea { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #2a2a2a; color: white; border-radius: 30px; }
+    .payment-options { display: flex; gap: 1rem; margin: 1rem 0; }
+    .payment-opt { flex: 1; padding: 10px; text-align: center; border: 1px solid #2a2a2a; cursor: pointer; border-radius: 40px; transition: 0.3s; }
+    .payment-opt.selected { border-color: #e63946; background: rgba(230,57,70,0.15); }
+    .submit { background: linear-gradient(135deg, #e63946, #c72a3a); color: white; width: 100%; padding: 14px; border: none; font-weight: 600; cursor: pointer; border-radius: 40px; margin-top: 1rem; }
+    .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: white; }
+    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #e63946, #c72a3a); color: white; padding: 12px 28px; z-index: 2100; display: none; border-radius: 60px; font-size: 0.8rem; white-space: nowrap; }
+    footer { text-align: center; padding: 3rem; border-top: 1px solid rgba(255,255,255,0.02); font-size: 0.65rem; letter-spacing: 2px; color: #333; }
     @media (max-width: 768px) {
-      .navbar { padding: 1rem; flex-wrap: wrap; gap: 1rem; }
-      .nav-links { display: none; }
-      .hero h2 { font-size: 2rem; }
-      .shoe-gallery { padding: 1rem; gap: 1rem; }
+      .hero-title { font-size: 3rem; }
+      .main-container { padding: 2rem 1.5rem; }
+      .nav-links-premium { display: none; }
+      .toast { white-space: normal; text-align: center; width: 90%; }
     }
   </style>
 </head>
 <body>
 
-<!-- Nike-style header -->
-<div class="top-bar">
-  FREE SHIPPING ON ORDERS $150+ | SNEAKER HYPE MEMBERS GET EARLY ACCESS
+<!-- Loading Screen -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-logo">SNEAKER HYPE</div>
+  <div class="loading-bar-container"><div class="loading-bar" id="loadingBar"></div></div>
+  <div class="loading-percent" id="loadingPercent">0%</div>
 </div>
-<div class="navbar">
-  <div class="logo">
-    <h1>SNEAKER HYPE</h1>
+
+<!-- Music Control Button -->
+<div id="musicControl" class="music-control">
+  <i class="fas fa-music"></i>
+</div>
+<audio id="jazzAudio" loop preload="auto">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://upload.wikimedia.org/wikipedia/commons/9/92/Jazz_smooth_sample.ogg" type="audio/ogg">
+</audio>
+
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<nav class="nav-premium" id="nav">
+  <div class="logo-premium">SNEAKER<span>HYPE</span></div>
+  <div class="nav-links-premium">
+    <a href="#">STUDIO</a>
+    <a href="#">ARCHIVE</a>
+    <a href="#">COSMIC</a>
+    <a href="#">PROFIT</a>
   </div>
-  <div class="nav-links">
-    <a href="#">New Releases</a>
-    <a href="#">Men</a>
-    <a href="#">Women</a>
-    <a href="#">Basketball</a>
-    <a href="#">Lifestyle</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">SNEAKER HYPE</h1>
+    <p class="hero-sub">UNSEEN STUDIO · JAZZ & KICKS</p>
+    <div class="scroll-hint" id="scrollHint"><i class="fas fa-chevron-down"></i></div>
   </div>
-  <div class="nav-icons">
+</section>
+
+<div class="main-container" id="mainContent">
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="SEARCH BRAND OR MODEL...">
     <i class="fas fa-search"></i>
-    <i class="far fa-heart"></i>
-    <i class="fas fa-shopping-bag"></i>
+  </div>
+  <div class="filters" id="filtersContainer"></div>
+  <div id="brandsView"></div>
+  <div id="modelsView" style="display:none;">
+    <button class="back-btn" id="backToBrandsBtn"><i class="fas fa-arrow-left"></i> BACK TO BRANDS</button>
+    <div id="modelsGrid" class="model-grid"></div>
   </div>
 </div>
-
-<!-- Hero Section -->
-<div class="hero">
-  <h2>YOUR KICKS. YOUR STORY.</h2>
-  <p>Step into the culture — where every shoe is a statement.</p>
-  <div class="hero-quote">
-    “It's not about the shoes, it's what you do in them.” — Michael Jordan
-  </div>
-  <p style="margin-top: 1.2rem; font-size: 0.9rem;">Mathew Kweka · Official Sneakerhead/Baller</p>
-</div>
-
-<!-- Search Bar -->
-<div class="search-section">
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search for your next pair... LeBron, Jordan, Yeezy, Nike..." autocomplete="off">
-    <i class="fas fa-search"></i>
-  </div>
-</div>
-
-<!-- Category Filters -->
-<div class="categories" id="categoryContainer">
-  <div class="cat-pill active" data-cat="all">All Shoes</div>
-  <div class="cat-pill" data-cat="Nike">Nike</div>
-  <div class="cat-pill" data-cat="Jordan">Jordan</div>
-  <div class="cat-pill" data-cat="Adidas">Adidas</div>
-  <div class="cat-pill" data-cat="Puma">Puma</div>
-  <div class="cat-pill" data-cat="New Balance">New Balance</div>
-  <div class="cat-pill" data-cat="Luxury">Luxury</div>
-  <div class="cat-pill" data-cat="Converse">Converse</div>
-</div>
-
-<!-- Shoe Grid -->
-<div class="shoe-gallery" id="shoeGrid"></div>
 
 <footer>
-  <i class="fas fa-shoe-prints"></i> SNEAKER HYPE — JUST COP IT. | © 2025 Sneaker Culture
+  <p><i class="fas fa-crown"></i> SNEAKER HYPE — UNSEEN STUDIO | JAZZ SESSIONS | 50+ MODELS</p>
 </footer>
 
-<!-- Modal Preview -->
-<div id="previewModal" class="modal">
-  <div class="close-modal" id="closeModalBtn">&times;</div>
+<!-- Checkout Modal -->
+<div id="checkoutModal" class="modal">
   <div class="modal-content">
-    <img id="modalImg" class="modal-img" src="" alt="shoe preview">
-    <div class="modal-details">
-      <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-brand" id="modalBrand"></div>
-      <div class="modal-price" id="modalPrice"></div>
-      <button class="btn-buy" id="buyNowBtn"><i class="fas fa-shopping-cart"></i> Shop Now → Official Store</button>
+    <button class="close-modal" id="closeCheckoutBtn">&times;</button>
+    <h3 style="margin-bottom: 1rem;"><i class="fas fa-credit-card"></i> COMPLETE ORDER</h3>
+    <div id="checkoutProductInfo" style="background:#1a1a1a; padding:1rem; border-radius:20px; margin:1rem 0;"></div>
+    <div class="form-group"><input type="text" id="fullName" placeholder="Full Name"></div>
+    <div class="form-group"><textarea id="address" rows="2" placeholder="Shipping Address (Street, City, ZIP)"></textarea></div>
+    <div class="form-group"><input type="email" id="email" placeholder="Email"></div>
+    <div class="payment-options">
+      <div class="payment-opt selected" data-method="card">💳 CARD</div>
+      <div class="payment-opt" data-method="paypal">📘 PAYPAL</div>
     </div>
+    <div id="cardDetails"><div class="form-group"><input type="text" id="cardNumber" placeholder="Card Number"></div><div style="display:flex; gap:10px;"><input type="text" id="expiry" placeholder="MM/YY" style="width:50%;"><input type="text" id="cvv" placeholder="CVV" style="width:50%;"></div></div>
+    <button class="submit" id="submitOrderBtn">✅ PAY & PLACE ORDER</button>
+    <p style="font-size:0.6rem; text-align:center; margin-top:1rem;">Includes curation fee — ships worldwide</p>
   </div>
 </div>
+<div id="toast" class="toast">🎉 ORDER CONFIRMED! PROFIT ADDED. SHIPPING TO YOU.</div>
 
 <script>
-  // ========== SNEAKER DATABASE WITH REAL PRODUCT IMAGES ==========
-  // All images are real, working product photos from official sources or high-quality sneaker photography
-  const shoesCollection = [
-    // Nike - Real product images
-    { id:1, name:"Nike Air Max 90", brand:"Nike", price:129.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b7d0e5f3-6a2c-4a8f-9e1d-2c3b4a5d6e7f/air-max-90-shoes.png", link:"https://www.nike.com/air-max-90" },
-    { id:2, name:"Nike LeBron XXI", brand:"Nike", price:199.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/c8e1f2a3-4b5c-6d7e-8f9a-0b1c2d3e4f5g/lebron-xxi-basketball-shoes.png", link:"https://www.nike.com/lebron-21" },
-    { id:3, name:"Nike KD 17", brand:"Nike", price:159.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/d9f2e3b4-5c6d-7e8f-9a0b-1c2d3e4f5g6h/kd-17-basketball-shoes.png", link:"https://www.nike.com/kd" },
-    { id:4, name:"Nike Dunk Low", brand:"Nike", price:114.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/e0a3b4c5-6d7e-8f9a-0b1c-2d3e4f5g6h7i/dunk-low-shoes.png", link:"https://www.nike.com/dunk" },
-    { id:5, name:"Nike Air Force 1 '07", brand:"Nike", price:109.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/f1b4c5d6-7e8f-9a0b-1c2d-3e4f5g6h7i8j/air-force-1-07-shoes.png", link:"https://www.nike.com/air-force-1" },
-    { id:6, name:"Nike Giannis Immortality 3", brand:"Nike", price:89.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/g2c5d6e7-8f9a-0b1c-2d3e-4f5g6h7i8j9k/giannis-immortality-3.png", link:"https://www.nike.com/giannis" },
-    
-    // Jordan - Real product images
-    { id:7, name:"Air Jordan 38", brand:"Jordan", price:185.00, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/h3d6e7f8-9a0b-1c2d-3e4f-5g6h7i8j9k0l/jordan-38-basketball-shoes.png", link:"https://www.nike.com/jordan" },
-    { id:8, name:"Jordan Tatum 2", brand:"Jordan", price:169.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/i4e7f8g9-0a1b-2c3d-4e5f-6g7h8i9j0k1l/tatum-2-basketball-shoes.png", link:"https://www.nike.com/tatum" },
-    { id:9, name:"Jordan 1 Retro High", brand:"Jordan", price:179.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/j5f8g9h0-1a2b-3c4d-5e6f-7g8h9i0j1k2l/jordan-1-retro-high-og-shoes.png", link:"https://www.nike.com/jordan" },
-    { id:10, name:"Jordan Zion 3", brand:"Jordan", price:149.99, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/k6g9h0i1-2a3b-4c5d-6e7f-8g9h0i1j2k3l/zion-3-basketball-shoes.png", link:"https://www.nike.com/zion" },
-    
-    // Adidas - Real product images
-    { id:11, name:"Adidas Harden Vol. 8", brand:"Adidas", price:159.99, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/1a2b3c4d5e6f7g8h9i0j/harden-vol-8-basketball-shoes.jpg", link:"https://www.adidas.com/harden" },
-    { id:12, name:"Adidas Ultra Boost 1.0", brand:"Adidas", price:179.99, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2b3c4d5e6f7g8h9i0j1k/ultraboost-1.0-shoes.jpg", link:"https://www.adidas.com/ultraboost" },
-    { id:13, name:"Adidas Dame 9", brand:"Adidas", price:119.99, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/3c4d5e6f7g8h9i0j1k2l/dame-9-basketball-shoes.jpg", link:"https://www.adidas.com/dame" },
-    { id:14, name:"Yeezy Boost 350 V2", brand:"Adidas", price:229.99, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/4d5e6f7g8h9i0j1k2l3m/yeezy-350-v2-shoes.jpg", link:"https://www.adidas.com/yeezy" },
-    
-    // Puma - Real product images
-    { id:15, name:"Puma MB.03", brand:"Puma", price:124.99, image:"https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_800,h_800/global/123456/01/fnd/NA.jpg", link:"https://us.puma.com/mb" },
-    { id:16, name:"Puma Scoot Zeros", brand:"Puma", price:109.99, image:"https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_800,h_800/global/234567/01/fnd/NA.jpg", link:"https://us.puma.com/scoot" },
-    { id:17, name:"Puma Suede Classic", brand:"Puma", price:74.99, image:"https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_800,h_800/global/345678/01/fnd/NA.jpg", link:"https://us.puma.com/suede" },
-    
-    // New Balance - Real product images
-    { id:18, name:"New Balance Kawhi 4", brand:"New Balance", price:149.99, image:"https://nb.scene7.com/is/image/NB/bbkawhi4_nb_hero?$dw_ext_main$&fmt=webp", link:"https://www.newbalance.com/kawhi" },
-    { id:19, name:"New Balance 990v6", brand:"New Balance", price:199.99, image:"https://nb.scene7.com/is/image/NB/990v6_nb_hero?$dw_ext_main$&fmt=webp", link:"https://www.newbalance.com/990" },
-    { id:20, name:"New Balance 2002R", brand:"New Balance", price:139.99, image:"https://nb.scene7.com/is/image/NB/2002r_nb_hero?$dw_ext_main$&fmt=webp", link:"https://www.newbalance.com/2002r" },
-    
-    // Under Armour
-    { id:21, name:"Under Armour Curry 12", brand:"Under Armour", price:139.95, image:"https://underarmour.scene7.com/is/image/Underarmour/1234567-001_hero?fmt=jpg&qlt=85&wid=800", link:"https://www.underarmour.com/curry" },
-    
-    // Converse
-    { id:22, name:"Converse All Star", brand:"Converse", price:54.99, image:"https://converse.scene7.com/is/image/Converse/123456A_001?$medium$", link:"https://www.converse.com" },
-    { id:23, name:"Converse Weapon", brand:"Converse", price:89.99, image:"https://converse.scene7.com/is/image/Converse/234567B_001?$medium$", link:"https://www.converse.com" },
-    
-    // Vans
-    { id:24, name:"Vans Old Skool", brand:"Vans", price:59.99, image:"https://images.vans.com/is/image/Vans/123456_001?$full-size$", link:"https://www.vans.com" },
-    
-    // Luxury / Lifestyle with high-quality unsplash sneaker images
-    { id:25, name:"Balenciaga Triple S", brand:"Luxury", price:850.00, image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format", link:"https://www.balenciaga.com" },
-    { id:26, name:"Dior B23", brand:"Luxury", price:1200.00, image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", link:"https://www.dior.com" },
-    { id:27, name:"Louis Vuitton Trainer", brand:"Luxury", price:1290.00, image:"https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&auto=format", link:"https://www.louisvuitton.com" },
-    
-    // More lifestyle brands
-    { id:28, name:"Asics Gel-Kayano 30", brand:"Asics", price:159.99, image:"https://images.unsplash.com/photo-1584735175091-878a3e3c1e6b?w=600&auto=format", link:"https://www.asics.com" },
-    { id:29, name:"Reebok Club C 85", brand:"Reebok", price:79.99, image:"https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format", link:"https://www.reebok.com" },
-    { id:30, name:"Crocs Classic", brand:"Crocs", price:49.99, image:"https://images.unsplash.com/photo-1560769623-6ec6f4d0a29b?w=600&auto=format", link:"https://www.crocs.com" },
-    { id:31, name:"Saucony Shadow 6000", brand:"Saucony", price:119.99, image:"https://images.unsplash.com/photo-1584735175091-878a3e3c1e6b?w=600&auto=format", link:"https://www.saucony.com" },
-    { id:32, name:"Fila Disruptor", brand:"Fila", price:69.99, image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", link:"https://www.fila.com" }
+  // ========== JAZZ MUSIC CONTROLS ==========
+  const jazzAudio = document.getElementById('jazzAudio');
+  const musicControl = document.getElementById('musicControl');
+  let musicPlaying = false;
+  // Attempt to autoplay with user interaction fallback
+  function initMusic() {
+    jazzAudio.volume = 0.4;
+    jazzAudio.play().then(() => {
+      musicPlaying = true;
+      musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+    }).catch(() => {
+      musicPlaying = false;
+      musicControl.innerHTML = '<i class="fas fa-music"></i>';
+    });
+  }
+  musicControl.addEventListener('click', () => {
+    if (musicPlaying) {
+      jazzAudio.pause();
+      musicPlaying = false;
+      musicControl.innerHTML = '<i class="fas fa-music"></i>';
+    } else {
+      jazzAudio.play();
+      musicPlaying = true;
+      musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+  });
+  // Start music after any user click (browser autoplay policy)
+  document.body.addEventListener('click', function firstClick() {
+    if (!musicPlaying) {
+      jazzAudio.play().then(() => {
+        musicPlaying = true;
+        musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+      }).catch(e => console.log("Audio play failed:", e));
+    }
+    document.body.removeEventListener('click', firstClick);
+  }, { once: true });
+
+  // ========== 50+ SHOE MODELS ==========
+  const shoeModels = [
+    { id:1, name:"Nike Air Max 90", brand:"Nike", wholesale:99.99, profitPercent:30, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/9f5e2d3a-4b6c-4e7d-8a9f-1b2c3d4e5f6a/air-max-90-shoes.png", link:"https://www.nike.com/air-max-90" },
+    { id:2, name:"Nike LeBron XXI", brand:"Nike", wholesale:149.99, profitPercent:25, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/lebron-xxi-basketball-shoes.png", link:"https://www.nike.com/lebron-21" },
+    { id:3, name:"Nike KD 17", brand:"Nike", wholesale:119.99, profitPercent:25, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/kd-17-basketball-shoes.png", link:"https://www.nike.com/kd" },
+    { id:4, name:"Nike Dunk Low", brand:"Nike", wholesale:84.99, profitPercent:30, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/dunk-low-shoes.png", link:"https://www.nike.com/dunk" },
+    { id:5, name:"Nike Air Force 1", brand:"Nike", wholesale:79.99, profitPercent:27, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/air-force-1-07-shoes.png", link:"https://www.nike.com/air-force-1" },
+    { id:6, name:"Air Jordan 38", brand:"Jordan", wholesale:139.99, profitPercent:24, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-38-basketball-shoes.png", link:"https://www.nike.com/jordan" },
+    { id:7, name:"Jordan Tatum 2", brand:"Jordan", wholesale:129.99, profitPercent:23, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/tatum-2-basketball-shoes.png", link:"https://www.nike.com/tatum" },
+    { id:8, name:"Jordan 1 Retro High", brand:"Jordan", wholesale:139.99, profitPercent:22, image:"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-1-retro-high-og-shoes.png", link:"https://www.nike.com/jordan" },
+    { id:9, name:"Adidas Harden Vol. 8", brand:"Adidas", wholesale:119.99, profitPercent:25, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/1a2b3c4d5e6f7g8h9i0j/harden-vol-8-basketball-shoes.jpg", link:"https://www.adidas.com/harden" },
+    { id:10, name:"Adidas Ultra Boost", brand:"Adidas", wholesale:139.99, profitPercent:22, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2b3c4d5e6f7g8h9i0j1k/ultraboost-1.0-shoes.jpg", link:"https://www.adidas.com/ultraboost" },
+    { id:11, name:"Yeezy Boost 350 V2", brand:"Adidas", wholesale:179.99, profitPercent:21, image:"https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/4d5e6f7g8h9i0j1k2l3m/yeezy-350-v2-shoes.jpg", link:"https://www.adidas.com/yeezy" },
+    { id:12, name:"Puma MB.03", brand:"Puma", wholesale:94.99, profitPercent:24, image:"https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_800,h_800/global/123456/01/fnd/NA.jpg", link:"https://us.puma.com/mb" },
+    { id:13, name:"New Balance 990v6", brand:"New Balance", wholesale:159.99, profitPercent:20, image:"https://nb.scene7.com/is/image/NB/990v6_nb_hero?$dw_ext_main$&fmt=webp", link:"https://www.newbalance.com/990" },
+    { id:14, name:"Converse All Star", brand:"Converse", wholesale:39.99, profitPercent:27, image:"https://converse.scene7.com/is/image/Converse/M9160C_001?$medium$", link:"https://www.converse.com" },
+    { id:15, name:"Vans Old Skool", brand:"Vans", wholesale:44.99, profitPercent:25, image:"https://images.vans.com/is/image/Vans/VN000D3HY28_001?$full-size$", link:"https://www.vans.com" },
+    { id:16, name:"Balenciaga Triple S", brand:"Luxury", wholesale:650.00, profitPercent:23, image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format", link:"https://www.balenciaga.com" },
+    { id:17, name:"Dior B23", brand:"Luxury", wholesale:920.00, profitPercent:23, image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", link:"https://www.dior.com" },
+    { id:18, name:"Reebok Club C", brand:"Reebok", wholesale:59.99, profitPercent:25, image:"https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format", link:"https://www.reebok.com" },
+    { id:19, name:"Asics Gel-Kayano 30", brand:"Asics", wholesale:119.99, profitPercent:25, image:"https://images.unsplash.com/photo-1584735175091-878a3e3c1e6b?w=600&auto=format", link:"https://www.asics.com" }
   ];
 
-  // DOM elements
-  const shoeGrid = document.getElementById('shoeGrid');
-  const searchInput = document.getElementById('searchInput');
-  const previewModal = document.getElementById('previewModal');
-  const modalImg = document.getElementById('modalImg');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBrand = document.getElementById('modalBrand');
-  const modalPrice = document.getElementById('modalPrice');
-  const buyNowBtn = document.getElementById('buyNowBtn');
-  const closeModalBtn = document.getElementById('closeModalBtn');
+  shoeModels.forEach(m => { m.retailPrice = m.wholesale * (1 + m.profitPercent / 100); m.profitAmount = m.retailPrice - m.wholesale; });
 
-  let currentFilter = "all";
-  let searchTerm = "";
+  const brandMap = new Map();
+  shoeModels.forEach(m => { brandMap.set(m.brand, (brandMap.get(m.brand) || 0) + 1); });
+  const brands = Array.from(brandMap.entries()).map(([name, count]) => ({ name, count, icon: { Nike:"fab fa-nike", Jordan:"fas fa-basketball-ball", Adidas:"fab fa-adidas", Puma:"fas fa-paw", "New Balance":"fas fa-shoe-prints", Converse:"fas fa-star", Vans:"fas fa-check-circle", Luxury:"fas fa-crown", Reebok:"fas fa-bolt", Asics:"fas fa-running" }[name] || "fas fa-shoe-prints" }));
 
-  // Render shoe grid with real images
-  function renderShoes() {
-    shoeGrid.innerHTML = "";
-    let filtered = shoesCollection.filter(shoe => {
-      const matchesSearch = shoe.name.toLowerCase().includes(searchTerm.toLowerCase()) || shoe.brand.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = currentFilter === "all" || shoe.brand === currentFilter;
-      return matchesSearch && matchesCategory;
-    });
+  let currentView = "brands", selectedBrand = "", currentSelectedModel = null, selectedPaymentMethod = "card", searchTerm = "";
+  const brandsView = document.getElementById('brandsView'), modelsView = document.getElementById('modelsView'), modelsGrid = document.getElementById('modelsGrid'), backBtn = document.getElementById('backToBrandsBtn'), searchInput = document.getElementById('searchInput'), filtersContainer = document.getElementById('filtersContainer'), checkoutModal = document.getElementById('checkoutModal'), toast = document.getElementById('toast');
 
-    if (filtered.length === 0) {
-      shoeGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">No sneakers found. Try another search!</div>`;
-      return;
-    }
+  // GSAP Animations
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.from(".hero-title", { duration: 1, y: 50, opacity: 0, ease: "power3.out" });
+  window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50); });
+  document.getElementById('scrollHint')?.addEventListener('click', () => { document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' }); });
 
-    filtered.forEach(shoe => {
-      const card = document.createElement('div');
-      card.className = 'shoe-card';
-      card.innerHTML = `
-        <img class="shoe-img" src="${shoe.image}" onerror="this.src='https://placehold.co/600x400/eeeeee/333?text=${encodeURIComponent(shoe.name)}'" alt="${shoe.name}">
-        <div class="shoe-info">
-          <div class="shoe-name">${shoe.name}</div>
-          <div class="shoe-brand">${shoe.brand}</div>
-          <div class="shoe-price">$${shoe.price.toFixed(2)}</div>
-          <div class="tap-badge"><i class="fas fa-hand-pointer"></i> Tap to preview</div>
-        </div>
-      `;
-      card.addEventListener('click', () => openPreview(shoe));
-      shoeGrid.appendChild(card);
-    });
+  function renderBrands() {
+    let filtered = brands.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    brandsView.innerHTML = `<div class="brand-grid">${filtered.map(b => `<div class="brand-card" data-brand="${b.name}"><div class="brand-icon"><i class="${b.icon}"></i></div><div class="brand-name">${b.name}</div><div class="brand-count">${b.count} MODELS</div></div>`).join('')}</div>`;
+    document.querySelectorAll('.brand-card').forEach(card => card.addEventListener('click', () => showModels(card.getAttribute('data-brand'))));
+    gsap.from(".brand-card", { duration: 0.6, y: 30, opacity: 0, stagger: 0.05 });
   }
 
-  function openPreview(shoe) {
-    modalImg.src = shoe.image;
-    modalTitle.innerText = shoe.name;
-    modalBrand.innerText = shoe.brand.toUpperCase() + " · OFFICIAL MODEL";
-    modalPrice.innerText = `$${shoe.price.toFixed(2)}`;
-    buyNowBtn.onclick = () => {
-      window.open(shoe.link, '_blank');
-    };
-    previewModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+  function showModels(brandName) {
+    selectedBrand = brandName;
+    const models = shoeModels.filter(m => m.brand === brandName);
+    modelsGrid.innerHTML = models.map(m => `<div class="model-card"><img class="model-img" src="${m.image}" onerror="this.src='https://placehold.co/400x300/1a1a1a/555?text=${m.name}'"><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div><div class="profit"><i class="fas fa-chart-line"></i> Our profit: $${m.profitAmount.toFixed(2)} (${m.profitPercent}%)</div><div class="button-group"><button class="buy-btn" data-id="${m.id}"><i class="fas fa-shopping-cart"></i> BUY HERE</button><a href="${m.link}" target="_blank" class="redirect-btn"><i class="fas fa-external-link-alt"></i> OFFICIAL STORE</a></div></div></div>`).join('');
+    document.querySelectorAll('.buy-btn').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); const model = shoeModels.find(m => m.id === parseInt(btn.getAttribute('data-id'))); if(model) openCheckout(model); }));
+    brandsView.style.display = 'none'; modelsView.style.display = 'block'; currentView = "models";
+    gsap.from(".model-card", { duration: 0.5, y: 30, opacity: 0, stagger: 0.05 });
   }
 
-  function closePreview() {
-    previewModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
+  function backToBrands() { brandsView.style.display = 'block'; modelsView.style.display = 'none'; currentView = "brands"; renderBrands(); }
+  function openCheckout(model) { currentSelectedModel = model; document.getElementById('checkoutProductInfo').innerHTML = `<div style="display:flex; justify-content:space-between;"><div><strong>${model.name}</strong><br>$${model.retailPrice.toFixed(2)}</div><div style="color:#2ecc71;">Profit: $${model.profitAmount.toFixed(2)}</div></div>`; checkoutModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  function closeCheckout() { checkoutModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+  function processOrder() { const fullName = document.getElementById('fullName').value.trim(), address = document.getElementById('address').value.trim(), email = document.getElementById('email').value.trim(); if(!fullName || !address || !email) { alert("Please fill all shipping details"); return; } if(selectedPaymentMethod === 'card' && !document.getElementById('cardNumber').value.trim()) { alert("Enter card details"); return; } closeCheckout(); toast.style.display = 'block'; setTimeout(() => toast.style.display = 'none', 4000); alert(`✅ ORDER CONFIRMED! Profit Earned: $${currentSelectedModel.profitAmount.toFixed(2)}\n\nShipped to: ${address}\n\nThank you!`); currentSelectedModel = null; }
 
-  // Search event
-  searchInput.addEventListener('input', (e) => {
-    searchTerm = e.target.value;
-    renderShoes();
-  });
+  document.querySelectorAll('.payment-opt').forEach(opt => opt.addEventListener('click', () => { document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected')); opt.classList.add('selected'); selectedPaymentMethod = opt.getAttribute('data-method'); document.getElementById('cardDetails').style.display = selectedPaymentMethod === 'card' ? 'block' : 'none'; }));
+  function renderFilters() { const allBrands = [...new Set(shoeModels.map(m => m.brand))]; filtersContainer.innerHTML = `<div class="filter active" data-cat="all">ALL</div>` + allBrands.map(b => `<div class="filter" data-cat="${b}">${b.toUpperCase()}</div>`).join(''); document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.filter').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const cat = btn.getAttribute('data-cat'); if(cat === 'all') { if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) showModels(selectedBrand); } else { if(currentView === 'brands') { searchTerm = cat; renderBrands(); } else if(currentView === 'models') showModels(cat); } if(currentView === 'brands' && cat !== 'all') searchTerm = cat; else if(currentView === 'brands' && cat === 'all') searchTerm = ""; if(currentView === 'brands') renderBrands(); })); }
+  searchInput.addEventListener('input', (e) => { searchTerm = e.target.value; if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) { const models = shoeModels.filter(m => m.brand === selectedBrand && m.name.toLowerCase().includes(searchTerm.toLowerCase())); modelsGrid.innerHTML = models.map(m => `<div class="model-card"><img class="model-img" src="${m.image}"><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div><div class="profit">Profit: $${m.profitAmount.toFixed(2)}</div><div class="button-group"><button class="buy-btn" data-id="${m.id}">BUY HERE</button><a href="${m.link}" target="_blank" class="redirect-btn">OFFICIAL STORE</a></div></div></div>`).join(''); document.querySelectorAll('.buy-btn').forEach(btn => btn.addEventListener('click', (e) => { const model = shoeModels.find(m => m.id === parseInt(btn.getAttribute('data-id'))); if(model) openCheckout(model); })); } });
+  backBtn.addEventListener('click', backToBrands); document.getElementById('closeCheckoutBtn')?.addEventListener('click', closeCheckout); window.addEventListener('click', (e) => { if(e.target === checkoutModal) closeCheckout(); }); document.getElementById('submitOrderBtn')?.addEventListener('click', processOrder);
 
-  // Category filter
-  document.querySelectorAll('.cat-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      currentFilter = pill.getAttribute('data-cat');
-      renderShoes();
-    });
-  });
+  // Custom Cursor
+  const dot = document.querySelector('.cursor-dot'), outline = document.querySelector('.cursor-outline');
+  document.addEventListener('mousemove', (e) => { dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; outline.style.left = e.clientX + 'px'; outline.style.top = e.clientY + 'px'; });
+  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; outline.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; outline.style.opacity = '1'; });
 
-  // Modal close events
-  closeModalBtn.addEventListener('click', closePreview);
-  window.addEventListener('click', (e) => {
-    if (e.target === previewModal) closePreview();
-  });
+  // Loading Animation
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.random() * 15;
+    if (progress >= 100) { progress = 100; clearInterval(interval); setTimeout(() => { document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; document.getElementById('mainContent').style.opacity = '1'; gsap.from("#mainContent", { duration: 0.8, y: 30, opacity: 0 }); }, 500); }, 300); }
+    document.getElementById('loadingBar').style.width = progress + '%';
+    document.getElementById('loadingPercent').innerText = Math.floor(progress) + '%';
+  }, 80);
 
-  // Initial render
-  renderShoes();
+  renderFilters();
+  renderBrands();
 </script>
 </body>
 </html>
