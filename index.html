@@ -4,13 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Sneaker Hype | Unseen Studio — Shop & Vibe</title>
-  <!-- UNIQUE FAVICON - Custom SVG Crown + Sneaker -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -19,7 +17,6 @@
       color: #ffffff;
       overflow-x: hidden;
     }
-    /* Music Control Button */
     .music-control {
       position: fixed;
       bottom: 25px;
@@ -46,7 +43,8 @@
       color: white;
       border-color: white;
     }
-    /* Loading Screen with Motion Path */
+    
+    /* LOADING SCREEN */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -61,123 +59,70 @@
       align-items: center;
       transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1);
       font-family: 'Inter', monospace;
+      overflow: hidden;
     }
     .loading-screen::before {
       content: "";
       position: absolute;
       width: 100%;
       height: 100%;
-      background-image: 
-        linear-gradient(rgba(230,57,70,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(230,57,70,0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background: radial-gradient(circle at center, rgba(230,57,70,0.15) 0%, transparent 70%);
       pointer-events: none;
+      animation: pulseGlow 1s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.2); }
     }
     
-    /* Motion Path Container */
-    .motion-path-container {
+    /* WORM LOGO CONTAINER - each letter animates like a worm */
+    .worm-logo-container {
       position: relative;
-      width: 451px;
-      height: 437px;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin-bottom: 50px;
+      text-align: center;
     }
-    .motion-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 8px rgba(230,57,70,0.3));
-    }
-    .motion-svg path {
-      stroke: url(#pathGradient);
-      stroke-width: 2.5;
-      fill: none;
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
-      animation: drawPath 2.2s ease-in-out forwards;
-    }
-    @keyframes drawPath {
-      0% { stroke-dashoffset: 1000; }
-      100% { stroke-dashoffset: 0; }
-    }
-    
-    /* Moving Text Logo - SNEAKER HYPE */
-    .moving-logo-text {
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: 4px;
-      background: linear-gradient(135deg, #e63946, #ffb347, #ffffff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      white-space: nowrap;
+    .worm-text {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      filter: drop-shadow(0 0 12px rgba(230,57,70,0.7));
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      transform-origin: center;
+      white-space: nowrap;
+      display: inline-block;
     }
-    .moving-logo-text i {
-      font-size: 1.2rem;
-      margin-right: 8px;
-      background: linear-gradient(135deg, #e63946, #ffb347);
+    .worm-letter {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946);
+      background-size: 300% 300%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      animation: gradientFlow 3s ease infinite;
+      transform-origin: center bottom;
+      will-change: transform, opacity, filter;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     
-    /* Loader Progress & Rings */
-    .resn-style-loader {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      opacity: 0.6;
-    }
-    .loader-ring {
+    /* Particle effect for disintegration */
+    .disintegration-particle {
       position: absolute;
-      width: 100%;
-      height: 100%;
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, #e63946, #ffb347);
       border-radius: 50%;
-      border: 1px solid rgba(230,57,70,0.2);
-      border-top: 1px solid #e63946;
-      border-right: 1px solid #ffb347;
-      animation: spinRing 1.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-    }
-    .loader-ring:nth-child(2) {
-      width: 70%;
-      height: 70%;
-      border: 1px solid rgba(255,179,71,0.2);
-      border-bottom: 1px solid #ffb347;
-      border-left: 1px solid #e63946;
-      animation: spinRingReverse 1.8s ease-in-out infinite;
-    }
-    @keyframes spinRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes spinRingReverse {
-      0% { transform: rotate(360deg); }
-      100% { transform: rotate(0deg); }
+      pointer-events: none;
+      z-index: 200;
     }
     
     .loader-progress-section {
-      margin-top: 20px;
+      margin-top: 30px;
       width: 320px;
       text-align: center;
+      opacity: 1;
+      transition: opacity 0.6s ease;
     }
     .loader-progress-bg {
       width: 100%;
@@ -257,19 +202,7 @@
     }
     @keyframes breathe { 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
     
-    #three-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 450px;
-      height: 450px;
-      z-index: 1;
-      opacity: 0.35;
-      pointer-events: none;
-    }
-    
-    .orbiting-container {
+    .moving-logo-container {
       position: absolute;
       top: 0;
       left: 0;
@@ -293,6 +226,11 @@
       filter: drop-shadow(0 0 8px rgba(230,57,70,0.5));
       will-change: transform;
       pointer-events: none;
+      animation: floatIcon 6s infinite alternate;
+    }
+    @keyframes floatIcon {
+      0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+      100% { transform: translateY(-30px) rotate(10deg); opacity: 0.7; }
     }
     
     .hero-content {
@@ -300,6 +238,74 @@
       z-index: 20;
       text-align: center;
     }
+    
+    /* INTERACTIVE CENTER LOGO */
+    .center-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 25;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      perspective: 1200px;
+    }
+    .center-logo .logo-3d-wrapper {
+      transform-style: preserve-3d;
+      transition: transform 0.08s linear;
+      will-change: transform;
+    }
+    .center-logo .logo-text {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-transform: uppercase;
+      white-space: nowrap;
+      animation: gradientFlowMain 4s ease infinite;
+      filter: drop-shadow(0 0 20px rgba(230,57,70,0.3));
+    }
+    @keyframes gradientFlowMain {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .center-logo .logo-sub {
+      font-size: 0.7rem;
+      letter-spacing: 8px;
+      margin-top: 1rem;
+      opacity: 0.5;
+      font-weight: 300;
+    }
+    .center-logo .logo-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #e63946;
+      display: inline-block;
+    }
+    .center-logo::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: -40px;
+      right: -40px;
+      bottom: -40px;
+      background: radial-gradient(circle, rgba(230,57,70,0.2), transparent 70%);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .center-logo:hover::before {
+      opacity: 1;
+    }
+    
     .hero-title {
       font-size: 7rem;
       font-weight: 800;
@@ -331,7 +337,7 @@
     @keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(10px); } }
     
     /* Main Content */
-    .main-container { background: #050505; padding: 6rem 5rem; opacity: 0; }
+    .main-container { background: #050505; padding: 6rem 5rem; opacity: 0; position: relative; z-index: 10; }
     .search-wrapper { max-width: 550px; margin: 0 auto 4rem; border-bottom: 1px solid rgba(255,255,255,0.08); position: relative; }
     .search-wrapper input { width: 100%; background: transparent; border: none; padding: 1.2rem 0; color: white; font-size: 0.9rem; outline: none; letter-spacing: 1.5px; }
     .search-wrapper input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 2px; }
@@ -340,7 +346,7 @@
     .filter { background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 0.7rem 2rem; border-radius: 60px; font-size: 0.7rem; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; color: rgba(255,255,255,0.5); }
     .filter:hover, .filter.active { background: #e63946; border-color: #e63946; color: white; transform: translateY(-3px); }
     .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
-    .brand-card { background: #0a0a0a; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.03); border-radius: 32px; transform-style: preserve-3d; }
+    .brand-card { background: #0a0a0a; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.03); border-radius: 32px; }
     .brand-card:hover { transform: translateY(-12px) scale(1.02); border-color: rgba(230,57,70,0.4); box-shadow: 0 20px 35px -15px rgba(230,57,70,0.2); }
     .brand-icon { font-size: 3.5rem; margin-bottom: 1rem; color: #e63946; }
     .brand-name { font-size: 1.3rem; font-weight: 500; letter-spacing: 2px; }
@@ -378,34 +384,19 @@
       .hero-title { font-size: 3rem; }
       .main-container { padding: 2rem 1.5rem; }
       .nav-links-premium { display: none; }
-      .toast { white-space: normal; text-align: center; width: 90%; }
-      .motion-path-container { transform: scale(0.7); }
-      .moving-logo-text { font-size: 0.9rem; letter-spacing: 2px; }
+      .worm-text { font-size: 1.8rem; letter-spacing: 0.08em; }
+      .center-logo .logo-text { font-size: 2rem; letter-spacing: 0.1em; }
     }
   </style>
 </head>
 <body>
 
-<!-- Loading Screen with Motion Path & SNEAKER HYPE Logo -->
+<!-- LOADING SCREEN WITH WORM LETTER ANIMATION -->
 <div id="loadingScreen" class="loading-screen">
-  <div class="motion-path-container">
-    <svg class="motion-svg" viewBox="0 0 451 437" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#e63946"/>
-          <stop offset="50%" stop-color="#ffb347"/>
-          <stop offset="100%" stop-color="#ffffff"/>
-        </linearGradient>
-      </defs>
-      <!-- Complex motion path - swooping trail -->
-      <path id="motionPath" d="M 40 200 C 60 100, 120 50, 200 80 C 280 110, 320 180, 300 250 C 280 320, 200 380, 130 360 C 60 340, 30 280, 50 220 C 70 160, 140 140, 190 170 C 240 200, 260 250, 240 290 C 220 330, 170 340, 140 310 C 110 280, 120 230, 160 210 C 200 190, 250 200, 270 240 C 290 280, 280 320, 250 340 C 220 360, 180 350, 170 320 C 160 290, 190 270, 220 280" stroke="url(#pathGradient)" stroke-width="3" fill="none" stroke-linecap="round"/>
-    </svg>
-    <!-- Moving SNEAKER HYPE Logo Text -->
-    <div class="moving-logo-text" id="movingLogoText">
-      <i class="fas fa-crown"></i> SNEAKER HYPE
-    </div>
+  <div class="worm-logo-container">
+    <div class="worm-text" id="wormText"></div>
   </div>
-  <div class="loader-progress-section">
+  <div class="loader-progress-section" id="loaderProgressSection">
     <div class="loader-progress-bg">
       <div class="loader-progress-fill" id="resnProgressFill"></div>
     </div>
@@ -414,7 +405,7 @@
       <span class="loader-percent" id="resnPercent">0%</span>
     </div>
   </div>
-  <div class="loader-message" id="loaderMessage">⟳ TRACING THE PATH</div>
+  <div class="loader-message" id="loaderMessage">🐛 WORM DANCE SEQUENCE 🐛</div>
 </div>
 
 <!-- Music Control -->
@@ -433,8 +424,16 @@
 
 <section class="hero">
   <div class="hero-bg-glow"></div>
-  <div id="three-container"></div>
-  <div class="orbiting-container" id="orbitingContainer"></div>
+  <div class="moving-logo-container" id="movingLogoContainer"></div>
+  
+  <div class="center-logo" id="centerLogo">
+    <div class="logo-3d-wrapper" id="logo3dWrapper">
+      <div class="logo-icon"><i class="fas fa-crown"></i></div>
+      <div class="logo-text">SNEAKER HYPE</div>
+      <div class="logo-sub">UNSEEN STUDIO — EDITION 01</div>
+    </div>
+  </div>
+  
   <div class="hero-content">
     <h1 class="hero-title" id="heroTitle">SNEAKER HYPE</h1>
     <div class="hero-sub">UNSEEN STUDIO — EDITION 01</div>
@@ -458,67 +457,8 @@
 <div id="purchaseModal" class="modal"><div class="modal-content"><button class="close-modal">&times;</button><h2 style="margin-bottom:1rem;">SECURE CHECKOUT</h2><div id="modalProductInfo" style="font-size:0.8rem; color:#e63946; margin-bottom:1.5rem;"></div><div class="form-group"><input type="text" id="fullName" placeholder="FULL NAME"></div><div class="form-group"><input type="email" id="emailAddr" placeholder="EMAIL"></div><div class="form-group"><input type="text" id="addressLine" placeholder="SHIPPING ADDRESS"></div><div class="payment-options" id="paymentOptions"><div class="payment-opt" data-method="card">💳 CREDIT CARD</div><div class="payment-opt" data-method="crypto">₿ CRYPTO</div><div class="payment-opt" data-method="paypal">📱 PAYPAL</div></div><button id="submitPurchase" class="submit">PLACE ORDER — SECURE</button></div></div>
 <div id="toastMsg" class="toast"></div>
 
-<script type="importmap">
-  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@v0.149.0/build/three.module.js" } }
-</script>
-
-<script type="module">
-  import * as THREE from "three";
-  const container = document.getElementById("three-container");
-  const scene = new THREE.Scene({ alpha: true });
-  const camera = new THREE.PerspectiveCamera(25, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.offsetWidth, container.offsetHeight);
-  renderer.setClearColor(0x000000, 0);
-  container.appendChild(renderer.domElement);
-  const geometry = new THREE.BoxGeometry(1.8, 1.8, 1.8);
-  const material = new THREE.MeshStandardMaterial({ color: 0xe63946, roughness: 0.3, metalness: 0.7, emissive: 0x220000, emissiveIntensity: 0.4 });
-  const cube = new THREE.Mesh(geometry, material);
-  const edgesGeo = new THREE.EdgesGeometry(geometry);
-  const wireframe = new THREE.LineSegments(edgesGeo, new THREE.LineBasicMaterial({ color: 0xffb347 }));
-  cube.add(wireframe);
-  scene.add(cube);
-  const ambientLight = new THREE.AmbientLight(0x404060);
-  scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(3, 5, 2);
-  scene.add(directionalLight);
-  scene.add(new THREE.PointLight(0xe63946, 0.5).position.set(-1,1,-2));
-  scene.add(new THREE.PointLight(0xffb347, 0.4).position.set(2,1,2));
-  camera.position.z = 4.2; camera.position.y = 0.5;
-  function animateCube() { requestAnimationFrame(animateCube); cube.rotation.x += 0.008; cube.rotation.y += 0.012; cube.rotation.z += 0.005; renderer.render(scene, camera); }
-  animateCube();
-  window.addEventListener('resize', () => { const w = container.offsetWidth, h = container.offsetHeight; renderer.setSize(w, h); camera.aspect = w/h; camera.updateProjectionMatrix(); });
-  
-  // Motion Path Animation for SNEAKER HYPE Logo
-  function initMotionPath() {
-    const movingLogo = document.getElementById("movingLogoText");
-    const path = document.getElementById("motionPath");
-    if(movingLogo && path) {
-      gsap.registerPlugin(MotionPathPlugin);
-      gsap.to(movingLogo, {
-        duration: 3.5,
-        repeat: -1,
-        repeatDelay: 0.3,
-        ease: "power1.inOut",
-        motionPath: {
-          path: path,
-          align: path,
-          autoRotate: true,
-          alignOrigin: [0.5, 0.5]
-        },
-        onUpdate: () => {
-          const rot = gsap.getProperty(movingLogo, "rotation");
-          movingLogo.style.transform = `rotate(${rot}deg) scale(1.05)`;
-        }
-      });
-    }
-  }
-  window.initMotionPath = initMotionPath;
-</script>
-
 <script>
-  // Sneaker Data & Core Logic
+  // Sneaker Data
   const sneakerData = [
     { id: 1, brand: "Nike", name: "Air Zoom Vaporfly", price: 275, profit: "+38% resell", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format", url: "https://www.nike.com" },
     { id: 2, brand: "Nike", name: "Dunk Low Retro", price: 125, profit: "+22% hype", image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", url: "https://www.nike.com" },
@@ -577,26 +517,248 @@
   let musicPlaying=false; const music=document.getElementById("shoppingMusic"), musicBtn=document.getElementById("musicControl");
   function initMusic(){ music.volume=0.5; musicBtn.addEventListener("click",()=>{ if(musicPlaying){ music.pause(); musicPlaying=false; musicBtn.style.background="rgba(0,0,0,0.8)"; musicBtn.style.color="#e63946"; } else { music.play().catch(()=>{}); musicPlaying=true; musicBtn.style.background="#e63946"; musicBtn.style.color="white"; } }); document.body.addEventListener("click",()=>{ if(!musicPlaying && music.paused){ music.play().then(()=>{ musicPlaying=true; musicBtn.style.background="#e63946"; musicBtn.style.color="white"; }).catch(()=>{}); } },{ once:true }); }
   
+  // WORM LETTER ANIMATION + DISINTEGRATION
+  let wormAnimationActive = true;
+  let wormInterval;
+  
+  function startWormAnimation() {
+    const letters = document.querySelectorAll('.worm-letter');
+    letters.forEach((letter, index) => {
+      // Staggered wave animation - each letter moves like a worm segment
+      gsap.to(letter, {
+        duration: 0.6,
+        y: -12,
+        rotationX: 15,
+        rotationZ: index % 2 === 0 ? 5 : -5,
+        scale: 1.1,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: index * 0.05,
+        repeatDelay: 0.1
+      });
+      gsap.to(letter, {
+        duration: 0.4,
+        opacity: 0.7,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: index * 0.07
+      });
+    });
+  }
+  
+  function disintegrateLetters() {
+    const container = document.getElementById("wormText");
+    const letters = document.querySelectorAll('.worm-letter');
+    const rect = container.getBoundingClientRect();
+    
+    letters.forEach((letter, idx) => {
+      const letterRect = letter.getBoundingClientRect();
+      const centerX = letterRect.left + letterRect.width / 2;
+      const centerY = letterRect.top + letterRect.height / 2;
+      
+      // Create 6-10 particles per letter
+      const particleCount = 8 + Math.floor(Math.random() * 8);
+      for(let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'disintegration-particle';
+        particle.style.position = 'fixed';
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        particle.style.width = (3 + Math.random() * 6) + 'px';
+        particle.style.height = (3 + Math.random() * 6) + 'px';
+        particle.style.background = `radial-gradient(circle, #e63946, #ffb347)`;
+        document.body.appendChild(particle);
+        
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 80 + Math.random() * 150;
+        const rotation = Math.random() * 360;
+        
+        gsap.to(particle, {
+          duration: 0.8 + Math.random() * 0.5,
+          x: Math.cos(angle) * distance,
+          y: Math.sin(angle) * distance,
+          rotation: rotation,
+          opacity: 0,
+          scale: 0,
+          ease: "power2.out",
+          onComplete: () => particle.remove()
+        });
+      }
+      
+      // Fade and scale down the letter
+      gsap.to(letter, {
+        duration: 0.5,
+        opacity: 0,
+        scale: 0,
+        filter: "blur(8px)",
+        ease: "back.in(1.2)",
+        delay: idx * 0.03
+      });
+    });
+  }
+  
+  function initWormLogo() {
+    const text = "SNEAKER HYPE";
+    const container = document.getElementById("wormText");
+    container.innerHTML = '';
+    for(let i = 0; i < text.length; i++) {
+      const span = document.createElement('span');
+      span.className = 'worm-letter';
+      span.textContent = text[i];
+      span.style.animationDelay = `${i * 0.08}s`;
+      container.appendChild(span);
+    }
+    startWormAnimation();
+  }
+  
   // Loading progression
-  let loadPercent=0; const progressFill=document.getElementById("resnProgressFill"), percentSpan=document.getElementById("resnPercent"), loaderMsg=document.getElementById("loaderMessage"), loadingScreenDiv=document.getElementById("loadingScreen");
-  const msgCycle=["⟳ TRACING THE PATH","◢ SNEAKER VECTORS","✦ MOTION ACTIVATED","⨀ FOLLOW THE SHOE","⛭ ALMOST READY"];
-  let msgIndex=0;
-  const msgInterval=setInterval(()=>{ if(loadPercent<100){ msgIndex=(msgIndex+1)%msgCycle.length; loaderMsg.innerText=msgCycle[msgIndex]; } },550);
-  const loadInterval=setInterval(()=>{ let inc=Math.floor(Math.random()*12)+4; loadPercent=Math.min(loadPercent+inc,100); progressFill.style.width=loadPercent+"%"; percentSpan.innerText=loadPercent+"%"; if(loadPercent>=100){ clearInterval(loadInterval); clearInterval(msgInterval); loaderMsg.innerText="✓ READY TO IGNITE"; setTimeout(()=>{ loadingScreenDiv.style.opacity="0"; setTimeout(()=>{ loadingScreenDiv.style.display="none"; gsap.to(".main-container",{opacity:1,duration:1.2}); if(window.triggerTitleAnimation) window.triggerTitleAnimation(); if(window.initMotionPath) window.initMotionPath(); },900); },400); } },70);
+  let loadPercent = 0;
+  const progressFill = document.getElementById("resnProgressFill");
+  const percentSpan = document.getElementById("resnPercent");
+  const loaderMsg = document.getElementById("loaderMessage");
+  const loadingScreenDiv = document.getElementById("loadingScreen");
+  const msgCycle = ["🐛 WORM DANCE", "🪱 LETTERS WAVING", "🌀 SNAKE MOTION", "💫 ALMOST THERE", "✨ DISINTEGRATION SOON"];
+  let msgIndex = 0;
+  
+  const msgInterval = setInterval(() => {
+    if(loadPercent < 100) {
+      msgIndex = (msgIndex + 1) % msgCycle.length;
+      loaderMsg.innerText = msgCycle[msgIndex];
+    }
+  }, 500);
+  
+  const loadInterval = setInterval(() => {
+    let inc = Math.floor(Math.random() * 6) + 2;
+    loadPercent = Math.min(loadPercent + inc, 100);
+    progressFill.style.width = loadPercent + "%";
+    percentSpan.innerText = loadPercent + "%";
+    
+    if(loadPercent >= 100) {
+      clearInterval(loadInterval);
+      clearInterval(msgInterval);
+      loaderMsg.innerText = "💥 DISINTEGRATING LOGO 💥";
+      
+      // Stop worm animation and disintegrate
+      disintegrateLetters();
+      
+      // Fade out progress section
+      gsap.to("#loaderProgressSection", { duration: 0.6, opacity: 0 });
+      gsap.to(".loader-message", { duration: 0.6, opacity: 0 });
+      
+      setTimeout(() => {
+        loadingScreenDiv.style.opacity = "0";
+        setTimeout(() => {
+          loadingScreenDiv.style.display = "none";
+          gsap.to(".main-container", { opacity: 1, duration: 1.2 });
+          if(window.triggerTitleAnimation) window.triggerTitleAnimation();
+          initCursorTracking();
+        }, 900);
+      }, 700);
+    }
+  }, 45);
+  
+  // Interactive cursor tracking for center logo
+  function initCursorTracking() {
+    const logoWrapper = document.getElementById("logo3dWrapper");
+    const container = document.getElementById("centerLogo");
+    if(!logoWrapper || !container) return;
+    
+    let targetRotateX = 0, targetRotateY = 0;
+    let currentRotateX = 0, currentRotateY = 0;
+    
+    document.addEventListener("mousemove", (e) => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = (e.clientX - centerX) / (rect.width / 2);
+      const deltaY = (e.clientY - centerY) / (rect.height / 2);
+      targetRotateY = deltaX * 15;
+      targetRotateX = -deltaY * 15;
+    });
+    
+    function animate() {
+      currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+      logoWrapper.style.transform = `rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) scale(1)`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+    
+    container.addEventListener("mouseenter", () => {
+      gsap.to(logoWrapper, { duration: 0.3, scale: 1.05, ease: "back.out(0.5)" });
+    });
+    container.addEventListener("mouseleave", () => {
+      targetRotateX = 0;
+      targetRotateY = 0;
+      gsap.to(logoWrapper, { duration: 0.5, scale: 1, ease: "elastic.out(1, 0.5)" });
+    });
+  }
   
   // Title split animation
-  window.triggerTitleAnimation=()=>{ const el=document.getElementById('heroTitle'); const txt=el.innerText; el.innerHTML=''; txt.split('').forEach((ch,i)=>{ const span=document.createElement('span'); span.className='char'; span.textContent=ch===' '?'\u00A0':ch; el.appendChild(span); }); gsap.fromTo('.hero-title .char',{opacity:0,y:80,filter:'blur(8px)'},{opacity:1,y:0,filter:'blur(0px)',duration:0.9,stagger:0.05,ease:"back.out(1.2)",delay:0.2}); gsap.to('.hero-sub',{opacity:0.4,y:0,duration:1,delay:0.8}); const orbContainer=document.getElementById("orbitingContainer"); if(orbContainer){ for(let i=0;i<12;i++){ const orb=document.createElement("div"); orb.className="orbiting-logo"; orb.textContent=["SNEAKER HYPE","RARE KICKS","LIMITED EDITION","STREETWEAR","COLLECTOR"][i%5]; orb.style.position="absolute"; orb.style.left=Math.random()*80+10+"%"; orb.style.top=Math.random()*80+10+"%"; orb.style.animation=`floatIcon ${5+Math.random()*5}s infinite alternate`; orbContainer.appendChild(orb); } } };
-  const styleSheet=document.createElement("style"); styleSheet.textContent=`@keyframes floatIcon{0%{transform:translateY(0px) rotate(0deg); opacity:0.2;}100%{transform:translateY(-30px) rotate(10deg); opacity:0.7;}}`; document.head.appendChild(styleSheet);
+  window.triggerTitleAnimation = () => {
+    const el = document.getElementById('heroTitle');
+    const txt = el.innerText;
+    el.innerHTML = '';
+    txt.split('').forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = ch === ' ' ? '\u00A0' : ch;
+      el.appendChild(span);
+    });
+    gsap.fromTo('.hero-title .char', 
+      { opacity: 0, y: 80, filter: 'blur(8px)' },
+      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, stagger: 0.05, ease: "back.out(1.2)", delay: 0.2 }
+    );
+    gsap.to('.hero-sub', { opacity: 0.4, y: 0, duration: 1, delay: 0.8 });
+    
+    const logoContainer = document.getElementById("movingLogoContainer");
+    if(logoContainer) {
+      const texts = ["SNEAKER HYPE", "RARE KICKS", "LIMITED EDITION", "STREETWEAR", "HYPEBEAST", "COLLECTOR"];
+      for(let i = 0; i < 12; i++) {
+        const orb = document.createElement("div");
+        orb.className = "orbiting-logo";
+        orb.textContent = texts[i % texts.length];
+        orb.style.left = (5 + Math.random() * 90) + "%";
+        orb.style.top = (5 + Math.random() * 90) + "%";
+        orb.style.animationDuration = (4 + Math.random() * 4) + "s";
+        orb.style.animationDelay = (Math.random() * 2) + "s";
+        logoContainer.appendChild(orb);
+      }
+    }
+  };
   
-  const cursorDot=document.querySelector(".cursor-dot"), cursorOutline=document.querySelector(".cursor-outline");
-  document.addEventListener("mousemove",(e)=>{ cursorDot.style.transform=`translate(${e.clientX-2}px,${e.clientY-2}px)`; cursorOutline.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`; });
-  document.addEventListener("mouseleave",()=>{ cursorDot.style.opacity="0"; cursorOutline.style.opacity="0"; });
-  document.addEventListener("mouseenter",()=>{ cursorDot.style.opacity="1"; cursorOutline.style.opacity="1"; });
-  window.addEventListener("scroll",()=>{ const nav=document.getElementById("nav"); if(window.scrollY>50) nav.classList.add("scrolled"); else nav.classList.remove("scrolled"); });
-  ScrollTrigger.create({ trigger:".main-container", start:"top 80%", onEnter:()=>gsap.to(".main-container",{opacity:1,duration:1}) });
-  document.getElementById("scrollHint")?.addEventListener("click",()=>window.scrollTo({top:window.innerHeight,behavior:"smooth"}));
+  // Initialize worm logo
+  initWormLogo();
   
-  function init(){ setupEvents(); renderBrands(); currentView="brands"; updateUIFromState(); initMusic(); document.querySelector('.payment-opt[data-method="card"]')?.classList.add("selected"); selectedPayment="card"; }
+  // Cursor and scroll effects
+  const cursorDot = document.querySelector(".cursor-dot"), cursorOutline = document.querySelector(".cursor-outline");
+  document.addEventListener("mousemove", (e) => {
+    cursorDot.style.transform = `translate(${e.clientX - 2}px, ${e.clientY - 2}px)`;
+    cursorOutline.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+  });
+  document.addEventListener("mouseleave", () => { cursorDot.style.opacity = "0"; cursorOutline.style.opacity = "0"; });
+  document.addEventListener("mouseenter", () => { cursorDot.style.opacity = "1"; cursorOutline.style.opacity = "1"; });
+  
+  window.addEventListener("scroll", () => {
+    const nav = document.getElementById("nav");
+    if(window.scrollY > 50) nav.classList.add("scrolled");
+    else nav.classList.remove("scrolled");
+  });
+  
+  ScrollTrigger.create({ trigger: ".main-container", start: "top 80%", onEnter: () => gsap.to(".main-container", { opacity: 1, duration: 1 }) });
+  document.getElementById("scrollHint")?.addEventListener("click", () => window.scrollTo({ top: window.innerHeight, behavior: "smooth" }));
+  
+  function init() {
+    setupEvents();
+    renderBrands();
+    currentView = "brands";
+    updateUIFromState();
+    initMusic();
+    document.querySelector('.payment-opt[data-method="card"]')?.classList.add("selected");
+    selectedPayment = "card";
+  }
   init();
 </script>
 </body>
