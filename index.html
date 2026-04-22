@@ -3,53 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Sneaker Hype | Unseen Studio — AI Edition</title>
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
+  <title>Sneaker Hype | Unseen Studio — Shop & Vibe</title>
+  <!-- UNIQUE FAVICON - Custom SVG Crown + Sneaker -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      cursor: none;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #050505;
       font-family: 'Inter', sans-serif;
       color: #ffffff;
       overflow-x: hidden;
     }
-
-    /* Smooth Custom Cursor - Unseen Style */
-    .cursor-dot {
-      width: 6px;
-      height: 6px;
-      background: #e63946;
-      border-radius: 50%;
+    /* Music Control Button */
+    .music-control {
       position: fixed;
-      pointer-events: none;
+      bottom: 25px;
+      right: 25px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(230,57,70,0.6);
+      color: #e63946;
+      cursor: pointer;
       z-index: 10001;
-      transition: transform 0.08s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(230,57,70,0.3);
     }
-    .cursor-outline {
-      width: 48px;
-      height: 48px;
-      border: 1.5px solid rgba(230,57,70,0.6);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.4, 1.1), width 0.2s, height 0.2s, border-color 0.2s;
-      backdrop-filter: blur(2px);
+    .music-control:hover {
+      transform: scale(1.1);
+      background: #e63946;
+      color: white;
+      border-color: white;
     }
-
-    /* Loading Screen - Ultra Smooth */
+    /* Loading Screen with Motion Path */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -62,83 +59,186 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: opacity 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+      transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+      font-family: 'Inter', monospace;
     }
-    .loading-logo {
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: 8px;
-      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347);
+    .loading-screen::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(230,57,70,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(230,57,70,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    
+    /* Motion Path Container */
+    .motion-path-container {
+      position: relative;
+      width: 451px;
+      height: 437px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .motion-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 8px rgba(230,57,70,0.3));
+    }
+    .motion-svg path {
+      stroke: url(#pathGradient);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawPath 2.2s ease-in-out forwards;
+    }
+    @keyframes drawPath {
+      0% { stroke-dashoffset: 1000; }
+      100% { stroke-dashoffset: 0; }
+    }
+    
+    /* Moving Text Logo - SNEAKER HYPE */
+    .moving-logo-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #e63946, #ffb347, #ffffff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 2rem;
+      white-space: nowrap;
+      text-transform: uppercase;
+      filter: drop-shadow(0 0 12px rgba(230,57,70,0.7));
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      transform-origin: center;
     }
-    .loading-bar-container {
-      width: 280px;
-      height: 1px;
-      background: rgba(255,255,255,0.1);
+    .moving-logo-text i {
+      font-size: 1.2rem;
+      margin-right: 8px;
+      background: linear-gradient(135deg, #e63946, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* Loader Progress & Rings */
+    .resn-style-loader {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+    .loader-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(230,57,70,0.2);
+      border-top: 1px solid #e63946;
+      border-right: 1px solid #ffb347;
+      animation: spinRing 1.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    }
+    .loader-ring:nth-child(2) {
+      width: 70%;
+      height: 70%;
+      border: 1px solid rgba(255,179,71,0.2);
+      border-bottom: 1px solid #ffb347;
+      border-left: 1px solid #e63946;
+      animation: spinRingReverse 1.8s ease-in-out infinite;
+    }
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes spinRingReverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+    
+    .loader-progress-section {
+      margin-top: 20px;
+      width: 320px;
+      text-align: center;
+    }
+    .loader-progress-bg {
+      width: 100%;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 4px;
       overflow: hidden;
     }
-    .loading-bar {
+    .loader-progress-fill {
       width: 0%;
       height: 100%;
-      background: #e63946;
+      background: linear-gradient(90deg, #e63946, #ffb347, #ffffff);
+      border-radius: 4px;
       transition: width 0.1s linear;
+      box-shadow: 0 0 8px #e63946;
     }
-    .loading-percent {
-      font-size: 0.8rem;
+    .loader-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 0.65rem;
       letter-spacing: 2px;
-      margin-top: 1rem;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.5);
     }
-
-    /* Navigation - Minimal Unseen */
-    .nav-unseen {
+    .loader-percent {
+      font-family: monospace;
+      font-weight: 500;
+      color: #e63946;
+    }
+    .loader-message {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      margin-top: 20px;
+      opacity: 0.6;
+    }
+    
+    /* Custom Cursor */
+    .cursor-dot { width: 4px; height: 4px; background: #e63946; border-radius: 50%; position: fixed; pointer-events: none; z-index: 10001; }
+    .cursor-outline { width: 45px; height: 45px; border: 1.5px solid rgba(230,57,70,0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: transform 0.12s ease-out; }
+    
+    /* Navigation */
+    .nav-premium {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 2rem 4rem;
+      padding: 2rem 5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
       mix-blend-mode: difference;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      transition: all 0.4s;
     }
-    .nav-unseen.scrolled {
-      padding: 1rem 4rem;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(20px);
-      mix-blend-mode: normal;
-    }
-    .logo-unseen {
-      font-size: 0.9rem;
-      font-weight: 400;
-      letter-spacing: 6px;
-      color: white;
-      text-transform: uppercase;
-    }
-    .logo-unseen span {
-      font-weight: 700;
-      color: #e63946;
-    }
-    .nav-links-unseen {
-      display: flex;
-      gap: 3rem;
-    }
-    .nav-links-unseen a {
-      color: white;
-      text-decoration: none;
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      font-weight: 300;
-      transition: opacity 0.3s;
-    }
-    .nav-links-unseen a:hover { opacity: 0.6; }
-
-    /* Hero Section - Unseen Style */
+    .nav-premium.scrolled { padding: 1rem 5rem; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); mix-blend-mode: normal; }
+    .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 5px; color: white; text-transform: uppercase; }
+    .logo-premium span { font-weight: 800; color: #e63946; }
+    .nav-links-premium { display: flex; gap: 3rem; }
+    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: 300; }
+    
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -148,455 +248,356 @@
       background: #000000;
       overflow: hidden;
     }
-    .hero-bg {
+    .hero-bg-glow {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.08), transparent 70%);
+      background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.12), transparent 70%);
+      animation: breathe 6s ease-in-out infinite;
     }
-    .hero-content {
-      text-align: center;
-      z-index: 2;
-    }
-    .hero-title {
-      font-size: 6rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      color: white;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    .hero-title span {
-      color: #e63946;
-    }
-    .hero-sub {
-      font-size: 0.7rem;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      margin-top: 1.5rem;
-      opacity: 0.4;
-      font-weight: 300;
-    }
-    .scroll-hint {
+    @keyframes breathe { 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+    
+    #three-container {
       position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      opacity: 0.3;
-      cursor: pointer;
-    }
-
-    /* Main Content */
-    .main-container {
-      padding: 6rem 4rem;
-      background: #050505;
-    }
-
-    /* Search - Minimal */
-    .search-wrapper {
-      max-width: 500px;
-      margin: 0 auto 4rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      position: relative;
-    }
-    .search-wrapper input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      padding: 1rem 0;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
-      letter-spacing: 1px;
-    }
-    .search-wrapper input::placeholder {
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 2px;
-    }
-    .search-wrapper i {
-      position: absolute;
-      right: 0;
       top: 50%;
-      transform: translateY(-50%);
-      color: rgba(255,255,255,0.2);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 450px;
+      height: 450px;
+      z-index: 1;
+      opacity: 0.35;
+      pointer-events: none;
     }
-
-    /* Filters */
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem;
-      margin-bottom: 4rem;
-    }
-    .filter {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.5rem 1.8rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: all 0.3s;
-      color: rgba(255,255,255,0.5);
-    }
-    .filter:hover, .filter.active {
-      background: #e63946;
-      border-color: #e63946;
-      color: white;
-    }
-
-    /* Brand Grid */
-    .brand-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1px;
-      background: #1a1a1a;
-    }
-    .brand-card {
-      background: #0a0a0a;
-      padding: 3rem 2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
-    .brand-card:hover {
-      background: #111111;
-      transform: translateY(-4px);
-    }
-    .brand-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: #e63946;
-    }
-    .brand-name {
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 2px;
-    }
-    .brand-count {
-      font-size: 0.6rem;
-      color: rgba(255,255,255,0.3);
-      margin-top: 0.5rem;
-    }
-
-    /* Model Grid - AI Generated Art */
-    .model-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1px;
-      background: #1a1a1a;
-    }
-    .model-card {
-      background: #0a0a0a;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      cursor: pointer;
-    }
-    .model-card:hover {
-      background: #111111;
-      transform: translateY(-4px);
-    }
-    .model-art {
-      width: 100%;
-      height: 280px;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
-    .model-card:hover .model-art {
-      transform: scale(1.03);
-    }
-    .model-info {
-      padding: 1.5rem;
-    }
-    .model-name {
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-    .model-price {
-      color: #e63946;
-      font-weight: 500;
-      margin-top: 0.5rem;
-    }
-    .back-btn {
-      background: none;
-      border: none;
-      color: #e63946;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      cursor: pointer;
-      margin-bottom: 2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
+    
+    .orbiting-container {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(20px);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
+      z-index: 15;
+      pointer-events: none;
+      overflow: visible;
     }
-    .modal-content {
-      background: #0f0f0f;
-      max-width: 500px;
-      width: 90%;
-      padding: 2rem;
-      border: 1px solid rgba(230,57,70,0.3);
+    .orbiting-logo {
+      position: absolute;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #e63946, #ffb347, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+      text-transform: uppercase;
+      filter: drop-shadow(0 0 8px rgba(230,57,70,0.5));
+      will-change: transform;
+      pointer-events: none;
     }
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    .form-group input, .form-group textarea {
-      width: 100%;
-      padding: 12px;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      color: white;
-    }
-    .payment-options {
-      display: flex;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-    .payment-opt {
-      flex: 1;
-      padding: 10px;
+    
+    .hero-content {
+      position: relative;
+      z-index: 20;
       text-align: center;
-      border: 1px solid #2a2a2a;
-      cursor: pointer;
     }
-    .payment-opt.selected {
-      border-color: #e63946;
-      background: rgba(230,57,70,0.1);
+    .hero-title {
+      font-size: 7rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #ffffff);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      opacity: 0;
+      margin: 0;
+      line-height: 1.1;
     }
-    .submit {
-      background: #e63946;
-      color: white;
-      width: 100%;
-      padding: 14px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 1rem;
+    .hero-title .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(80px) rotate(15deg);
+      filter: blur(8px);
     }
-    .close-modal {
-      float: right;
-      font-size: 1.5rem;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: white;
+    .hero-sub { 
+      font-size: 0.7rem; 
+      letter-spacing: 10px; 
+      text-transform: uppercase; 
+      margin-top: 1.5rem; 
+      opacity: 0;
+      transform: translateY(30px);
     }
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #e63946;
-      color: white;
-      padding: 12px 28px;
-      z-index: 2100;
-      display: none;
-      font-size: 0.8rem;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.03);
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      color: #333;
-    }
+    .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-size: 0.7rem; letter-spacing: 2px; opacity: 0.4; cursor: pointer; animation: bounce 2s infinite; z-index: 30; }
+    @keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(10px); } }
+    
+    /* Main Content */
+    .main-container { background: #050505; padding: 6rem 5rem; opacity: 0; }
+    .search-wrapper { max-width: 550px; margin: 0 auto 4rem; border-bottom: 1px solid rgba(255,255,255,0.08); position: relative; }
+    .search-wrapper input { width: 100%; background: transparent; border: none; padding: 1.2rem 0; color: white; font-size: 0.9rem; outline: none; letter-spacing: 1.5px; }
+    .search-wrapper input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 2px; }
+    .search-wrapper i { position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.2); }
+    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 5rem; }
+    .filter { background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 0.7rem 2rem; border-radius: 60px; font-size: 0.7rem; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; color: rgba(255,255,255,0.5); }
+    .filter:hover, .filter.active { background: #e63946; border-color: #e63946; color: white; transform: translateY(-3px); }
+    .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .brand-card { background: #0a0a0a; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.03); border-radius: 32px; transform-style: preserve-3d; }
+    .brand-card:hover { transform: translateY(-12px) scale(1.02); border-color: rgba(230,57,70,0.4); box-shadow: 0 20px 35px -15px rgba(230,57,70,0.2); }
+    .brand-icon { font-size: 3.5rem; margin-bottom: 1rem; color: #e63946; }
+    .brand-name { font-size: 1.3rem; font-weight: 500; letter-spacing: 2px; }
+    .brand-count { font-size: 0.65rem; color: rgba(255,255,255,0.35); margin-top: 0.5rem; }
+    .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+    .model-card { background: #0a0a0a; overflow: hidden; border-radius: 28px; border: 1px solid rgba(255,255,255,0.03); transition: all 0.4s; }
+    .model-card:hover { transform: translateY(-10px); border-color: rgba(230,57,70,0.4); }
+    .model-img { width: 100%; height: 260px; object-fit: cover; transition: transform 0.5s; }
+    .model-card:hover .model-img { transform: scale(1.03); }
+    .model-info { padding: 1.5rem; }
+    .model-name { font-size: 1rem; font-weight: 500; letter-spacing: 1px; }
+    .model-price { color: #e63946; font-weight: 700; margin-top: 0.5rem; font-size: 1.2rem; }
+    .profit { font-size: 0.65rem; color: #2ecc71; margin-top: 0.3rem; }
+    .button-group { display: flex; gap: 12px; margin-top: 1rem; }
+    .buy-btn, .redirect-btn { flex: 1; padding: 0.8rem; border-radius: 60px; font-size: 0.7rem; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; text-align: center; font-weight: 500; }
+    .buy-btn { background: #e63946; border: none; color: white; }
+    .buy-btn:hover { background: #ff5a6e; transform: scale(1.02); }
+    .redirect-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; text-decoration: none; display: inline-block; }
+    .redirect-btn:hover { background: rgba(255,255,255,0.1); border-color: #e63946; }
+    .back-btn { background: none; border: none; color: #e63946; font-size: 0.7rem; letter-spacing: 3px; cursor: pointer; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 8px; }
+    
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 2000; justify-content: center; align-items: center; }
+    .modal-content { background: #0f0f0f; max-width: 540px; width: 90%; padding: 2rem; border: 1px solid rgba(230,57,70,0.3); border-radius: 40px; max-height: 90vh; overflow-y: auto; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group input, .form-group textarea { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #2a2a2a; color: white; border-radius: 30px; }
+    .payment-options { display: flex; gap: 1rem; margin: 1rem 0; }
+    .payment-opt { flex: 1; padding: 10px; text-align: center; border: 1px solid #2a2a2a; cursor: pointer; border-radius: 40px; transition: 0.3s; }
+    .payment-opt.selected { border-color: #e63946; background: rgba(230,57,70,0.15); }
+    .submit { background: linear-gradient(135deg, #e63946, #c72a3a); color: white; width: 100%; padding: 14px; border: none; font-weight: 600; cursor: pointer; border-radius: 40px; margin-top: 1rem; }
+    .close-modal { float: right; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: white; }
+    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #e63946, #c72a3a); color: white; padding: 12px 28px; z-index: 2100; display: none; border-radius: 60px; font-size: 0.8rem; white-space: nowrap; font-weight: 500; }
+    footer { text-align: center; padding: 3rem; border-top: 1px solid rgba(255,255,255,0.02); font-size: 0.65rem; letter-spacing: 2px; color: #333; }
     @media (max-width: 768px) {
       .hero-title { font-size: 3rem; }
-      .main-container { padding: 2rem 1rem; }
-      .nav-links-unseen { display: none; }
-      .nav-unseen { padding: 1.5rem; }
+      .main-container { padding: 2rem 1.5rem; }
+      .nav-links-premium { display: none; }
+      .toast { white-space: normal; text-align: center; width: 90%; }
+      .motion-path-container { transform: scale(0.7); }
+      .moving-logo-text { font-size: 0.9rem; letter-spacing: 2px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Loading Screen -->
+<!-- Loading Screen with Motion Path & SNEAKER HYPE Logo -->
 <div id="loadingScreen" class="loading-screen">
-  <div class="loading-logo">SNEAKER HYPE</div>
-  <div class="loading-bar-container"><div class="loading-bar" id="loadingBar"></div></div>
-  <div class="loading-percent" id="loadingPercent">0%</div>
+  <div class="motion-path-container">
+    <svg class="motion-svg" viewBox="0 0 451 437" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e63946"/>
+          <stop offset="50%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#ffffff"/>
+        </linearGradient>
+      </defs>
+      <!-- Complex motion path - swooping trail -->
+      <path id="motionPath" d="M 40 200 C 60 100, 120 50, 200 80 C 280 110, 320 180, 300 250 C 280 320, 200 380, 130 360 C 60 340, 30 280, 50 220 C 70 160, 140 140, 190 170 C 240 200, 260 250, 240 290 C 220 330, 170 340, 140 310 C 110 280, 120 230, 160 210 C 200 190, 250 200, 270 240 C 290 280, 280 320, 250 340 C 220 360, 180 350, 170 320 C 160 290, 190 270, 220 280" stroke="url(#pathGradient)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+    <!-- Moving SNEAKER HYPE Logo Text -->
+    <div class="moving-logo-text" id="movingLogoText">
+      <i class="fas fa-crown"></i> SNEAKER HYPE
+    </div>
+  </div>
+  <div class="loader-progress-section">
+    <div class="loader-progress-bg">
+      <div class="loader-progress-fill" id="resnProgressFill"></div>
+    </div>
+    <div class="loader-stats">
+      <span>LOADING EXPERIENCE</span>
+      <span class="loader-percent" id="resnPercent">0%</span>
+    </div>
+  </div>
+  <div class="loader-message" id="loaderMessage">⟳ TRACING THE PATH</div>
 </div>
+
+<!-- Music Control -->
+<div id="musicControl" class="music-control"><i class="fas fa-music"></i></div>
+<audio id="shoppingMusic" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8c8c8c8.mp3?filename=upbeat-lofi-112191.mp3" type="audio/mpeg">
+</audio>
 
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
 
-<nav class="nav-unseen" id="nav">
-  <div class="logo-unseen">SNEAKER<span>HYPE</span></div>
-  <div class="nav-links-unseen">
-    <a href="#">STUDIO</a>
-    <a href="#">ARCHIVE</a>
-    <a href="#">AI GENERATED</a>
-  </div>
+<nav class="nav-premium" id="nav">
+  <div class="logo-premium">UNSEEN <span>// SNKRS</span></div>
+  <div class="nav-links-premium"><a href="#">SHOP</a><a href="#">ARCHIVE</a><a href="#">VISIONS</a></div>
 </nav>
 
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg-glow"></div>
+  <div id="three-container"></div>
+  <div class="orbiting-container" id="orbitingContainer"></div>
   <div class="hero-content">
-    <h1 class="hero-title">SNEAKER <span>HYPE</span></h1>
-    <p class="hero-sub">AI GENERATED · UNSEEN STUDIO</p>
-    <div class="scroll-hint" id="scrollHint"><i class="fas fa-chevron-down"></i></div>
+    <h1 class="hero-title" id="heroTitle">SNEAKER HYPE</h1>
+    <div class="hero-sub">UNSEEN STUDIO — EDITION 01</div>
   </div>
+  <div class="scroll-hint" id="scrollHint">SCROLL</div>
 </section>
 
-<div class="main-container" id="mainContent">
-  <div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="SEARCH BRAND...">
-    <i class="fas fa-search"></i>
+<div id="mainApp" class="main-container">
+  <div class="search-wrapper"><input type="text" id="searchInput" placeholder="SEARCH SNEAKERS, BRANDS..."><i class="fas fa-search"></i></div>
+  <div class="filters" id="filterContainer">
+    <div class="filter active" data-filter="all">ALL</div>
+    <div class="filter" data-filter="Nike">NIKE</div>
+    <div class="filter" data-filter="Adidas">ADIDAS</div>
+    <div class="filter" data-filter="New Balance">NEW BALANCE</div>
+    <div class="filter" data-filter="Jordan">JORDAN</div>
   </div>
-  <div class="filters" id="filtersContainer"></div>
-  <div id="brandsView"></div>
-  <div id="modelsView" style="display:none;">
-    <button class="back-btn" id="backToBrandsBtn"><i class="fas fa-arrow-left"></i> BACK</button>
-    <div id="modelsGrid" class="model-grid"></div>
-  </div>
+  <div id="dynamicContent"></div>
 </div>
+<footer><p>© 2025 UNSEEN STUDIO — CULTURE & DISRUPTION</p></footer>
 
-<footer>
-  <p>SNEAKER HYPE — AI GENERATED ARTWORKS | UNSEEN STUDIO EDITION</p>
-</footer>
+<div id="purchaseModal" class="modal"><div class="modal-content"><button class="close-modal">&times;</button><h2 style="margin-bottom:1rem;">SECURE CHECKOUT</h2><div id="modalProductInfo" style="font-size:0.8rem; color:#e63946; margin-bottom:1.5rem;"></div><div class="form-group"><input type="text" id="fullName" placeholder="FULL NAME"></div><div class="form-group"><input type="email" id="emailAddr" placeholder="EMAIL"></div><div class="form-group"><input type="text" id="addressLine" placeholder="SHIPPING ADDRESS"></div><div class="payment-options" id="paymentOptions"><div class="payment-opt" data-method="card">💳 CREDIT CARD</div><div class="payment-opt" data-method="crypto">₿ CRYPTO</div><div class="payment-opt" data-method="paypal">📱 PAYPAL</div></div><button id="submitPurchase" class="submit">PLACE ORDER — SECURE</button></div></div>
+<div id="toastMsg" class="toast"></div>
 
-<div id="checkoutModal" class="modal">
-  <div class="modal-content">
-    <button class="close-modal" id="closeCheckoutBtn">&times;</button>
-    <h3>Complete Order</h3>
-    <div id="checkoutProductInfo" style="background:#1a1a1a; padding:1rem; margin:1rem 0;"></div>
-    <div class="form-group"><input type="text" id="fullName" placeholder="Full Name"></div>
-    <div class="form-group"><textarea id="address" rows="2" placeholder="Address"></textarea></div>
-    <div class="form-group"><input type="email" id="email" placeholder="Email"></div>
-    <div class="payment-options"><div class="payment-opt selected" data-method="card">CARD</div><div class="payment-opt" data-method="paypal">PAYPAL</div></div>
-    <div id="cardDetails"><div class="form-group"><input type="text" id="cardNumber" placeholder="Card Number"></div><div style="display:flex; gap:10px;"><input type="text" id="expiry" placeholder="MM/YY" style="width:50%;"><input type="text" id="cvv" placeholder="CVV" style="width:50%;"></div></div>
-    <button class="submit" id="submitOrderBtn">PAY NOW</button>
-  </div>
-</div>
-<div id="toast" class="toast">ORDER CONFIRMED!</div>
+<script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@v0.149.0/build/three.module.js" } }
+</script>
+
+<script type="module">
+  import * as THREE from "three";
+  const container = document.getElementById("three-container");
+  const scene = new THREE.Scene({ alpha: true });
+  const camera = new THREE.PerspectiveCamera(25, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.offsetWidth, container.offsetHeight);
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
+  const geometry = new THREE.BoxGeometry(1.8, 1.8, 1.8);
+  const material = new THREE.MeshStandardMaterial({ color: 0xe63946, roughness: 0.3, metalness: 0.7, emissive: 0x220000, emissiveIntensity: 0.4 });
+  const cube = new THREE.Mesh(geometry, material);
+  const edgesGeo = new THREE.EdgesGeometry(geometry);
+  const wireframe = new THREE.LineSegments(edgesGeo, new THREE.LineBasicMaterial({ color: 0xffb347 }));
+  cube.add(wireframe);
+  scene.add(cube);
+  const ambientLight = new THREE.AmbientLight(0x404060);
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(3, 5, 2);
+  scene.add(directionalLight);
+  scene.add(new THREE.PointLight(0xe63946, 0.5).position.set(-1,1,-2));
+  scene.add(new THREE.PointLight(0xffb347, 0.4).position.set(2,1,2));
+  camera.position.z = 4.2; camera.position.y = 0.5;
+  function animateCube() { requestAnimationFrame(animateCube); cube.rotation.x += 0.008; cube.rotation.y += 0.012; cube.rotation.z += 0.005; renderer.render(scene, camera); }
+  animateCube();
+  window.addEventListener('resize', () => { const w = container.offsetWidth, h = container.offsetHeight; renderer.setSize(w, h); camera.aspect = w/h; camera.updateProjectionMatrix(); });
+  
+  // Motion Path Animation for SNEAKER HYPE Logo
+  function initMotionPath() {
+    const movingLogo = document.getElementById("movingLogoText");
+    const path = document.getElementById("motionPath");
+    if(movingLogo && path) {
+      gsap.registerPlugin(MotionPathPlugin);
+      gsap.to(movingLogo, {
+        duration: 3.5,
+        repeat: -1,
+        repeatDelay: 0.3,
+        ease: "power1.inOut",
+        motionPath: {
+          path: path,
+          align: path,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5]
+        },
+        onUpdate: () => {
+          const rot = gsap.getProperty(movingLogo, "rotation");
+          movingLogo.style.transform = `rotate(${rot}deg) scale(1.05)`;
+        }
+      });
+    }
+  }
+  window.initMotionPath = initMotionPath;
+</script>
 
 <script>
-  // ========== SMOOTH LOADING ON REFRESH ==========
-  let progress = 0;
-  const interval = setInterval(() => {
-    progress += Math.random() * 15 + 5;
-    if (progress >= 100) { progress = 100; clearInterval(interval); 
-      setTimeout(() => { 
-        document.getElementById('loadingScreen').style.opacity = '0'; 
-        setTimeout(() => { 
-          document.getElementById('loadingScreen').style.display = 'none'; 
-          document.getElementById('mainContent').style.opacity = '1'; 
-          gsap.from("#mainContent", { duration: 0.8, y: 30, opacity: 0, ease: "power3.out" });
-        }, 500);
-      }, 400);
-    }
-    document.getElementById('loadingBar').style.width = progress + '%';
-    document.getElementById('loadingPercent').innerText = Math.floor(progress) + '%';
-  }, 60);
-
-  // GSAP Hero Animations
-  gsap.to(".hero-title", { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 0.2 });
-  gsap.to(".hero-sub", { duration: 1, y: 0, opacity: 1, ease: "power3.out", delay: 0.5 });
-
-  // Smooth Scroll
-  document.getElementById('scrollHint')?.addEventListener('click', () => {
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // Navbar Scroll Effect
-  window.addEventListener('scroll', () => {
-    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  // ========== AI GENERATED SHOE ARTWORKS (DeepSeek style abstract sneaker art) ==========
-  // Each shoe gets a unique generative art background using CSS gradients and patterns
-  const shoeModels = [
-    { id:1, name:"Nike Air Max 90", brand:"Nike", wholesale:99.99, profitPercent:30, artGradient:"linear-gradient(135deg, #ff6b6b, #c92a2a, #e63946)", link:"https://www.nike.com/air-max-90" },
-    { id:2, name:"Nike LeBron XXI", brand:"Nike", wholesale:149.99, profitPercent:25, artGradient:"radial-gradient(circle at 30% 40%, #ffb347, #e63946, #8b0000)", link:"https://www.nike.com/lebron-21" },
-    { id:3, name:"Nike KD 17", brand:"Nike", wholesale:119.99, profitPercent:25, artGradient:"linear-gradient(45deg, #2b2d42, #e63946, #ffb347)", link:"https://www.nike.com/kd" },
-    { id:4, name:"Nike Dunk Low", brand:"Nike", wholesale:84.99, profitPercent:30, artGradient:"radial-gradient(ellipse at top, #ffffff, #e63946)", link:"https://www.nike.com/dunk" },
-    { id:5, name:"Air Jordan 38", brand:"Jordan", wholesale:139.99, profitPercent:24, artGradient:"linear-gradient(135deg, #1a1a2e, #e63946, #16213e)", link:"https://www.nike.com/jordan" },
-    { id:6, name:"Jordan Tatum 2", brand:"Jordan", wholesale:129.99, profitPercent:23, artGradient:"radial-gradient(circle, #e63946, #ffb347, #c92a2a)", link:"https://www.nike.com/tatum" },
-    { id:7, name:"Jordan 1 Retro High", brand:"Jordan", wholesale:139.99, profitPercent:22, artGradient:"linear-gradient(120deg, #000000, #e63946, #ffb347)", link:"https://www.nike.com/jordan" },
-    { id:8, name:"Adidas Harden Vol. 8", brand:"Adidas", wholesale:119.99, profitPercent:25, artGradient:"repeating-linear-gradient(45deg, #e63946, #ffb347 30px, #1a1a2e 30px, #1a1a2e 60px)", link:"https://www.adidas.com/harden" },
-    { id:9, name:"Adidas Ultra Boost", brand:"Adidas", wholesale:139.99, profitPercent:22, artGradient:"radial-gradient(circle at 70% 20%, #ffffff, #e63946, #2b2d42)", link:"https://www.adidas.com/ultraboost" },
-    { id:10, name:"Yeezy Boost 350 V2", brand:"Adidas", wholesale:179.99, profitPercent:21, artGradient:"linear-gradient(90deg, #1a1a2e, #e63946, #ffb347, #1a1a2e)", link:"https://www.adidas.com/yeezy" },
-    { id:11, name:"Puma MB.03", brand:"Puma", wholesale:94.99, profitPercent:24, artGradient:"radial-gradient(ellipse at 20% 80%, #e63946, #ffb347, #c92a2a)", link:"https://us.puma.com/mb" },
-    { id:12, name:"New Balance 990v6", brand:"New Balance", wholesale:159.99, profitPercent:20, artGradient:"linear-gradient(135deg, #2d2d2d, #e63946, #4a4a4a)", link:"https://www.newbalance.com/990" },
-    { id:13, name:"Converse All Star", brand:"Converse", wholesale:39.99, profitPercent:27, artGradient:"radial-gradient(circle, #ffffff, #e63946, #8b0000)", link:"https://www.converse.com" },
-    { id:14, name:"Vans Old Skool", brand:"Vans", wholesale:44.99, profitPercent:25, artGradient:"repeating-radial-gradient(circle at 20% 30%, #e63946, #ffb347 15px, #1a1a2e 15px, #1a1a2e 30px)", link:"https://www.vans.com" },
-    { id:15, name:"Balenciaga Triple S", brand:"Luxury", wholesale:650.00, profitPercent:23, artGradient:"linear-gradient(180deg, #e63946, #ffb347, #c92a2a)", link:"https://www.balenciaga.com" },
-    { id:16, name:"Dior B23", brand:"Luxury", wholesale:920.00, profitPercent:23, artGradient:"radial-gradient(circle at 50% 50%, #1a1a2e, #e63946, #ffb347)", link:"https://www.dior.com" },
-    { id:17, name:"Reebok Club C", brand:"Reebok", wholesale:59.99, profitPercent:25, artGradient:"linear-gradient(45deg, #e63946, #ffb347, #c92a2a, #1a1a2e)", link:"https://www.reebok.com" },
-    { id:18, name:"Asics Gel-Kayano 30", brand:"Asics", wholesale:119.99, profitPercent:25, artGradient:"radial-gradient(ellipse at 60% 40%, #ffb347, #e63946, #2b2d42)", link:"https://www.asics.com" },
-    { id:19, name:"Crocs Classic", brand:"Crocs", wholesale:39.99, profitPercent:28, artGradient:"repeating-linear-gradient(0deg, #e63946, #ffb347 20px, #ffffff 20px, #ffffff 40px)", link:"https://www.crocs.com" },
-    { id:20, name:"Fila Disruptor", brand:"Fila", wholesale:64.99, profitPercent:27, artGradient:"radial-gradient(circle at 80% 20%, #e63946, #ffb347, #c92a2a)", link:"https://www.fila.com" }
+  // Sneaker Data & Core Logic
+  const sneakerData = [
+    { id: 1, brand: "Nike", name: "Air Zoom Vaporfly", price: 275, profit: "+38% resell", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format", url: "https://www.nike.com" },
+    { id: 2, brand: "Nike", name: "Dunk Low Retro", price: 125, profit: "+22% hype", image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", url: "https://www.nike.com" },
+    { id: 3, brand: "Adidas", name: "Yeezy Boost 350", price: 230, profit: "+67% premium", image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&auto=format", url: "https://www.adidas.com" },
+    { id: 4, brand: "Adidas", name: "Ultraboost 23", price: 190, profit: "+29% stable", image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format", url: "https://www.adidas.com" },
+    { id: 5, brand: "New Balance", name: "990v6 Made in USA", price: 199, profit: "+45% exclusive", image: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format", url: "https://www.newbalance.com" },
+    { id: 6, brand: "New Balance", name: "2002R Protection", price: 150, profit: "+31% trending", image: "https://images.unsplash.com/photo-1584735175090-9c8fccdca87c?w=600&auto=format", url: "https://www.newbalance.com" },
+    { id: 7, brand: "Jordan", name: "Air Jordan 1 Retro High", price: 180, profit: "+92% grail", image: "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=600&auto=format", url: "https://www.jordan.com" },
+    { id: 8, brand: "Jordan", name: "Air Jordan 4 Thunder", price: 210, profit: "+73% limited", image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format", url: "https://www.jordan.com" },
+    { id: 9, brand: "Nike", name: "Air Max 90 Futura", price: 140, profit: "+18% classic", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&auto=format", url: "https://www.nike.com" }
   ];
-
-  shoeModels.forEach(m => { m.retailPrice = m.wholesale * (1 + m.profitPercent / 100); m.profitAmount = m.retailPrice - m.wholesale; });
-
-  const brandMap = new Map();
-  shoeModels.forEach(m => { brandMap.set(m.brand, (brandMap.get(m.brand) || 0) + 1); });
-  const brands = Array.from(brandMap.entries()).map(([name, count]) => ({ name, count, icon: { Nike:"fab fa-nike", Jordan:"fas fa-basketball-ball", Adidas:"fab fa-adidas", Puma:"fas fa-paw", "New Balance":"fas fa-shoe-prints", Converse:"fas fa-star", Vans:"fas fa-check-circle", Luxury:"fas fa-crown", Reebok:"fas fa-bolt", Asics:"fas fa-running", Crocs:"fas fa-smile", Fila:"fas fa-tshirt" }[name] || "fas fa-shoe-prints" }));
-
-  let currentView = "brands", selectedBrand = "", currentSelectedModel = null, selectedPaymentMethod = "card", searchTerm = "";
-  const brandsView = document.getElementById('brandsView'), modelsView = document.getElementById('modelsView'), modelsGrid = document.getElementById('modelsGrid'), backBtn = document.getElementById('backToBrandsBtn'), searchInput = document.getElementById('searchInput'), filtersContainer = document.getElementById('filtersContainer'), checkoutModal = document.getElementById('checkoutModal'), toast = document.getElementById('toast');
-
+  
+  let currentView = "brands", selectedBrand = "", currentFilter = "all", searchQuery = "";
+  const dynamicContainer = document.getElementById("dynamicContent");
+  const searchInput = document.getElementById("searchInput");
+  const filterContainer = document.getElementById("filterContainer");
+  
+  function showToast(msg, duration = 3000) { const t=document.getElementById("toastMsg"); t.innerText=msg; t.style.display="block"; setTimeout(()=>t.style.display="none",duration); }
+  function getFilteredModels() {
+    let f = [...sneakerData];
+    if(currentFilter!=="all") f=f.filter(m=>m.brand===currentFilter);
+    if(searchQuery.trim()){ const q=searchQuery.toLowerCase(); f=f.filter(m=>m.name.toLowerCase().includes(q)||m.brand.toLowerCase().includes(q)); }
+    if(currentView==="models" && selectedBrand) f=f.filter(m=>m.brand===selectedBrand);
+    return f;
+  }
+  function getBrandStats() { const s={}; sneakerData.forEach(b=>{ s[b.brand]=(s[b.brand]||0)+1; }); return s; }
   function renderBrands() {
-    let filtered = brands.filter(b => b.name.toLowerCase().includes(searchTerm.toLowerCase()));
-    brandsView.innerHTML = `<div class="brand-grid">${filtered.map(b => `<div class="brand-card" data-brand="${b.name}"><div class="brand-icon"><i class="${b.icon}"></i></div><div class="brand-name">${b.name}</div><div class="brand-count">${b.count} MODELS · AI ART</div></div>`).join('')}</div>`;
-    document.querySelectorAll('.brand-card').forEach(card => card.addEventListener('click', () => showModels(card.getAttribute('data-brand'))));
-    gsap.from(".brand-card", { duration: 0.5, y: 20, opacity: 0, stagger: 0.03, ease: "power2.out" });
+    const stats=getBrandStats(), brands=[...new Set(sneakerData.map(s=>s.brand))];
+    let html=`<div class="brand-grid">`;
+    brands.forEach(b=>{ html+=`<div class="brand-card" data-brand="${b}"><div class="brand-icon"><i class="fas fa-shoe-prints"></i></div><div class="brand-name">${b.toUpperCase()}</div><div class="brand-count">${stats[b]} MODELS</div></div>`; });
+    html+=`</div>`;
+    dynamicContainer.innerHTML=html;
+    document.querySelectorAll(".brand-card").forEach(c=>c.addEventListener("click",()=>{ selectedBrand=c.getAttribute("data-brand"); currentView="models"; renderModels(); gsap.fromTo(".model-grid",{opacity:0,y:30},{opacity:1,y:0,duration:0.6}); }));
+    gsap.fromTo(".brand-card", { opacity:0, y:50, scale:0.95 }, { opacity:1, y:0, scale:1, stagger:0.08, duration:0.8, ease:"back.out(0.6)" });
   }
-
-  function showModels(brandName) {
-    selectedBrand = brandName;
-    const models = shoeModels.filter(m => m.brand === brandName);
-    modelsGrid.innerHTML = models.map(m => `<div class="model-card" data-id="${m.id}"><div class="model-art" style="background: ${m.artGradient};"></div><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div><div style="font-size:0.6rem; color:#2ecc71; margin-top:0.3rem;">AI GENERATED · profit $${m.profitAmount.toFixed(2)}</div></div></div>`).join('');
-    document.querySelectorAll('.model-card').forEach(card => card.addEventListener('click', () => { const model = shoeModels.find(m => m.id === parseInt(card.getAttribute('data-id'))); if(model) openCheckout(model); }));
-    brandsView.style.display = 'none'; modelsView.style.display = 'block'; currentView = "models";
-    gsap.from(".model-card", { duration: 0.5, y: 20, opacity: 0, stagger: 0.04, ease: "power2.out" });
+  function renderModels() {
+    let models=getFilteredModels();
+    if(selectedBrand && currentView==="models") models=models.filter(m=>m.brand===selectedBrand);
+    if(models.length===0){ dynamicContainer.innerHTML=`<div style="text-align:center; padding:4rem;">NO SNEAKERS FOUND</div>`; return; }
+    let html=`<div style="margin-bottom:1.5rem;"><button class="back-btn" id="globalBackBtn"><i class="fas fa-arrow-left"></i> BACK TO BRANDS</button></div><div class="model-grid">`;
+    models.forEach(m=>{ html+=`<div class="model-card"><img class="model-img" src="${m.image}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1a1a1a/444?text=SNEAKER'"><div class="model-info"><div class="model-name">${m.brand} • ${m.name}</div><div class="model-price">$${m.price}</div><div class="profit">📈 RESELL: ${m.profit}</div><div class="button-group"><button class="buy-btn" data-id="${m.id}">BUY NOW</button><a class="redirect-btn" href="${m.url}" target="_blank">OFFICIAL STORE →</a></div></div></div>`; });
+    html+=`</div>`;
+    dynamicContainer.innerHTML=html;
+    document.querySelectorAll(".buy-btn").forEach(btn=>{ btn.addEventListener("click",(e)=>{ const p=sneakerData.find(p=>p.id===parseInt(btn.getAttribute("data-id"))); if(p) openPurchaseModal(p); e.stopPropagation(); }); });
+    document.getElementById("globalBackBtn")?.addEventListener("click",()=>{ currentView="brands"; selectedBrand=""; renderBrands(); gsap.fromTo(".brand-grid",{opacity:0,y:30},{opacity:1,y:0,duration:0.5}); });
   }
-
-  function backToBrands() { brandsView.style.display = 'block'; modelsView.style.display = 'none'; currentView = "brands"; renderBrands(); }
-  function openCheckout(model) { currentSelectedModel = model; document.getElementById('checkoutProductInfo').innerHTML = `<div><strong>${model.name}</strong><br>$${model.retailPrice.toFixed(2)}<br><span style="color:#2ecc71;">Profit: $${model.profitAmount.toFixed(2)}</span></div>`; checkoutModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-  function closeCheckout() { checkoutModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
-  function processOrder() { const fullName = document.getElementById('fullName').value.trim(), address = document.getElementById('address').value.trim(), email = document.getElementById('email').value.trim(); if(!fullName || !address || !email) { alert("Please fill all details"); return; } if(selectedPaymentMethod === 'card' && !document.getElementById('cardNumber').value.trim()) { alert("Enter card details"); return; } closeCheckout(); toast.style.display = 'block'; setTimeout(() => toast.style.display = 'none', 3000); alert(`✅ ORDER CONFIRMED!\n\n${currentSelectedModel.name}\nShipped to: ${address}\nProfit earned: $${currentSelectedModel.profitAmount.toFixed(2)}\n\nThank you!`); currentSelectedModel = null; }
-
-  document.querySelectorAll('.payment-opt').forEach(opt => opt.addEventListener('click', () => { document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected')); opt.classList.add('selected'); selectedPaymentMethod = opt.getAttribute('data-method'); document.getElementById('cardDetails').style.display = selectedPaymentMethod === 'card' ? 'block' : 'none'; }));
-  function renderFilters() { const allBrands = [...new Set(shoeModels.map(m => m.brand))]; filtersContainer.innerHTML = `<div class="filter active" data-cat="all">ALL</div>` + allBrands.map(b => `<div class="filter" data-cat="${b}">${b.toUpperCase()}</div>`).join(''); document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.filter').forEach(b => b.classList.remove('active')); btn.classList.add('active'); const cat = btn.getAttribute('data-cat'); if(cat === 'all') { if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) showModels(selectedBrand); } else { if(currentView === 'brands') { searchTerm = cat; renderBrands(); } else if(currentView === 'models') showModels(cat); } if(currentView === 'brands' && cat !== 'all') searchTerm = cat; else if(currentView === 'brands' && cat === 'all') searchTerm = ""; if(currentView === 'brands') renderBrands(); })); }
-  searchInput.addEventListener('input', (e) => { searchTerm = e.target.value; if(currentView === 'brands') renderBrands(); else if(currentView === 'models' && selectedBrand) { const models = shoeModels.filter(m => m.brand === selectedBrand && m.name.toLowerCase().includes(searchTerm.toLowerCase())); modelsGrid.innerHTML = models.map(m => `<div class="model-card" data-id="${m.id}"><div class="model-art" style="background: ${m.artGradient};"></div><div class="model-info"><div class="model-name">${m.name}</div><div class="model-price">$${m.retailPrice.toFixed(2)}</div></div></div>`).join(''); document.querySelectorAll('.model-card').forEach(card => card.addEventListener('click', () => { const model = shoeModels.find(m => m.id === parseInt(card.getAttribute('data-id'))); if(model) openCheckout(model); })); } });
-  backBtn.addEventListener('click', backToBrands); document.getElementById('closeCheckoutBtn')?.addEventListener('click', closeCheckout); window.addEventListener('click', (e) => { if(e.target === checkoutModal) closeCheckout(); }); document.getElementById('submitOrderBtn')?.addEventListener('click', processOrder);
-
-  // Smooth Custom Cursor
-  const dot = document.querySelector('.cursor-dot'), outline = document.querySelector('.cursor-outline');
-  document.addEventListener('mousemove', (e) => { 
-    dot.style.left = e.clientX + 'px'; 
-    dot.style.top = e.clientY + 'px'; 
-    outline.style.left = e.clientX + 'px'; 
-    outline.style.top = e.clientY + 'px'; 
-  });
-  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; outline.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; outline.style.opacity = '1'; });
-
-  renderFilters();
-  renderBrands();
+  function updateUIFromState() { if(currentView==="brands") renderBrands(); else renderModels(); document.querySelectorAll(".filter").forEach(btn=>{ if(btn.getAttribute("data-filter")===currentFilter) btn.classList.add("active"); else btn.classList.remove("active"); }); }
+  function setupEvents() { searchInput.addEventListener("input",(e)=>{ searchQuery=e.target.value; if(currentView==="models") renderModels(); else renderBrands(); }); filterContainer.addEventListener("click",(e)=>{ const btn=e.target.closest(".filter"); if(btn){ currentFilter=btn.getAttribute("data-filter"); if(currentView==="models") renderModels(); else renderBrands(); updateUIFromState(); } }); }
+  let currentProduct=null; const modal=document.getElementById("purchaseModal");
+  function openPurchaseModal(p){ currentProduct=p; document.getElementById("modalProductInfo").innerText=`${p.brand} ${p.name} — $${p.price}`; modal.style.display="flex"; document.body.style.overflow="hidden"; }
+  function closeModal(){ modal.style.display="none"; document.body.style.overflow=""; }
+  document.querySelector(".close-modal")?.addEventListener("click",closeModal); window.addEventListener("click",(e)=>{ if(e.target===modal) closeModal(); });
+  let selectedPayment="card"; document.querySelectorAll(".payment-opt").forEach(opt=>{ opt.addEventListener("click",()=>{ document.querySelectorAll(".payment-opt").forEach(o=>o.classList.remove("selected")); opt.classList.add("selected"); selectedPayment=opt.getAttribute("data-method"); }); });
+  document.getElementById("submitPurchase")?.addEventListener("click",()=>{ const name=document.getElementById("fullName").value.trim(), email=document.getElementById("emailAddr").value.trim(), addr=document.getElementById("addressLine").value.trim(); if(!name||!email||!addr) showToast("❌ Please fill all fields",2000); else if(currentProduct){ showToast(`✅ ORDER PLACED! ${currentProduct.name} (${selectedPayment.toUpperCase()})`,4000); closeModal(); document.getElementById("fullName").value=""; document.getElementById("emailAddr").value=""; document.getElementById("addressLine").value=""; } });
+  
+  let musicPlaying=false; const music=document.getElementById("shoppingMusic"), musicBtn=document.getElementById("musicControl");
+  function initMusic(){ music.volume=0.5; musicBtn.addEventListener("click",()=>{ if(musicPlaying){ music.pause(); musicPlaying=false; musicBtn.style.background="rgba(0,0,0,0.8)"; musicBtn.style.color="#e63946"; } else { music.play().catch(()=>{}); musicPlaying=true; musicBtn.style.background="#e63946"; musicBtn.style.color="white"; } }); document.body.addEventListener("click",()=>{ if(!musicPlaying && music.paused){ music.play().then(()=>{ musicPlaying=true; musicBtn.style.background="#e63946"; musicBtn.style.color="white"; }).catch(()=>{}); } },{ once:true }); }
+  
+  // Loading progression
+  let loadPercent=0; const progressFill=document.getElementById("resnProgressFill"), percentSpan=document.getElementById("resnPercent"), loaderMsg=document.getElementById("loaderMessage"), loadingScreenDiv=document.getElementById("loadingScreen");
+  const msgCycle=["⟳ TRACING THE PATH","◢ SNEAKER VECTORS","✦ MOTION ACTIVATED","⨀ FOLLOW THE SHOE","⛭ ALMOST READY"];
+  let msgIndex=0;
+  const msgInterval=setInterval(()=>{ if(loadPercent<100){ msgIndex=(msgIndex+1)%msgCycle.length; loaderMsg.innerText=msgCycle[msgIndex]; } },550);
+  const loadInterval=setInterval(()=>{ let inc=Math.floor(Math.random()*12)+4; loadPercent=Math.min(loadPercent+inc,100); progressFill.style.width=loadPercent+"%"; percentSpan.innerText=loadPercent+"%"; if(loadPercent>=100){ clearInterval(loadInterval); clearInterval(msgInterval); loaderMsg.innerText="✓ READY TO IGNITE"; setTimeout(()=>{ loadingScreenDiv.style.opacity="0"; setTimeout(()=>{ loadingScreenDiv.style.display="none"; gsap.to(".main-container",{opacity:1,duration:1.2}); if(window.triggerTitleAnimation) window.triggerTitleAnimation(); if(window.initMotionPath) window.initMotionPath(); },900); },400); } },70);
+  
+  // Title split animation
+  window.triggerTitleAnimation=()=>{ const el=document.getElementById('heroTitle'); const txt=el.innerText; el.innerHTML=''; txt.split('').forEach((ch,i)=>{ const span=document.createElement('span'); span.className='char'; span.textContent=ch===' '?'\u00A0':ch; el.appendChild(span); }); gsap.fromTo('.hero-title .char',{opacity:0,y:80,filter:'blur(8px)'},{opacity:1,y:0,filter:'blur(0px)',duration:0.9,stagger:0.05,ease:"back.out(1.2)",delay:0.2}); gsap.to('.hero-sub',{opacity:0.4,y:0,duration:1,delay:0.8}); const orbContainer=document.getElementById("orbitingContainer"); if(orbContainer){ for(let i=0;i<12;i++){ const orb=document.createElement("div"); orb.className="orbiting-logo"; orb.textContent=["SNEAKER HYPE","RARE KICKS","LIMITED EDITION","STREETWEAR","COLLECTOR"][i%5]; orb.style.position="absolute"; orb.style.left=Math.random()*80+10+"%"; orb.style.top=Math.random()*80+10+"%"; orb.style.animation=`floatIcon ${5+Math.random()*5}s infinite alternate`; orbContainer.appendChild(orb); } } };
+  const styleSheet=document.createElement("style"); styleSheet.textContent=`@keyframes floatIcon{0%{transform:translateY(0px) rotate(0deg); opacity:0.2;}100%{transform:translateY(-30px) rotate(10deg); opacity:0.7;}}`; document.head.appendChild(styleSheet);
+  
+  const cursorDot=document.querySelector(".cursor-dot"), cursorOutline=document.querySelector(".cursor-outline");
+  document.addEventListener("mousemove",(e)=>{ cursorDot.style.transform=`translate(${e.clientX-2}px,${e.clientY-2}px)`; cursorOutline.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`; });
+  document.addEventListener("mouseleave",()=>{ cursorDot.style.opacity="0"; cursorOutline.style.opacity="0"; });
+  document.addEventListener("mouseenter",()=>{ cursorDot.style.opacity="1"; cursorOutline.style.opacity="1"; });
+  window.addEventListener("scroll",()=>{ const nav=document.getElementById("nav"); if(window.scrollY>50) nav.classList.add("scrolled"); else nav.classList.remove("scrolled"); });
+  ScrollTrigger.create({ trigger:".main-container", start:"top 80%", onEnter:()=>gsap.to(".main-container",{opacity:1,duration:1}) });
+  document.getElementById("scrollHint")?.addEventListener("click",()=>window.scrollTo({top:window.innerHeight,behavior:"smooth"}));
+  
+  function init(){ setupEvents(); renderBrands(); currentView="brands"; updateUIFromState(); initMusic(); document.querySelector('.payment-opt[data-method="card"]')?.classList.add("selected"); selectedPayment="card"; }
+  init();
 </script>
 </body>
 </html>
