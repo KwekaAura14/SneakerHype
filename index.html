@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Sneaker Hype | Unseen Studio — Cosmic Disintegration</title>
+  <title>SNEAKER HYPE | Unseen Studio — Holographic Portal</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -22,6 +22,173 @@
       body { cursor: auto; }
       .cursor-dot, .cursor-outline { display: none; }
     }
+    
+    /* ===== UNIQUE LOADING SCREEN: HOLOGRAPHIC PORTAL ===== */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+      font-family: 'Inter', monospace;
+      overflow: hidden;
+    }
+    
+    /* Animated gradient background */
+    .loading-screen::before {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.15), transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(255,180,71,0.1), transparent 50%);
+      animation: rotateBg 20s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes rotateBg {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Portal Container */
+    .portal-container {
+      position: relative;
+      width: 380px;
+      height: 380px;
+      margin-bottom: 50px;
+      z-index: 10;
+    }
+    
+    /* Portal Rings */
+    .portal-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border-style: solid;
+      border-width: 2px;
+      opacity: 0;
+    }
+    
+    /* Central Energy Core */
+    .portal-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, #e63946, #ffb347);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(230,57,70,0.8);
+      animation: pulseCore 1.2s ease-in-out infinite;
+    }
+    @keyframes pulseCore {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
+    }
+    
+    /* Floating particles around portal */
+    .portal-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffb347;
+      border-radius: 50%;
+      filter: blur(1px);
+      pointer-events: none;
+    }
+    
+    /* Brand Typography Animation */
+    .loader-brand {
+      text-align: center;
+      margin-top: 30px;
+      z-index: 20;
+    }
+    .loader-brand-name {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 12px;
+      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: brandShine 2s ease infinite;
+      text-transform: uppercase;
+    }
+    @keyframes brandShine {
+      0% { background-position: 0% 50%; letter-spacing: 12px; }
+      50% { background-position: 100% 50%; letter-spacing: 14px; }
+      100% { background-position: 0% 50%; letter-spacing: 12px; }
+    }
+    .loader-tagline {
+      font-size: 0.6rem;
+      letter-spacing: 6px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 10px;
+    }
+    
+    /* Progress Bar */
+    .loader-progress-section {
+      margin-top: 40px;
+      width: 320px;
+      text-align: center;
+      z-index: 20;
+    }
+    .loader-progress-bg {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loader-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #e63946, #ffb347, #ffffff);
+      border-radius: 2px;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 10px #e63946;
+    }
+    .loader-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.4);
+    }
+    .loader-percent {
+      font-family: monospace;
+      font-weight: 500;
+      color: #e63946;
+    }
+    .loader-message {
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      margin-top: 20px;
+      opacity: 0.5;
+      text-transform: uppercase;
+    }
+    
+    /* Portal Opening Animation */
+    @keyframes ringExpand {
+      0% { width: 0px; height: 0px; opacity: 1; border-width: 3px; }
+      100% { width: 380px; height: 380px; opacity: 0; border-width: 1px; }
+    }
+    
+    /* Music Control */
     .music-control {
       position: fixed;
       bottom: 25px;
@@ -47,113 +214,6 @@
       background: #e63946;
       color: white;
       border-color: white;
-    }
-    
-    /* LOADING SCREEN - COSMIC ENERGY CORE */
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #0a0a1a 0%, #000000 100%);
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-      font-family: 'Inter', monospace;
-      overflow: hidden;
-    }
-    
-    /* Cosmic Core Animation Canvas */
-    .cosmic-container {
-      position: relative;
-      width: 400px;
-      height: 400px;
-      margin-bottom: 40px;
-      cursor: pointer;
-      z-index: 10;
-    }
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    #cosmicCanvas { z-index: 2; }
-    #particleCanvas { z-index: 3; pointer-events: none; }
-    
-    /* Floating particles container */
-    .floating-particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 50;
-      overflow: hidden;
-    }
-    .energy-particle {
-      position: absolute;
-      pointer-events: none;
-      filter: drop-shadow(0 0 12px currentColor);
-      will-change: transform;
-    }
-    
-    .loader-progress-section {
-      margin-top: 30px;
-      width: 380px;
-      text-align: center;
-      opacity: 1;
-      transition: opacity 0.6s ease;
-      z-index: 20;
-    }
-    .loader-progress-bg {
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .loader-progress-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #e63946, #ffb347, #ffffff, #e63946);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s ease infinite;
-      border-radius: 4px;
-      transition: width 0.1s linear;
-      box-shadow: 0 0 8px #e63946;
-    }
-    @keyframes shimmer {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
-    }
-    .loader-stats {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 12px;
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.5);
-    }
-    .loader-percent {
-      font-family: monospace;
-      font-weight: 500;
-      color: #e63946;
-    }
-    .loader-message {
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      margin-top: 20px;
-      opacity: 0.6;
-      text-transform: uppercase;
-      font-weight: 300;
     }
     
     /* Custom Cursor */
@@ -236,7 +296,6 @@
       text-align: center;
     }
     
-    /* INTERACTIVE CENTER LOGO - DISINTEGRATES ON TOUCH */
     .center-logo {
       position: absolute;
       top: 50%;
@@ -285,21 +344,6 @@
       color: #e63946;
       display: inline-block;
     }
-    .center-logo::before {
-      content: '';
-      position: absolute;
-      top: -40px;
-      left: -40px;
-      right: -40px;
-      bottom: -40px;
-      background: radial-gradient(circle, rgba(230,57,70,0.2), transparent 70%);
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-      z-index: -1;
-    }
-    .center-logo:hover::before { opacity: 1; }
     
     .hero-title {
       font-size: 7rem;
@@ -380,29 +424,32 @@
       .main-container { padding: 2rem 1.5rem; }
       .nav-links-premium { display: none; }
       .center-logo .logo-text { font-size: 2rem; letter-spacing: 0.1em; }
-      .cosmic-container { width: 250px; height: 250px; }
+      .portal-container { width: 260px; height: 260px; }
     }
   </style>
 </head>
 <body>
 
-<!-- LOADING SCREEN - COSMIC ENERGY CORE -->
+<!-- UNIQUE LOADING SCREEN: HOLOGRAPHIC PORTAL -->
 <div id="loadingScreen" class="loading-screen">
-  <div class="cosmic-container">
-    <canvas id="cosmicCanvas" width="400" height="400"></canvas>
-    <canvas id="particleCanvas" width="400" height="400"></canvas>
+  <div class="portal-container" id="portalContainer">
+    <div class="portal-core" id="portalCore"></div>
+    <!-- Rings will be added dynamically -->
   </div>
-  <div class="floating-particles" id="floatingParticles"></div>
+  <div class="loader-brand">
+    <div class="loader-brand-name">SNEAKER HYPE</div>
+    <div class="loader-tagline">UNSEEN STUDIO</div>
+  </div>
   <div class="loader-progress-section" id="loaderProgressSection">
     <div class="loader-progress-bg">
       <div class="loader-progress-fill" id="resnProgressFill"></div>
     </div>
     <div class="loader-stats">
-      <span>COSMIC ENERGY CHARGING</span>
+      <span>OPENING PORTAL</span>
       <span class="loader-percent" id="resnPercent">0%</span>
     </div>
   </div>
-  <div class="loader-message" id="loaderMessage">🌀 DIMENSIONAL RIFT OPENING 🌀</div>
+  <div class="loader-message" id="loaderMessage">⚡ INITIALIZING HOLOGRAPHIC DIMENSION ⚡</div>
 </div>
 
 <div id="musicControl" class="music-control"><i class="fas fa-music"></i></div>
@@ -424,7 +471,7 @@
   <div class="center-logo" id="centerLogo">
     <div class="logo-3d-wrapper" id="logo3dWrapper">
       <div class="logo-icon"><i class="fas fa-crown"></i></div>
-      <div class="logo-text" id="disintegrateLogoText">SNEAKER HYPE</div>
+      <div class="logo-text">SNEAKER HYPE</div>
       <div class="logo-sub">UNSEEN STUDIO — EDITION 01</div>
     </div>
   </div>
@@ -465,107 +512,78 @@
     { id: 9, brand: "Nike", name: "Air Max 90 Futura", price: 140, profit: "+18% classic", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&auto=format", url: "https://www.nike.com" }
   ];
   
-  // ========== COSMIC ENERGY CORE ANIMATION ==========
-  const cosmicCanvas = document.getElementById('cosmicCanvas');
-  const ctx = cosmicCanvas.getContext('2d');
-  let time = 0;
-  let animationId;
+  // ========== HOLOGRAPHIC PORTAL LOADING SCREEN ==========
+  const portalContainer = document.getElementById('portalContainer');
+  let rings = [];
+  let particles = [];
   
-  function drawCosmicCore(progress = 0) {
-    const w = 400, h = 400;
-    ctx.clearRect(0, 0, w, h);
-    const centerX = w/2, centerY = h/2;
-    const pulseScale = 1 + Math.sin(time * 0.015) * 0.05;
-    const explosionGlow = Math.min(1, Math.max(0, (progress - 0.7) / 0.3));
-    
-    // Outer nebula rings
-    for(let i = 0; i < 3; i++) {
-      const radius = 120 + i * 30 + Math.sin(time * 0.01 + i) * 8;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(230, 57, 70, ${0.15 - i * 0.03 + explosionGlow * 0.3})`;
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-    
-    // Central energy ball
-    const grad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, 70);
-    grad.addColorStop(0, `rgba(255, 100, 70, ${0.9 - progress * 0.3})`);
-    grad.addColorStop(0.5, `rgba(230, 57, 70, ${0.6 - progress * 0.2})`);
-    grad.addColorStop(1, `rgba(255, 180, 71, 0)`);
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 70 * pulseScale, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Core inner fire
-    ctx.fillStyle = `rgba(255, 220, 100, ${0.8 - progress * 0.2})`;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 35 * (0.8 + Math.sin(time * 0.03) * 0.1), 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Energy spikes
-    for(let i = 0; i < 12; i++) {
-      const angle = (i / 12) * Math.PI * 2 + time * 0.02;
-      const length = 85 + Math.sin(time * 0.02 + i) * 10;
-      const x1 = centerX + Math.cos(angle) * 40;
-      const y1 = centerY + Math.sin(angle) * 40;
-      const x2 = centerX + Math.cos(angle) * length;
-      const y2 = centerY + Math.sin(angle) * length;
-      ctx.beginPath();
-      ctx.strokeStyle = `rgba(255, 100, 70, ${0.6 - progress * 0.2})`;
-      ctx.lineWidth = 3;
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
-    }
-    
-    // Explosion particles effect during loading
-    if(explosionGlow > 0) {
-      for(let i = 0; i < 30; i++) {
-        const angle2 = (i * 37) % 360 * Math.PI / 180;
-        const dist = 100 + explosionGlow * 150;
-        ctx.fillStyle = `rgba(255, ${100 - explosionGlow * 50}, 50, ${explosionGlow * 0.5})`;
-        ctx.beginPath();
-        ctx.arc(centerX + Math.cos(angle2 + time * 0.03) * dist, centerY + Math.sin(angle2 + time * 0.03) * dist, 3 + explosionGlow * 8, 0, Math.PI * 2);
-        ctx.fill();
-      }
+  // Create expanding rings
+  function createPortalRings() {
+    for(let i = 0; i < 5; i++) {
+      const ring = document.createElement('div');
+      ring.className = 'portal-ring';
+      const size = 40 + i * 20;
+      ring.style.width = size + 'px';
+      ring.style.height = size + 'px';
+      ring.style.borderColor = `rgba(230, 57, 70, ${0.8 - i * 0.15})`;
+      ring.style.borderWidth = (3 - i * 0.4) + 'px';
+      ring.style.opacity = '0';
+      portalContainer.appendChild(ring);
+      rings.push(ring);
     }
   }
   
-  function animateCosmic() {
-    time++;
-    drawCosmicCore(loadPercent / 100);
-    animationId = requestAnimationFrame(animateCosmic);
-  }
-  animateCosmic();
-  
-  function createEnergyBurst(centerX, centerY, count = 80) {
-    const container = document.getElementById('floatingParticles');
-    for(let i = 0; i < count; i++) {
+  // Create floating particles
+  function createPortalParticles() {
+    for(let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
-      particle.className = 'energy-particle';
-      const colors = ['#e63946', '#ffb347', '#ff5a6e', '#ff8c42', '#ffffff'];
-      particle.innerHTML = `<i class="fas ${['fa-star', 'fa-bolt', 'fa-fire', 'fa-gem', 'fa-circle'][Math.floor(Math.random()*5)]}" style="font-size: ${12 + Math.random() * 20}px; color: ${colors[Math.floor(Math.random()*colors.length)]};"></i>`;
-      particle.style.left = centerX + 'px';
-      particle.style.top = centerY + 'px';
-      particle.style.opacity = '0';
-      container.appendChild(particle);
-      
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 150 + Math.random() * 400;
-      gsap.set(particle, { opacity: 1, scale: 0.3 });
-      gsap.to(particle, {
-        duration: 0.8 + Math.random() * 0.7,
-        x: Math.cos(angle) * distance,
-        y: Math.sin(angle) * distance,
-        rotation: (Math.random() - 0.5) * 720,
-        scale: 1.4,
-        opacity: 0,
-        delay: Math.random() * 0.2,
-        ease: "back.out(0.8)",
-        onComplete: () => particle.remove()
-      });
+      particle.className = 'portal-particle';
+      particle.style.position = 'absolute';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.width = (3 + Math.random() * 6) + 'px';
+      particle.style.height = (3 + Math.random() * 6) + 'px';
+      particle.style.background = `radial-gradient(circle, #e63946, #ffb347)`;
+      particle.style.animation = `floatParticle ${3 + Math.random() * 4}s infinite ease-in-out`;
+      portalContainer.appendChild(particle);
+      particles.push(particle);
+    }
+  }
+  
+  // Add particle floating animation
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = `
+    @keyframes floatParticle {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      50% { transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px) scale(1.5); opacity: 1; }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+  
+  createPortalRings();
+  createPortalParticles();
+  
+  let ringAnimationFrame;
+  let portalProgress = 0;
+  
+  function animatePortal(progress) {
+    portalProgress = progress;
+    rings.forEach((ring, idx) => {
+      const expansion = progress * 380;
+      const baseSize = 40 + idx * 20;
+      const newSize = baseSize + expansion * 0.6;
+      ring.style.width = newSize + 'px';
+      ring.style.height = newSize + 'px';
+      ring.style.opacity = Math.max(0, 0.8 - progress * 1.2 - idx * 0.1);
+      ring.style.borderColor = `rgba(230, 57, 70, ${Math.max(0, 0.7 - progress)})`;
+    });
+    
+    // Core intensity
+    const core = document.getElementById('portalCore');
+    if(core) {
+      const intensity = 1 + progress * 1.5;
+      core.style.boxShadow = `0 0 ${40 + progress * 80}px rgba(230,57,70,${0.8 + progress * 0.5})`;
+      core.style.background = `radial-gradient(circle, ${progress > 0.7 ? '#ff5a6e' : '#e63946'}, ${progress > 0.7 ? '#ffb347' : '#ffb347'})`;
     }
   }
   
@@ -575,45 +593,29 @@
   const percentSpan = document.getElementById("resnPercent");
   const loaderMsg = document.getElementById("loaderMessage");
   const loadingScreenDiv = document.getElementById("loadingScreen");
-  const msgCycle = ["🌀 DIMENSIONAL RIFT", "⚡ COSMIC ENERGY SURGE", "✨ REALITY FRAGMENTING", "💫 UNIVERSE COLLAPSING", "🔥 SNEAKER DIMENSION OPENING"];
+  const msgCycle = ["🌀 CALIBRATING PORTAL", "✨ HOLOGRAPHIC RINGS", "💫 DIMENSIONAL SHIFT", "⚡ ENERGY SURGE", "🔮 PORTAL STABILIZING", "🚪 OPENING GATEWAY"];
   let msgIndex = 0;
   
-  const msgInterval = setInterval(() => { if(loadPercent < 100) { msgIndex = (msgIndex + 1) % msgCycle.length; loaderMsg.innerText = msgCycle[msgIndex]; } }, 500);
+  const msgInterval = setInterval(() => { if(loadPercent < 100) { msgIndex = (msgIndex + 1) % msgCycle.length; loaderMsg.innerText = msgCycle[msgIndex]; } }, 450);
   
-  let explosionTriggered = false;
   const loadInterval = setInterval(() => {
     let inc = Math.floor(Math.random() * 5) + 2;
     loadPercent = Math.min(loadPercent + inc, 100);
     progressFill.style.width = loadPercent + "%";
     percentSpan.innerText = loadPercent + "%";
-    
-    if(loadPercent >= 85 && !explosionTriggered) {
-      explosionTriggered = true;
-      const rect = cosmicCanvas.getBoundingClientRect();
-      createEnergyBurst(rect.left + rect.width/2, rect.top + rect.height/2, 100);
-      const flash = document.createElement('div');
-      flash.style.position = 'fixed';
-      flash.style.top = 0;
-      flash.style.left = 0;
-      flash.style.width = '100%';
-      flash.style.height = '100%';
-      flash.style.backgroundColor = 'rgba(230,57,70,0.4)';
-      flash.style.pointerEvents = 'none';
-      flash.style.zIndex = '9999';
-      document.body.appendChild(flash);
-      gsap.to(flash, { duration: 0.3, opacity: 0, onComplete: () => flash.remove() });
-      gsap.to(".cosmic-container", { duration: 0.08, x: 5, repeat: 6, yoyo: true });
-    }
+    animatePortal(loadPercent / 100);
     
     if(loadPercent >= 100) {
       clearInterval(loadInterval);
       clearInterval(msgInterval);
-      loaderMsg.innerText = "✨ DIMENSIONAL SHIFT COMPLETE ✨";
-      const rect = cosmicCanvas.getBoundingClientRect();
-      createEnergyBurst(rect.left + rect.width/2, rect.top + rect.height/2, 120);
+      loaderMsg.innerText = "✨ PORTAL ACTIVE — WELCOME ✨";
+      
+      // Final portal burst
       gsap.to("#loaderProgressSection", { duration: 0.6, opacity: 0 });
       gsap.to(".loader-message", { duration: 0.6, opacity: 0 });
-      gsap.to(".cosmic-container", { duration: 0.5, scale: 0, opacity: 0, ease: "back.in" });
+      gsap.to(".loader-brand", { duration: 0.5, y: -30, opacity: 0 });
+      gsap.to(".portal-container", { duration: 0.6, scale: 1.5, opacity: 0, ease: "back.in" });
+      
       setTimeout(() => {
         loadingScreenDiv.style.opacity = "0";
         setTimeout(() => {
@@ -621,86 +623,10 @@
           gsap.to(".main-container", { opacity: 1, duration: 1.2 });
           if(window.triggerTitleAnimation) window.triggerTitleAnimation();
           initCursorTracking();
-          initLogoDisintegration();
         }, 900);
-      }, 800);
+      }, 700);
     }
   }, 40);
-  
-  // ========== LOGO DISINTEGRATION ON CURSOR TOUCH ==========
-  function initLogoDisintegration() {
-    const logoContainer = document.getElementById("centerLogo");
-    const logoWrapper = document.getElementById("logo3dWrapper");
-    let disintegrated = false;
-    
-    logoContainer.addEventListener("mouseenter", () => {
-      if(disintegrated) return;
-      disintegrated = true;
-      
-      const rect = logoContainer.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      // Get all logo text elements
-      const logoText = document.querySelector("#disintegrateLogoText");
-      const logoSub = document.querySelector(".center-logo .logo-sub");
-      const logoIcon = document.querySelector(".center-logo .logo-icon");
-      
-      // Create particles for each letter of the logo
-      const letters = logoText.innerText.split('');
-      logoText.style.opacity = '0';
-      
-      letters.forEach((letter, idx) => {
-        for(let i = 0; i < 4; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'energy-particle';
-          particle.innerHTML = `<i class="fas ${['fa-star', 'fa-bolt', 'fa-fire', 'fa-gem'][Math.floor(Math.random()*4)]}" style="font-size: ${10 + Math.random() * 18}px; color: ${['#e63946', '#ffb347', '#ff5a6e'][Math.floor(Math.random()*3)]};"></i>`;
-          particle.style.position = 'fixed';
-          particle.style.left = centerX + (Math.random() - 0.5) * 100 + 'px';
-          particle.style.top = centerY + (Math.random() - 0.5) * 60 + 'px';
-          particle.style.opacity = '1';
-          particle.style.zIndex = '10000';
-          document.body.appendChild(particle);
-          
-          const angle = Math.random() * Math.PI * 2;
-          const distance = 100 + Math.random() * 250;
-          gsap.to(particle, {
-            duration: 0.7 + Math.random() * 0.5,
-            x: Math.cos(angle) * distance,
-            y: Math.sin(angle) * distance,
-            rotation: (Math.random() - 0.5) * 540,
-            scale: 1.5,
-            opacity: 0,
-            ease: "back.out(0.7)",
-            onComplete: () => particle.remove()
-          });
-        }
-      });
-      
-      // Fade out and scale down the sub and icon
-      gsap.to(logoSub, { duration: 0.4, opacity: 0, y: -30, scale: 0.8 });
-      gsap.to(logoIcon, { duration: 0.4, opacity: 0, scale: 0.5 });
-      gsap.to(logoWrapper, { duration: 0.5, scale: 1.2, opacity: 0.8, ease: "back.in" });
-      
-      // Flash effect
-      const flash = document.createElement('div');
-      flash.style.position = 'fixed';
-      flash.style.top = 0;
-      flash.style.left = 0;
-      flash.style.width = '100%';
-      flash.style.height = '100%';
-      flash.style.backgroundColor = 'rgba(230,57,70,0.3)';
-      flash.style.pointerEvents = 'none';
-      flash.style.zIndex = '9999';
-      document.body.appendChild(flash);
-      gsap.to(flash, { duration: 0.3, opacity: 0, onComplete: () => flash.remove() });
-      
-      // Remove the logo container after animation
-      setTimeout(() => {
-        gsap.to(logoWrapper, { duration: 0.3, opacity: 0, scale: 0 });
-      }, 500);
-    });
-  }
   
   // ========== APP LOGIC ==========
   let currentView = "brands", selectedBrand = "", currentFilter = "all", searchQuery = "";
