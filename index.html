@@ -748,7 +748,7 @@
   }, 32);
   
   // ========== FAST PAGE TRANSITION TO SHOP (GitHub Pages) ==========
-  function navigateToShop() {
+  function navigateToShop.html() {
     const transition = document.getElementById('pageTransition');
     gsap.set(transition, { visibility: 'visible', y: '100%' });
     gsap.to(transition, { duration: 0.4, y: '0%', ease: "power2.inOut" });
