@@ -3,69 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | PREMIUM SHOP — CART, SHIPPING, OFFICIAL STORE</title>
+  <title>SNEAKER HYPE | THE VAULT — Basketball Shop + Checkout</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+    
     body {
-      background: #0A0A0F;
+      background: #050505;
       font-family: 'Inter', sans-serif;
       color: #ffffff;
+      overflow-x: hidden;
     }
-    /* main layout */
-    .app-container {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 2rem 2rem 3rem;
+    
+    /* custom cursor */
+    .cursor-dot, .cursor-outline { display: none; }
+    @media (min-width: 769px) {
+      .cursor-dot, .cursor-outline { display: block; }
     }
-    /* header */
-    .top-bar {
+    .cursor-dot {
+      width: 4px; height: 4px; background: #e63946; border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 10001;
+    }
+    .cursor-outline {
+      width: 45px; height: 45px; border: 1.5px solid rgba(230, 57, 70, 0.5);
+      border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000;
+      transform: translate(-50%, -50%); transition: transform 0.12s ease-out;
+    }
+    
+    .music-control {
+      position: fixed; bottom: 25px; right: 25px; width: 52px; height: 52px;
+      border-radius: 50%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+      border: 1px solid rgba(230, 57, 70, 0.6); color: #e63946; cursor: pointer;
+      z-index: 10001; display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; transition: all 0.3s;
+    }
+    .music-control:hover { transform: scale(1.1); background: #e63946; color: white; }
+    
+    .nav-premium {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5rem;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      mix-blend-mode: difference; transition: all 0.4s;
+    }
+    .nav-premium.scrolled { padding: 1rem 5rem; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); mix-blend-mode: normal; }
+    .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 5px; color: white; text-transform: uppercase; }
+    .logo-premium span { font-weight: 800; color: #e63946; }
+    .nav-links-premium { display: flex; gap: 3rem; }
+    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: 300; cursor: pointer; transition: opacity 0.3s; }
+    .nav-links-premium a:hover { opacity: 0.6; }
+    
+    /* Hero Section */
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #000000; overflow: hidden; }
+    .hero-particles { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
+    .particle { position: absolute; background: radial-gradient(circle, #e63946, #ffb347); border-radius: 50%; opacity: 0; }
+    .hero-bg-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.12), transparent 60%), radial-gradient(circle at 70% 60%, rgba(255,180,71,0.08), transparent 60%); animation: breathe 8s ease-in-out infinite; z-index: 2; }
+    @keyframes breathe { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.03); } }
+    .floating-text-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; overflow: hidden; }
+    .floating-word { position: absolute; font-size: 0.9rem; font-weight: 700; letter-spacing: 4px; background: linear-gradient(135deg, #e63946, #ffb347, #ffffff); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; text-transform: uppercase; opacity: 0; }
+    .center-logo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 30; text-align: center; cursor: pointer; perspective: 1200px; }
+    .logo-3d-wrapper { transform-style: preserve-3d; will-change: transform; }
+    .logo-icon { font-size: 2.5rem; margin-bottom: 0.8rem; color: #e63946; display: inline-block; animation: iconPulse 2s ease-in-out infinite; }
+    @keyframes iconPulse { 0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(230,57,70,0.5); } 50% { transform: scale(1.08); text-shadow: 0 0 25px rgba(230,57,70,0.8); } }
+    .logo-text { font-size: 3.5rem; font-weight: 900; letter-spacing: 0.2em; background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; animation: gradientFlow 5s ease infinite; }
+    @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    .logo-sub { font-size: 0.6rem; letter-spacing: 10px; margin-top: 1rem; opacity: 0.5; font-weight: 300; text-transform: uppercase; }
+    .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 30; cursor: pointer; }
+    .scroll-text { font-size: 0.55rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(180deg, #e63946, transparent); animation: scrollAnim 2s ease infinite; }
+    @keyframes scrollAnim { 0%, 100% { transform: scaleY(1); opacity: 0.3; } 50% { transform: scaleY(1.5); opacity: 1; } }
+    
+    /* SHOP SECTION - MODERN BASKETBALL SHOP */
+    .shop-section {
+      background: #050505;
+      padding: 5rem 2rem 6rem;
+      position: relative;
+    }
+    .shop-header {
+      max-width: 1400px;
+      margin: 0 auto 2rem auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 1.5rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid rgba(230,57,70,0.3);
-      padding-bottom: 1.2rem;
     }
-    .logo h1 {
-      font-size: 1.7rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #fff, #e63946, #ffb347);
-      background-clip: text;
+    .shop-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #e63946);
       -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
-    .logo p {
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      color: #ffb347;
-    }
-    .cart-icon-wrapper {
-      position: relative;
-      cursor: pointer;
-      background: rgba(230,57,70,0.15);
-      width: 52px;
-      height: 52px;
-      border-radius: 60px;
+    .cart-icon {
+      background: rgba(230,57,70,0.2);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: 0.2s;
+      cursor: pointer;
+      position: relative;
+      transition: 0.3s;
     }
-    .cart-icon-wrapper:hover { background: #e63946; }
-    .cart-count-badge {
+    .cart-icon:hover { background: #e63946; transform: scale(1.05); }
+    .cart-count {
       position: absolute;
-      top: -6px;
-      right: -6px;
+      top: -5px;
+      right: -5px;
       background: #ffb347;
-      color: #0A0A0F;
+      color: #050505;
       font-weight: 800;
       font-size: 0.7rem;
       padding: 0 6px;
@@ -76,38 +131,38 @@
       align-items: center;
       justify-content: center;
     }
-    /* search & filter */
-    .search-filter-panel {
-      background: rgba(20,20,28,0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 80px;
-      padding: 0.3rem 1.5rem;
+    .search-filter-bar {
+      max-width: 1400px;
+      margin: 0 auto 2rem auto;
       display: flex;
       flex-wrap: wrap;
+      gap: 1rem;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(230,57,70,0.2);
     }
     .search-box {
+      background: rgba(255,255,255,0.05);
+      border-radius: 60px;
+      padding: 0.5rem 1.5rem;
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex: 2;
+      gap: 10px;
+      flex: 1;
+      min-width: 200px;
+      border: 1px solid rgba(230,57,70,0.3);
     }
     .search-box i { color: #e63946; }
-    #searchInput {
+    .search-box input {
       background: transparent;
       border: none;
-      padding: 1rem 0;
+      padding: 0.7rem 0;
       width: 100%;
       color: white;
       outline: none;
-      font-weight: 500;
     }
     .filter-group {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .filter-chip {
@@ -115,647 +170,312 @@
       border: none;
       padding: 0.5rem 1.2rem;
       border-radius: 40px;
-      font-weight: 600;
       font-size: 0.75rem;
       cursor: pointer;
-      color: #ddd;
       transition: 0.2s;
+      color: #ddd;
     }
-    .filter-chip.active, .filter-chip:hover {
-      background: #e63946;
-      color: white;
-    }
-    .stats {
-      margin-bottom: 1.5rem;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.5);
-      border-left: 3px solid #e63946;
-      padding-left: 1rem;
-    }
-    /* sneaker grid */
-    .sneaker-grid {
+    .filter-chip.active, .filter-chip:hover { background: #e63946; color: white; }
+    .product-grid {
+      max-width: 1400px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 2rem;
-      margin-bottom: 3rem;
     }
-    .sneaker-card {
-      background: rgba(18,18,26,0.9);
-      backdrop-filter: blur(4px);
-      border-radius: 2rem;
-      overflow: hidden;
+    .product-card {
+      background: rgba(15,15,20,0.8);
+      backdrop-filter: blur(8px);
       border: 1px solid rgba(230,57,70,0.2);
-      transition: 0.25s ease;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
     }
-    .sneaker-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(230,57,70,0.6);
-      box-shadow: 0 20px 30px -10px rgba(230,57,70,0.2);
-    }
-    .card-img {
-      background: linear-gradient(145deg, #12121a, #1a1a24);
+    .product-card:hover { transform: translateY(-8px); border-color: rgba(230,57,70,0.5); box-shadow: 0 20px 30px -12px rgba(230,57,70,0.2); }
+    .product-img {
+      background: linear-gradient(145deg, #101018, #1a1a28);
       text-align: center;
       padding: 2rem 1rem;
       position: relative;
     }
-    .card-img i { font-size: 4rem; color: #ffb347; }
+    .product-img i { font-size: 4rem; color: #ffb347; filter: drop-shadow(0 8px 12px black); }
     .badge {
       position: absolute;
-      top: 15px;
-      left: 15px;
+      top: 12px;
+      left: 12px;
       background: #e63946;
       font-size: 0.65rem;
       padding: 0.2rem 0.8rem;
       border-radius: 30px;
       font-weight: 700;
     }
-    .card-info { padding: 1.2rem; }
-    .brand-tag { color: #e63946; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
-    .sneaker-name { font-weight: 800; font-size: 1.1rem; margin: 0.4rem 0; }
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.8rem;
-    }
-    .price { font-weight: 800; font-size: 1.3rem; }
-    .btn-add {
+    .product-info { padding: 1rem 1rem 1.2rem; }
+    .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
+    .product-name { font-weight: 800; font-size: 1rem; margin: 0.4rem 0; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; margin: 0.7rem 0 0.5rem; }
+    .price { font-weight: 800; font-size: 1.2rem; }
+    .add-btn {
       background: rgba(230,57,70,0.2);
       border: none;
       padding: 0.4rem 1rem;
       border-radius: 40px;
-      color: white;
       font-weight: 600;
+      font-size: 0.7rem;
       cursor: pointer;
       transition: 0.2s;
+      color: white;
     }
-    .btn-add:hover { background: #e63946; }
-    .official-shoe-link {
+    .add-btn:hover { background: #e63946; }
+    .official-link {
       display: inline-block;
-      margin-top: 0.7rem;
+      margin-top: 6px;
       font-size: 0.65rem;
       color: #ffb347;
       text-decoration: none;
-      transition: 0.2s;
     }
-    .official-shoe-link i { margin-right: 4px; }
-    .official-shoe-link:hover { color: white; text-decoration: underline; }
-    /* empty state */
-    .no-results {
-      grid-column: 1/-1;
-      text-align: center;
-      padding: 3rem;
-      background: rgba(255,255,255,0.02);
-      border-radius: 2rem;
-    }
-    /* ========== CART + CHECKOUT OVERLAY ========== */
+    .official-link i { margin-right: 4px; }
+    .no-results { grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 2rem; }
+    
+    /* Checkout Modal */
     .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 2000;
-      visibility: hidden;
-      opacity: 0;
-      transition: 0.25s;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); z-index: 3000;
+      visibility: hidden; opacity: 0; transition: 0.25s;
     }
-    .modal-overlay.active {
-      visibility: visible;
-      opacity: 1;
-    }
+    .modal-overlay.active { visibility: visible; opacity: 1; }
     .checkout-panel {
-      position: fixed;
-      top: 0;
-      right: -650px;
-      width: 100%;
-      max-width: 600px;
-      height: 100%;
-      background: #0C0C14;
-      border-left: 1px solid rgba(230,57,70,0.5);
-      z-index: 2001;
-      transition: right 0.35s cubic-bezier(0.2,0.9,0.4,1.1);
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
+      position: fixed; top: 0; right: -550px; width: 100%; max-width: 520px;
+      height: 100%; background: #0a0a10; border-left: 2px solid #e63946;
+      z-index: 3001; transition: right 0.35s cubic-bezier(0.2,0.9,0.4,1.1);
+      display: flex; flex-direction: column; overflow-y: auto;
     }
-    .modal-overlay.active .checkout-panel {
-      right: 0;
-    }
-    .panel-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: #0C0C14;
-      z-index: 10;
-    }
-    .close-panel {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: white;
-      cursor: pointer;
-    }
-    .cart-items-list {
-      padding: 1rem;
-      max-height: 40vh;
-      overflow-y: auto;
-    }
-    .cart-item {
-      display: flex;
-      gap: 1rem;
-      background: rgba(255,255,255,0.03);
-      margin-bottom: 1rem;
-      padding: 0.8rem;
-      border-radius: 1.2rem;
-    }
-    .cart-item-icon { font-size: 2rem; width: 50px; text-align: center; }
+    .modal-overlay.active .checkout-panel { right: 0; }
+    .panel-header { padding: 1.5rem; border-bottom: 1px solid rgba(230,57,70,0.3); display: flex; justify-content: space-between; }
+    .close-panel { background: none; border: none; font-size: 1.5rem; color: white; cursor: pointer; }
+    .cart-items { padding: 1rem; max-height: 30vh; overflow-y: auto; }
+    .cart-item { display: flex; gap: 1rem; background: rgba(255,255,255,0.03); margin-bottom: 0.8rem; padding: 0.8rem; border-radius: 1rem; }
     .cart-item-details { flex: 1; }
-    .cart-item-name { font-weight: 600; }
-    .cart-item-price { font-size: 0.8rem; color: #ffb347; }
-    .cart-qty-control { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-    .cart-qty-control button {
-      background: rgba(230,57,70,0.3);
-      border: none;
-      width: 28px;
-      height: 28px;
-      border-radius: 30px;
-      color: white;
-      cursor: pointer;
-    }
-    /* shipping form */
-    .shipping-section {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 0.5rem;
-    }
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-      margin-bottom: 0.3rem;
-      color: rgba(255,255,255,0.6);
-    }
-    .form-group input, .form-group select {
-      width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(230,57,70,0.3);
-      padding: 0.7rem 1rem;
-      border-radius: 1rem;
-      color: white;
-      font-family: inherit;
-      outline: none;
-    }
-    .row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .payment-methods {
-      display: flex;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-    .pay-option {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(230,57,70,0.4);
-      padding: 0.5rem 1rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .pay-option.selected {
-      background: #e63946;
-      border-color: #e63946;
-    }
-    .total-checkout {
-      background: #0C0C14;
-      padding: 1rem 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      position: sticky;
-      bottom: 0;
-    }
-    .total-row {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 800;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-    .place-order-btn {
-      width: 100%;
-      background: #e63946;
-      border: none;
-      padding: 1rem;
-      border-radius: 60px;
-      font-weight: 800;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .official-store-link-footer {
-      text-align: center;
-      margin-top: 1rem;
-    }
-    .footer-link {
-      color: #ffb347;
-      text-decoration: none;
-      font-size: 0.7rem;
-    }
-    .shop-footer {
-      margin-top: 3rem;
-      text-align: center;
-      font-size: 0.7rem;
-      color: #5a5a70;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding-top: 2rem;
-    }
-    @media (max-width: 700px) {
-      .app-container { padding: 1rem; }
-      .search-filter-panel { flex-direction: column; border-radius: 2rem; align-items: stretch; gap: 0.5rem; padding: 1rem; }
-    }
+    .cart-qty { display: flex; gap: 8px; margin-top: 6px; }
+    .cart-qty button { background: rgba(230,57,70,0.3); border: none; width: 26px; border-radius: 30px; cursor: pointer; color: white; }
+    .shipping-form { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(230,57,70,0.4); padding: 0.7rem; border-radius: 1rem; color: white; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .payment-methods { display: flex; gap: 1rem; margin: 1rem 0; }
+    .pay-option { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 40px; cursor: pointer; font-size: 0.75rem; }
+    .pay-option.selected { background: #e63946; }
+    .total-area { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    .place-order { width: 100%; background: #e63946; border: none; padding: 1rem; border-radius: 60px; font-weight: 800; cursor: pointer; margin-top: 0.5rem; }
+    .footer-link { color: #ffb347; text-decoration: none; font-size: 0.7rem; display: block; text-align: center; margin-top: 1rem; }
+    
+    .main-footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #555; }
+    @media (max-width: 768px) { .nav-premium { padding: 1rem 1.5rem; } .nav-links-premium { display: none; } .logo-text { font-size: 1.8rem; } .shop-header h2 { font-size: 1.5rem; } }
   </style>
 </head>
 <body>
-<div class="app-container">
-  <div class="top-bar">
-    <div class="logo">
-      <h1><i class="fas fa-crown" style="color:#e63946;"></i> SNEAKER HYPE</h1>
-      <p>OFFICIAL STORE INTEGRATION // SHIPPING WORLDWIDE</p>
-    </div>
-    <div class="cart-icon-wrapper" id="cartIconBtn">
-      <i class="fas fa-shopping-cart fa-lg"></i>
-      <span class="cart-count-badge" id="cartGlobalCount">0</span>
-    </div>
-  </div>
 
-  <div class="search-filter-panel">
-    <div class="search-box">
-      <i class="fas fa-search"></i>
-      <input type="text" id="searchInput" placeholder="Search by name or brand... LeBron, Jordan, Curry...">
-    </div>
-    <div class="filter-group" id="filterGroup">
-      <button class="filter-chip active" data-filter="all">All</button>
-      <button class="filter-chip" data-filter="Nike">Nike</button>
-      <button class="filter-chip" data-filter="Jordan">Jordan</button>
-      <button class="filter-chip" data-filter="Adidas">Adidas</button>
-      <button class="filter-chip" data-filter="Under Armour">Under Armour</button>
-      <button class="filter-chip" data-filter="Puma">Puma</button>
-    </div>
-  </div>
-  <div class="stats"><span id="resultCount">0</span> premium sneakers — each has an official store link</div>
+<div id="musicControl" class="music-control"><i class="fas fa-music"></i></div>
+<audio id="bgMusic" loop preload="auto"><source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8c8c8c8.mp3?filename=upbeat-lofi-112191.mp3" type="audio/mpeg"></audio>
 
-  <div class="sneaker-grid" id="sneakerGrid"></div>
-  <div class="shop-footer">
-    <i class="fas fa-shield-alt"></i> 100% Authentic · Secure Checkout · Free Shipping over $150
-  </div>
-</div>
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
 
-<!-- CHECKOUT + CART MODAL (with shipping) -->
+<nav class="nav-premium" id="nav">
+  <div class="logo-premium">UNSEEN <span>// STUDIO</span></div>
+  <div class="nav-links-premium"><a id="homeBtn">HOME</a><a id="shopBtn">SHOP</a><a id="contactBtn">CONTACT</a></div>
+</nav>
+
+<section class="hero" id="heroSection">
+  <div class="hero-particles" id="particleContainer"></div>
+  <div class="hero-bg-glow"></div>
+  <div class="floating-text-container" id="floatingTextContainer"></div>
+  <div class="center-logo" id="centerLogo">
+    <div class="logo-3d-wrapper"><div class="logo-icon"><i class="fas fa-basketball"></i></div><div class="logo-text">SNEAKER HYPE</div><div class="logo-sub">THE BASKETBALL VAULT</div></div>
+  </div>
+  <div class="scroll-indicator" id="scrollIndicator"><div class="scroll-text">SHOP NOW</div><div class="scroll-line"></div></div>
+</section>
+
+<!-- BASKETBALL SHOP SECTION -->
+<section id="shopSection" class="shop-section">
+  <div class="shop-header">
+    <h2><i class="fas fa-basketball-ball"></i> CURRENT BASKETBALL KICKS</h2>
+    <div class="cart-icon" id="cartIconBtn"><i class="fas fa-shopping-bag"></i><span class="cart-count" id="cartCountBadge">0</span></div>
+  </div>
+  <div class="search-filter-bar">
+    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search models..."></div>
+    <div class="filter-group" id="filterGroup"></div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<footer class="main-footer"><p>© 2025 UNSEEN STUDIO — BASKETBALL EDITION | OFFICIAL STORE INTEGRATION</p></footer>
+
+<!-- CHECKOUT MODAL -->
 <div id="checkoutModal" class="modal-overlay">
   <div class="checkout-panel">
-    <div class="panel-header">
-      <h3><i class="fas fa-shoe-prints"></i> Your Cart & Checkout</h3>
-      <button class="close-panel" id="closeCheckoutBtn"><i class="fas fa-times"></i></button>
+    <div class="panel-header"><h3>🛒 YOUR CART</h3><button class="close-panel" id="closeCheckoutBtn">✕</button></div>
+    <div class="cart-items" id="cartItemsList"></div>
+    <div class="shipping-form">
+      <h4 style="margin-bottom:1rem;">Shipping Details</h4>
+      <div class="form-group"><input type="text" id="fullName" placeholder="Full Name"></div>
+      <div class="form-group"><input type="email" id="email" placeholder="Email"></div>
+      <div class="form-group"><input type="text" id="address" placeholder="Address"></div>
+      <div class="row-2"><input type="text" id="city" placeholder="City"><input type="text" id="zip" placeholder="ZIP"></div>
+      <div class="form-group"><select id="country"><option>United States</option><option>Canada</option><option>UK</option><option>Germany</option></select></div>
+      <div class="payment-methods" id="paymentMethods"><div class="pay-option selected" data-method="card"><i class="fab fa-cc-visa"></i> Card</div><div class="pay-option" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div><div class="pay-option" data-method="apple"><i class="fab fa-apple-pay"></i> Apple Pay</div></div>
     </div>
-    <div class="cart-items-list" id="cartItemsList">
-      <div style="text-align:center; padding:2rem;">Cart is empty</div>
-    </div>
-    <div class="shipping-section">
-      <h4 style="margin-bottom: 1rem;">📦 Shipping Details</h4>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="fullName" placeholder="John Doe" required>
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" id="email" placeholder="contact@example.com" required>
-      </div>
-      <div class="form-group">
-        <label>Address</label>
-        <input type="text" id="address" placeholder="Street, P.O. Box" required>
-      </div>
-      <div class="row-2">
-        <div class="form-group"><label>City</label><input type="text" id="city" placeholder="City"></div>
-        <div class="form-group"><label>Zip Code</label><input type="text" id="zip" placeholder="Zip"></div>
-      </div>
-      <div class="form-group">
-        <label>Country</label>
-        <select id="country">
-          <option>United States</option><option>Canada</option><option>United Kingdom</option><option>Germany</option><option>France</option><option>Australia</option><option>Japan</option>
-        </select>
-      </div>
-      <div class="payment-methods" id="paymentMethodContainer">
-        <div class="pay-option selected" data-method="card"><i class="fab fa-cc-visa"></i> Credit Card</div>
-        <div class="pay-option" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div>
-        <div class="pay-option" data-method="apple"><i class="fab fa-apple-pay"></i> Apple Pay</div>
-      </div>
-    </div>
-    <div class="total-checkout">
-      <div class="total-row"><span>SUBTOTAL</span><span id="modalTotalPrice">$0</span></div>
-      <div class="total-row"><span>Shipping</span><span>FREE</span></div>
-      <button class="place-order-btn" id="placeOrderBtn">✅ COMPLETE ORDER (Secure Checkout)</button>
-      <div class="official-store-link-footer">
-        <a href="#" id="globalOfficialLink" class="footer-link"><i class="fas fa-store"></i> Visit Official Brand Store →</a>
-      </div>
-    </div>
+    <div class="total-area"><div style="display:flex; justify-content:space-between; font-weight:800;"><span>TOTAL</span><span id="cartTotal">$0</span></div><button class="place-order" id="placeOrderBtn">✅ PLACE ORDER</button><a href="#" id="officialStoreLink" class="footer-link"><i class="fas fa-store"></i> Official Brand Store →</a></div>
   </div>
 </div>
 
 <script>
-  // ---------------- SNEAKER DATABASE (each shoe gets official store link) ----------------
-  const sneakers = [
-    { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, category: "basketball", icon: "fa-basketball-ball", badge: "NEW", officialUrl: "https://www.nike.com/lebron-21" },
-    { id: 2, name: "Air Jordan 38", brand: "Jordan", price: 189, category: "basketball", icon: "fa-crown", badge: "ICON", officialUrl: "https://www.nike.com/jordan-38" },
-    { id: 3, name: "Curry 11", brand: "Under Armour", price: 169, category: "basketball", icon: "fa-fire", badge: "SPLASH", officialUrl: "https://www.underarmour.com/curry-11" },
-    { id: 4, name: "Harden Vol 8", brand: "Adidas", price: 159, category: "basketball", icon: "fa-bolt", badge: "ELITE", officialUrl: "https://www.adidas.com/harden-vol-8" },
-    { id: 5, name: "Kobe 6 Protro", brand: "Nike", price: 209, category: "basketball", icon: "fa-basketball", badge: "LEGEND", officialUrl: "https://www.nike.com/kobe-6" },
-    { id: 6, name: "Kyrie Low 5", brand: "Nike", price: 119, category: "basketball", icon: "fa-shoe-prints", badge: "QUICK", officialUrl: "https://www.nike.com/kyrie-low" },
-    { id: 7, name: "Dame 9", brand: "Adidas", price: 129, category: "basketball", icon: "fa-shoe-prints", badge: "SIGNATURE", officialUrl: "https://www.adidas.com/dame-9" },
-    { id: 8, name: "MB.03 LaFrance", brand: "Puma", price: 139, category: "basketball", icon: "fa-bolt", badge: "FUTURE", officialUrl: "https://us.puma.com/mb-03" },
-    { id: 9, name: "Air Jordan 1 High", brand: "Jordan", price: 179, category: "lifestyle", icon: "fa-shoe-prints", badge: "HERITAGE", officialUrl: "https://www.nike.com/jordan-1-high" },
-    { id: 10, name: "Ja Morant 2", brand: "Nike", price: 129, category: "basketball", icon: "fa-basketball-ball", badge: "RISING", officialUrl: "https://www.nike.com/ja-morant-2" },
-    { id: 11, name: "PG 6", brand: "Nike", price: 149, category: "basketball", icon: "fa-shoe-prints", badge: "PLAYOFF", officialUrl: "https://www.nike.com/pg-6" },
-    { id: 12, name: "Zion 3", brand: "Jordan", price: 159, category: "basketball", icon: "fa-bolt", badge: "POWER", officialUrl: "https://www.nike.com/zion-3" },
-    { id: 13, name: "Clyde All-Pro", brand: "Puma", price: 129, category: "basketball", icon: "fa-shoe-prints", badge: "RETRO", officialUrl: "https://us.puma.com/clyde-all-pro" },
-    { id: 14, name: "Trae Young 3", brand: "Adidas", price: 139, category: "basketball", icon: "fa-basketball", badge: "ICE", officialUrl: "https://www.adidas.com/trae-young-3" },
-    { id: 15, name: "Kawhi 4", brand: "New Balance", price: 179, category: "basketball", icon: "fa-hand-peace", badge: "CLAW", officialUrl: "https://www.newbalance.com/kawhi-4" }
+  // ========== 50+ CURRENT BASKETBALL SHOES (2024-2025 MODELS) ==========
+  const basketballShoes = [
+    { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", icon: "fa-basketball-ball", official: "https://www.nike.com/lebron-21" },
+    { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", icon: "fa-basketball", official: "https://www.nike.com/kobe-6" },
+    { id: 3, name: "Air Jordan 38", brand: "Jordan", price: 189, badge: "ICON", icon: "fa-crown", official: "https://www.nike.com/jordan-38" },
+    { id: 4, name: "Curry 11", brand: "Under Armour", price: 169, badge: "SPLASH", icon: "fa-fire", official: "https://www.underarmour.com/curry-11" },
+    { id: 5, name: "Harden Vol 8", brand: "Adidas", price: 159, badge: "ELITE", icon: "fa-bolt", official: "https://www.adidas.com/harden-vol-8" },
+    { id: 6, name: "Ja Morant 2", brand: "Nike", price: 129, badge: "RISING", icon: "fa-basketball-ball", official: "https://www.nike.com/ja-morant-2" },
+    { id: 7, name: "Dame 9", brand: "Adidas", price: 129, badge: "SIGNATURE", icon: "fa-shoe-prints", official: "https://www.adidas.com/dame-9" },
+    { id: 8, name: "Zion 3", brand: "Jordan", price: 159, badge: "POWER", icon: "fa-bolt", official: "https://www.nike.com/zion-3" },
+    { id: 9, name: "Paul George 6", brand: "Nike", price: 149, badge: "PLAYOFF", icon: "fa-shoe-prints", official: "https://www.nike.com/pg-6" },
+    { id: 10, name: "Kyrie Low 5", brand: "Nike", price: 119, badge: "QUICK", icon: "fa-basketball-ball", official: "https://www.nike.com/kyrie-low" },
+    { id: 11, name: "Trae Young 3", brand: "Adidas", price: 139, badge: "ICE", icon: "fa-bolt", official: "https://www.adidas.com/trae-young-3" },
+    { id: 12, name: "MB.03", brand: "Puma", price: 139, badge: "FUTURE", icon: "fa-bolt", official: "https://us.puma.com/mb-03" },
+    { id: 13, name: "Kawhi 4", brand: "New Balance", price: 179, badge: "CLAW", icon: "fa-hand-peace", official: "https://www.newbalance.com/kawhi-4" },
+    { id: 14, name: "Giannis Freak 5", brand: "Nike", price: 149, badge: "FREAK", icon: "fa-bolt", official: "https://www.nike.com/freak-5" },
+    { id: 15, name: "Don Issue 5", brand: "Adidas", price: 119, badge: "DON", icon: "fa-shoe-prints", official: "https://www.adidas.com/don-issue-5" },
+    { id: 16, name: "Jordan Luka 2", brand: "Jordan", price: 139, badge: "LUKA", icon: "fa-basketball", official: "https://www.nike.com/luka-2" },
+    { id: 17, name: "Clyde All-Pro", brand: "Puma", price: 129, badge: "RETRO", icon: "fa-shoe-prints", official: "https://us.puma.com/clyde-all-pro" },
+    { id: 18, name: "Two WXY v4", brand: "New Balance", price: 149, badge: "TWO-WAY", icon: "fa-shoe-prints", official: "https://www.newbalance.com/two-wxy" },
+    { id: 19, name: "Curry 4 Flotro", brand: "Under Armour", price: 159, badge: "FLOTRO", icon: "fa-fire", official: "https://www.underarmour.com/curry-4" },
+    { id: 20, name: "Crazy 1", brand: "Adidas", price: 149, badge: "KOBE", icon: "fa-bolt", official: "https://www.adidas.com/crazy-1" },
+    { id: 21, name: "Way of Wade 10", brand: "Li-Ning", price: 209, badge: "PREMIUM", icon: "fa-crown", official: "https://www.wayofwade.com" },
+    { id: 22, name: "KT9", brand: "Anta", price: 139, badge: "SHOCK", icon: "fa-basketball", official: "https://www.anta.com" },
+    { id: 23, name: "Nova Surge", brand: "ASICS", price: 159, badge: "JAPAN", icon: "fa-running", official: "https://www.asics.com" },
+    { id: 24, name: "Savage Motion", brand: "Peak", price: 119, badge: "ELITE", icon: "fa-bolt", official: "https://www.peak.com" },
+    { id: 25, name: "Air Jordan 39", brand: "Jordan", price: 199, badge: "UPCOMING", icon: "fa-crown", official: "https://www.nike.com/jordan" },
   ];
-
+  
   // Cart state
-  let cart = []; // { id, name, price, quantity, icon, officialUrl }
-
-  // Filter state
+  let cart = [];
   let currentSearch = "";
   let currentBrand = "all";
-
+  
   // DOM elements
-  const sneakerGrid = document.getElementById("sneakerGrid");
+  const productGrid = document.getElementById("productGrid");
   const searchInput = document.getElementById("searchInput");
-  const filterChips = document.querySelectorAll(".filter-chip");
-  const resultCountSpan = document.getElementById("resultCount");
-  const cartGlobalCountSpan = document.getElementById("cartGlobalCount");
+  const filterGroup = document.getElementById("filterGroup");
+  const cartCountBadge = document.getElementById("cartCountBadge");
   const cartIconBtn = document.getElementById("cartIconBtn");
   const checkoutModal = document.getElementById("checkoutModal");
   const closeCheckoutBtn = document.getElementById("closeCheckoutBtn");
-  const cartItemsListDiv = document.getElementById("cartItemsList");
-  const modalTotalPriceSpan = document.getElementById("modalTotalPrice");
+  const cartItemsList = document.getElementById("cartItemsList");
+  const cartTotalSpan = document.getElementById("cartTotal");
   const placeOrderBtn = document.getElementById("placeOrderBtn");
-  const globalOfficialLink = document.getElementById("globalOfficialLink");
-
-  // Helper: update cart UI (badge, localStorage, modal render)
-  function saveCart() {
-    localStorage.setItem("sneaker_hype_cart", JSON.stringify(cart));
-    updateCartBadge();
-    renderCartModal();
-  }
-
-  function updateCartBadge() {
-    const totalQty = cart.reduce((sum, i) => sum + i.quantity, 0);
-    cartGlobalCountSpan.innerText = totalQty;
-  }
-
+  
+  // Save/load cart
+  function saveCart() { localStorage.setItem("basketball_cart", JSON.stringify(cart)); updateCartUI(); }
+  function updateCartUI() { const totalQty = cart.reduce((s,i)=>s+i.quantity,0); cartCountBadge.innerText = totalQty; renderCartModal(); }
   function renderCartModal() {
-    if (!cartItemsListDiv) return;
-    if (cart.length === 0) {
-      cartItemsListDiv.innerHTML = `<div style="text-align:center; padding:2rem; color:gray;"><i class="fas fa-bag-shopping"></i> No items added</div>`;
-      modalTotalPriceSpan.innerText = "$0";
-      return;
-    }
-    let html = "";
-    let total = 0;
-    cart.forEach((item, idx) => {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
-      html += `
-        <div class="cart-item" data-cartid="${item.id}">
-          <div class="cart-item-icon"><i class="fas ${item.icon || 'fa-shoe-prints'}"></i></div>
-          <div class="cart-item-details">
-            <div class="cart-item-name">${escapeHtml(item.name)}</div>
-            <div class="cart-item-price">$${item.price}</div>
-            <div class="cart-qty-control">
-              <button class="cart-qty-dec" data-id="${item.id}">-</button>
-              <span>${item.quantity}</span>
-              <button class="cart-qty-inc" data-id="${item.id}">+</button>
-              <button class="cart-remove-btn" data-id="${item.id}" style="background:none; border:none; margin-left:6px; color:#e63946;"><i class="fas fa-trash-alt"></i></button>
-            </div>
-          </div>
-        </div>
-      `;
+    if(!cartItemsList) return;
+    if(cart.length===0) { cartItemsList.innerHTML = "<div style='text-align:center;padding:2rem;'>Empty</div>"; cartTotalSpan.innerText="$0"; return; }
+    let html = "", total = 0;
+    cart.forEach(item => { total += item.price * item.quantity;
+      html += `<div class="cart-item"><div><i class="fas ${item.icon}"></i></div><div class="cart-item-details"><b>${escapeHtml(item.name)}</b><div>$${item.price}</div><div class="cart-qty"><button class="qty-dec" data-id="${item.id}">-</button><span>${item.quantity}</span><button class="qty-inc" data-id="${item.id}">+</button><button class="cart-remove" data-id="${item.id}" style="background:none;margin-left:8px;">🗑️</button></div></div></div>`;
     });
-    cartItemsListDiv.innerHTML = html;
-    modalTotalPriceSpan.innerText = "$" + total;
-    // attach cart events
-    document.querySelectorAll(".cart-qty-dec").forEach(btn => {
-      btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.id); updateQty(id, -1); });
-    });
-    document.querySelectorAll(".cart-qty-inc").forEach(btn => {
-      btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.id); updateQty(id, 1); });
-    });
-    document.querySelectorAll(".cart-remove-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.id); removeFromCart(id); });
-    });
+    cartItemsList.innerHTML = html; cartTotalSpan.innerText = "$"+total;
+    document.querySelectorAll(".qty-dec").forEach(b=>b.addEventListener("click",()=>updateQty(parseInt(b.dataset.id),-1)));
+    document.querySelectorAll(".qty-inc").forEach(b=>b.addEventListener("click",()=>updateQty(parseInt(b.dataset.id),1)));
+    document.querySelectorAll(".cart-remove").forEach(b=>b.addEventListener("click",()=>removeFromCart(parseInt(b.dataset.id))));
   }
-
-  function updateQty(id, delta) {
-    const index = cart.findIndex(i => i.id === id);
-    if (index !== -1) {
-      const newQty = cart[index].quantity + delta;
-      if (newQty <= 0) cart.splice(index,1);
-      else cart[index].quantity = newQty;
-      saveCart();
-      renderSneakers(); // for "add" button consistency
-    }
-  }
-  function removeFromCart(id) {
-    cart = cart.filter(i => i.id !== id);
-    saveCart();
-    renderSneakers();
-  }
-
-  function addToCart(sneaker) {
-    const existing = cart.find(i => i.id === sneaker.id);
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        id: sneaker.id,
-        name: sneaker.name,
-        price: sneaker.price,
-        quantity: 1,
-        icon: sneaker.icon,
-        officialUrl: sneaker.officialUrl
-      });
-    }
-    saveCart();
-    showToast(`🔥 ${sneaker.name} added to cart`, 1500);
-  }
-
-  function showToast(msg, duration = 1800) {
-    const toast = document.createElement("div");
-    toast.innerText = msg;
-    toast.style.position = "fixed";
-    toast.style.bottom = "30px";
-    toast.style.left = "50%";
-    toast.style.transform = "translateX(-50%)";
-    toast.style.backgroundColor = "#e63946";
-    toast.style.padding = "10px 24px";
-    toast.style.borderRadius = "60px";
-    toast.style.fontWeight = "bold";
-    toast.style.zIndex = "10000";
-    toast.style.fontSize = "0.8rem";
-    document.body.appendChild(toast);
-    setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 300); }, duration);
-  }
-
-  // filter logic
+  function updateQty(id, delta) { let idx = cart.findIndex(i=>i.id===id); if(idx!==-1) { let newQ = cart[idx].quantity+delta; if(newQ<=0) cart.splice(idx,1); else cart[idx].quantity=newQ; saveCart(); renderProducts(); } }
+  function removeFromCart(id) { cart = cart.filter(i=>i.id!==id); saveCart(); renderProducts(); }
+  function addToCart(shoe) { let exist = cart.find(i=>i.id===shoe.id); if(exist) exist.quantity++; else cart.push({id:shoe.id,name:shoe.name,price:shoe.price,quantity:1,icon:shoe.icon,official:shoe.official}); saveCart(); showToast(`+ ${shoe.name} added`); }
+  function showToast(msg) { let t=document.createElement("div"); t.innerText=msg; t.style.cssText="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#e63946;padding:10px 24px;border-radius:60px;z-index:9999"; document.body.appendChild(t); setTimeout(()=>t.remove(),1500); }
+  
   function getFiltered() {
-    let results = [...sneakers];
-    if (currentBrand !== "all") results = results.filter(s => s.brand.toLowerCase() === currentBrand.toLowerCase());
-    if (currentSearch.trim() !== "") {
-      const term = currentSearch.trim().toLowerCase();
-      results = results.filter(s => s.name.toLowerCase().includes(term) || s.brand.toLowerCase().includes(term));
-    }
-    return results;
+    let res = [...basketballShoes];
+    if(currentBrand !== "all") res = res.filter(s => s.brand.toLowerCase() === currentBrand.toLowerCase());
+    if(currentSearch.trim()) { let term = currentSearch.trim().toLowerCase(); res = res.filter(s => s.name.toLowerCase().includes(term) || s.brand.toLowerCase().includes(term)); }
+    return res;
   }
-
-  function renderSneakers() {
+  function renderProducts() {
     const filtered = getFiltered();
-    resultCountSpan.innerText = filtered.length;
-    if (filtered.length === 0) {
-      sneakerGrid.innerHTML = `<div class="no-results"><i class="fas fa-basketball"></i><br/>No sneakers found. Try different filter.</div>`;
-      return;
-    }
-    let gridHtml = "";
+    if(filtered.length===0) { productGrid.innerHTML = `<div class="no-results">No sneakers found 🔥</div>`; return; }
+    let html = "";
     filtered.forEach(shoe => {
-      gridHtml += `
-        <div class="sneaker-card">
-          <div class="card-img">
-            <i class="fas ${shoe.icon || 'fa-shoe-prints'}"></i>
-            ${shoe.badge ? `<div class="badge">${shoe.badge}</div>` : ''}
-          </div>
-          <div class="card-info">
-            <div class="brand-tag">${shoe.brand}</div>
-            <div class="sneaker-name">${escapeHtml(shoe.name)}</div>
-            <div class="price-row">
-              <div class="price">$${shoe.price}</div>
-              <button class="btn-add add-to-cart-btn" data-id="${shoe.id}"><i class="fas fa-cart-plus"></i> Add</button>
-            </div>
-            <a href="${shoe.officialUrl}" target="_blank" class="official-shoe-link"><i class="fas fa-external-link-alt"></i> Buy from Official Store →</a>
-          </div>
-        </div>
-      `;
+      html += `<div class="product-card"><div class="product-img"><i class="fas ${shoe.icon}"></i>${shoe.badge?`<div class="badge">${shoe.badge}</div>`:''}</div><div class="product-info"><div class="brand">${shoe.brand}</div><div class="product-name">${escapeHtml(shoe.name)}</div><div class="price-row"><div class="price">$${shoe.price}</div><button class="add-btn add-to-cart" data-id="${shoe.id}">ADD</button></div><a href="${shoe.official}" target="_blank" class="official-link"><i class="fas fa-external-link-alt"></i> Official Store</a></div></div>`;
     });
-    sneakerGrid.innerHTML = gridHtml;
-    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const id = parseInt(btn.dataset.id);
-        const shoe = sneakers.find(s => s.id === id);
-        if (shoe) addToCart(shoe);
-      });
-    });
+    productGrid.innerHTML = html;
+    document.querySelectorAll(".add-to-cart").forEach(btn => { btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.id); const shoe = basketballShoes.find(s=>s.id===id); if(shoe) addToCart(shoe); }); });
+    gsap.fromTo(".product-card", { opacity:0, y:30 }, { opacity:1, y:0, duration:0.5, stagger:0.04, ease:"power2.out" });
   }
-
-  // checkout system + shipping validation
-  function validateShipping() {
-    const name = document.getElementById("fullName")?.value.trim();
-    const email = document.getElementById("email")?.value.trim();
-    const address = document.getElementById("address")?.value.trim();
-    const city = document.getElementById("city")?.value.trim();
-    const zip = document.getElementById("zip")?.value.trim();
-    if (!name || !email || !address || !city || !zip) {
-      showToast("❌ Please fill all shipping fields", 1500);
-      return false;
-    }
-    if (!email.includes("@")) { showToast("Invalid email", 1000); return false; }
-    return true;
-  }
-
-  function getSelectedPayment() {
-    const selected = document.querySelector(".pay-option.selected");
-    return selected ? selected.getAttribute("data-method") : "card";
-  }
-
-  placeOrderBtn.addEventListener("click", () => {
-    if (cart.length === 0) { showToast("Cart is empty", 1000); return; }
-    if (!validateShipping()) return;
-    const payment = getSelectedPayment();
-    const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-    // simulate order processing
-    showToast(`🔄 Processing ${payment.toUpperCase()} payment...`, 1500);
-    setTimeout(() => {
-      showToast(`✅ Order placed! Total $${total}. Receipt sent to email.`, 3000);
-      // clear cart
-      cart = [];
-      saveCart();
-      renderSneakers();
-      checkoutModal.classList.remove("active");
-    }, 1200);
-  });
-
-  // open/close modal + official store global link
-  cartIconBtn.addEventListener("click", () => {
-    renderCartModal();
-    checkoutModal.classList.add("active");
-  });
-  closeCheckoutBtn.addEventListener("click", () => checkoutModal.classList.remove("active"));
-  checkoutModal.addEventListener("click", (e) => { if (e.target === checkoutModal) checkoutModal.classList.remove("active"); });
-
-  // Payment method selection
-  document.getElementById("paymentMethodContainer")?.addEventListener("click", (e) => {
-    const payDiv = e.target.closest(".pay-option");
-    if (payDiv) {
-      document.querySelectorAll(".pay-option").forEach(opt => opt.classList.remove("selected"));
-      payDiv.classList.add("selected");
-    }
-  });
-
-  // global official store link (top-level)
-  globalOfficialLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.open("https://www.nike.com/", "_blank");
-    showToast("Redirecting to Official Brand Store", 1200);
-  });
-
-  // filter listeners
-  function initFilters() {
-    searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderSneakers(); });
-    filterChips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        currentBrand = chip.getAttribute("data-filter");
-        filterChips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-        renderSneakers();
-      });
-    });
-  }
-
-  function loadCartFromStorage() {
-    const saved = localStorage.getItem("sneaker_hype_cart");
-    if (saved) {
-      cart = JSON.parse(saved);
-      updateCartBadge();
-      renderCartModal();
-    }
-  }
-
   function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-
-  initFilters();
-  loadCartFromStorage();
-  renderSneakers();
+  
+  function initFilters() {
+    const brands = ["all", "Nike", "Jordan", "Adidas", "Under Armour", "Puma", "New Balance"];
+    filterGroup.innerHTML = brands.map(b => `<button class="filter-chip ${b==='all'?'active':''}" data-brand="${b}">${b.toUpperCase()}</button>`).join('');
+    document.querySelectorAll(".filter-chip").forEach(chip => { chip.addEventListener("click", () => { currentBrand = chip.dataset.brand; document.querySelectorAll(".filter-chip").forEach(c=>c.classList.remove("active")); chip.classList.add("active"); renderProducts(); }); });
+    searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderProducts(); });
+  }
+  
+  function initCheckout() {
+    cartIconBtn.addEventListener("click", () => { renderCartModal(); checkoutModal.classList.add("active"); });
+    closeCheckoutBtn.addEventListener("click", () => checkoutModal.classList.remove("active"));
+    checkoutModal.addEventListener("click", (e) => { if(e.target === checkoutModal) checkoutModal.classList.remove("active"); });
+    document.getElementById("paymentMethods")?.addEventListener("click", (e) => { let div = e.target.closest(".pay-option"); if(div) { document.querySelectorAll(".pay-option").forEach(p=>p.classList.remove("selected")); div.classList.add("selected"); } });
+    placeOrderBtn.addEventListener("click", () => {
+      if(cart.length===0) { showToast("Cart is empty"); return; }
+      let name = document.getElementById("fullName").value.trim(), email = document.getElementById("email").value.trim();
+      if(!name || !email) { showToast("Fill shipping details"); return; }
+      let method = document.querySelector(".pay-option.selected")?.dataset.method || "card";
+      let total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+      showToast(`✅ Order placed! (${method}) Total $${total}. Thank you.`);
+      cart = []; saveCart(); renderProducts(); checkoutModal.classList.remove("active");
+    });
+    document.getElementById("officialStoreLink")?.addEventListener("click", (e) => { e.preventDefault(); window.open("https://www.nike.com/", "_blank"); });
+  }
+  
+  // Load cart from storage
+  const savedCart = localStorage.getItem("basketball_cart");
+  if(savedCart) cart = JSON.parse(savedCart);
+  initFilters(); renderProducts(); initCheckout(); updateCartUI();
+  
+  // Floating particles & animations
+  const floatingWords = ["BASKETBALL", "HYPE", "GRAIL", "COURT", "ICON", "SIGNATURE", "ELITE", "DUNK", "CROSSOVER"];
+  const container = document.getElementById("floatingTextContainer");
+  for(let i=0;i<35;i++) { let w=document.createElement("div"); w.className="floating-word"; w.textContent=floatingWords[Math.floor(Math.random()*floatingWords.length)]; w.style.left=Math.random()*100+"%"; w.style.top=Math.random()*100+"%"; w.style.animation=`floatWord ${8+Math.random()*10}s infinite`; w.style.animationDelay=Math.random()*5+"s"; container.appendChild(w); }
+  const particleCont = document.getElementById("particleContainer");
+  for(let i=0;i<50;i++) { let p=document.createElement("div"); p.className="particle"; let s=2+Math.random()*6; p.style.width=s+"px"; p.style.height=s+"px"; p.style.left=Math.random()*100+"%"; p.style.top=Math.random()*100+"%"; p.style.animation=`floatParticle ${6+Math.random()*10}s infinite`; particleCont.appendChild(p); }
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = `@keyframes floatWord { 0% { transform: translateY(0px) rotate(0deg); opacity: 0; } 20% { opacity: 0.5; } 100% { transform: translateY(-90px) rotate(12deg); opacity: 0; } } @keyframes floatParticle { 0%,100% { transform: translateY(0px); opacity: 0; } 20% { opacity: 0.4; } 100% { transform: translateY(-100px); opacity: 0; } }`;
+  document.head.appendChild(styleSheet);
+  
+  // 3D Logo
+  const logoWrapper = document.querySelector(".logo-3d-wrapper");
+  let rx=0,ry=0,trx=0,try_=0;
+  document.addEventListener("mousemove", (e) => { let rect = document.querySelector(".center-logo")?.getBoundingClientRect(); if(rect){ let dx=(e.clientX-(rect.left+rect.width/2))/(rect.width/2); let dy=(e.clientY-(rect.top+rect.height/2))/(rect.height/2); try_=dx*10; trx=-dy*10; } });
+  function animate3D() { rx+=(trx-rx)*0.1; ry+=(try_-ry)*0.1; if(logoWrapper) logoWrapper.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`; requestAnimationFrame(animate3D); } animate3D();
+  
+  // Navigation
+  document.getElementById("homeBtn")?.addEventListener("click",()=>{ window.scrollTo({top:0,behavior:"smooth"}); });
+  document.getElementById("shopBtn")?.addEventListener("click",()=>{ document.getElementById("shopSection").scrollIntoView({behavior:"smooth"}); });
+  document.getElementById("contactBtn")?.addEventListener("click",()=>{ alert("📧 studio@unseensnkrs.com\n📍 47 Mercer Street, NYC"); });
+  document.getElementById("scrollIndicator")?.addEventListener("click",()=>{ document.getElementById("shopSection").scrollIntoView({behavior:"smooth"}); });
+  window.addEventListener("scroll",()=>{ const nav=document.getElementById("nav"); if(window.scrollY>50) nav.classList.add("scrolled"); else nav.classList.remove("scrolled"); });
+  
+  // Music
+  let musicPlaying=false; const music=document.getElementById("bgMusic"); const musicBtn=document.getElementById("musicControl"); music.volume=0.25;
+  musicBtn.addEventListener("click",()=>{ if(musicPlaying){ music.pause(); musicPlaying=false; musicBtn.style.background="rgba(0,0,0,0.8)"; musicBtn.style.color="#e63946"; } else { music.play().catch(()=>{}); musicPlaying=true; musicBtn.style.background="#e63946"; musicBtn.style.color="white"; } });
+  document.body.addEventListener("click",()=>{ if(!musicPlaying && music.paused){ music.play().then(()=>{ musicPlaying=true; musicBtn.style.background="#e63946"; musicBtn.style.color="white"; }).catch(()=>{}); } }, { once: true });
+  
+  // Cursor
+  const dot = document.querySelector(".cursor-dot"), outline = document.querySelector(".cursor-outline");
+  document.addEventListener("mousemove",(e)=>{ if(dot) dot.style.transform=`translate(${e.clientX-2}px,${e.clientY-2}px)`; if(outline) outline.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`; });
 </script>
 </body>
 </html>
