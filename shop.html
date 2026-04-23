@@ -3,278 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | THE VAULT — Basketball Shop + Checkout</title>
+  <title>SNEAKER HYPE | CINEMATIC 4D • REDSHIFT • WEBGL SHOP</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #050505; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; }
+    
+    /* WebGL Canvas fullscreen */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
     
-    body {
-      background: #050505;
-      font-family: 'Inter', sans-serif;
-      color: #ffffff;
-      overflow-x: hidden;
-    }
-    
-    /* custom cursor */
+    /* Custom Cursor */
     .cursor-dot, .cursor-outline { display: none; }
     @media (min-width: 769px) {
       .cursor-dot, .cursor-outline { display: block; }
     }
-    .cursor-dot {
-      width: 4px; height: 4px; background: #e63946; border-radius: 50%;
-      position: fixed; pointer-events: none; z-index: 10001;
-    }
-    .cursor-outline {
-      width: 45px; height: 45px; border: 1.5px solid rgba(230, 57, 70, 0.5);
-      border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000;
-      transform: translate(-50%, -50%); transition: transform 0.12s ease-out;
-    }
+    .cursor-dot { width: 4px; height: 4px; background: #e63946; border-radius: 50%; position: fixed; pointer-events: none; z-index: 10001; }
+    .cursor-outline { width: 45px; height: 45px; border: 1.5px solid rgba(230,57,70,0.6); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: transform 0.12s cubic-bezier(0.2,0.9,0.4,1.1); }
     
     .music-control {
       position: fixed; bottom: 25px; right: 25px; width: 52px; height: 52px;
-      border-radius: 50%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
-      border: 1px solid rgba(230, 57, 70, 0.6); color: #e63946; cursor: pointer;
+      border-radius: 50%; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px);
+      border: 1px solid rgba(230,57,70,0.7); color: #e63946; cursor: pointer;
       z-index: 10001; display: flex; align-items: center; justify-content: center;
       font-size: 1.3rem; transition: all 0.3s;
     }
-    .music-control:hover { transform: scale(1.1); background: #e63946; color: white; }
+    .music-control:hover { transform: scale(1.1); background: #e63946; color: white; box-shadow: 0 0 30px #e63946; }
     
     .nav-premium {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5rem;
+      position: fixed; top: 0; left: 0; width: 100%; padding: 1.8rem 5rem;
       display: flex; justify-content: space-between; align-items: center; z-index: 1000;
-      mix-blend-mode: difference; transition: all 0.4s;
+      mix-blend-mode: difference; transition: all 0.5s cubic-bezier(0.2,0.9,0.4,1.1);
     }
-    .nav-premium.scrolled { padding: 1rem 5rem; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); mix-blend-mode: normal; }
-    .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 5px; color: white; text-transform: uppercase; }
-    .logo-premium span { font-weight: 800; color: #e63946; }
+    .nav-premium.scrolled { padding: 1rem 5rem; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); mix-blend-mode: normal; border-bottom: 1px solid rgba(230,57,70,0.3); }
+    .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 6px; color: white; text-transform: uppercase; }
+    .logo-premium span { font-weight: 800; color: #e63946; text-shadow: 0 0 8px rgba(230,57,70,0.5); }
     .nav-links-premium { display: flex; gap: 3rem; }
-    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: 300; cursor: pointer; transition: opacity 0.3s; }
-    .nav-links-premium a:hover { opacity: 0.6; }
+    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; font-weight: 300; cursor: pointer; transition: all 0.3s; }
+    .nav-links-premium a:hover { opacity: 0.6; letter-spacing: 4px; color: #e63946; }
     
-    /* Hero Section */
-    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #000000; overflow: hidden; }
-    .hero-particles { position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
-    .particle { position: absolute; background: radial-gradient(circle, #e63946, #ffb347); border-radius: 50%; opacity: 0; }
-    .hero-bg-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 30% 40%, rgba(230,57,70,0.12), transparent 60%), radial-gradient(circle at 70% 60%, rgba(255,180,71,0.08), transparent 60%); animation: breathe 8s ease-in-out infinite; z-index: 2; }
-    @keyframes breathe { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.03); } }
-    .floating-text-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; overflow: hidden; }
-    .floating-word { position: absolute; font-size: 0.9rem; font-weight: 700; letter-spacing: 4px; background: linear-gradient(135deg, #e63946, #ffb347, #ffffff); -webkit-background-clip: text; background-clip: text; color: transparent; white-space: nowrap; text-transform: uppercase; opacity: 0; }
-    .center-logo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 30; text-align: center; cursor: pointer; perspective: 1200px; }
-    .logo-3d-wrapper { transform-style: preserve-3d; will-change: transform; }
-    .logo-icon { font-size: 2.5rem; margin-bottom: 0.8rem; color: #e63946; display: inline-block; animation: iconPulse 2s ease-in-out infinite; }
-    @keyframes iconPulse { 0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(230,57,70,0.5); } 50% { transform: scale(1.08); text-shadow: 0 0 25px rgba(230,57,70,0.8); } }
-    .logo-text { font-size: 3.5rem; font-weight: 900; letter-spacing: 0.2em; background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; animation: gradientFlow 5s ease infinite; }
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 5; pointer-events: none; }
+    .hero-content { text-align: center; pointer-events: auto; }
+    .logo-icon { font-size: 3.5rem; color: #e63946; margin-bottom: 1rem; animation: cinematicPulse 2.5s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(230,57,70,0.6)); }
+    @keyframes cinematicPulse { 0%,100% { transform: scale(1); text-shadow: 0 0 10px rgba(230,57,70,0.5); } 50% { transform: scale(1.08); text-shadow: 0 0 40px rgba(230,57,70,0.9); } }
+    .logo-text { font-size: 4rem; font-weight: 900; letter-spacing: 0.2em; background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946); background-size: 400% 400%; -webkit-background-clip: text; background-clip: text; color: transparent; text-transform: uppercase; animation: gradientFlow 6s ease infinite; }
     @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .logo-sub { font-size: 0.6rem; letter-spacing: 10px; margin-top: 1rem; opacity: 0.5; font-weight: 300; text-transform: uppercase; }
-    .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 30; cursor: pointer; }
-    .scroll-text { font-size: 0.55rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-    .scroll-line { width: 1px; height: 40px; background: linear-gradient(180deg, #e63946, transparent); animation: scrollAnim 2s ease infinite; }
-    @keyframes scrollAnim { 0%, 100% { transform: scaleY(1); opacity: 0.3; } 50% { transform: scaleY(1.5); opacity: 1; } }
+    .logo-sub { font-size: 0.7rem; letter-spacing: 12px; margin-top: 1rem; opacity: 0.7; text-transform: uppercase; font-weight: 300; }
+    .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; z-index: 20; pointer-events: auto; }
+    .scroll-text { font-size: 0.55rem; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .scroll-line { width: 1.5px; height: 45px; background: linear-gradient(180deg, #e63946, transparent); animation: scrollAnim 2s ease infinite; }
+    @keyframes scrollAnim { 0%,100% { transform: scaleY(1); opacity: 0.4; } 50% { transform: scaleY(1.6); opacity: 1; } }
     
-    /* SHOP SECTION - MODERN BASKETBALL SHOP */
-    .shop-section {
-      background: #050505;
-      padding: 5rem 2rem 6rem;
-      position: relative;
-    }
-    .shop-header {
-      max-width: 1400px;
-      margin: 0 auto 2rem auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-    .shop-header h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff, #e63946);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .cart-icon {
-      background: rgba(230,57,70,0.2);
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-      transition: 0.3s;
-    }
-    .cart-icon:hover { background: #e63946; transform: scale(1.05); }
-    .cart-count {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: #ffb347;
-      color: #050505;
-      font-weight: 800;
-      font-size: 0.7rem;
-      padding: 0 6px;
-      border-radius: 30px;
-      min-width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .search-filter-bar {
-      max-width: 1400px;
-      margin: 0 auto 2rem auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .search-box {
-      background: rgba(255,255,255,0.05);
-      border-radius: 60px;
-      padding: 0.5rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-      min-width: 200px;
-      border: 1px solid rgba(230,57,70,0.3);
-    }
+    .shop-section { background: rgba(5,5,5,0.7); backdrop-filter: blur(12px); padding: 5rem 2rem 6rem; position: relative; z-index: 10; border-top: 1px solid rgba(230,57,70,0.2); }
+    .shop-header { max-width: 1400px; margin: 0 auto 2rem auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+    .shop-header h2 { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #fff, #e63946, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; }
+    .cart-icon { background: rgba(230,57,70,0.2); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: all 0.3s; border: 1px solid rgba(230,57,70,0.4); backdrop-filter: blur(8px); }
+    .cart-icon:hover { background: #e63946; transform: scale(1.05); box-shadow: 0 0 25px rgba(230,57,70,0.6); }
+    .cart-count { position: absolute; top: -5px; right: -5px; background: #ffb347; color: #050505; font-weight: 800; font-size: 0.7rem; padding: 0 6px; border-radius: 30px; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+    
+    .search-filter-bar { max-width: 1400px; margin: 0 auto 2rem auto; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
+    .search-box { background: rgba(255,255,255,0.05); border-radius: 60px; padding: 0.5rem 1.5rem; display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; border: 1px solid rgba(230,57,70,0.4); backdrop-filter: blur(8px); }
     .search-box i { color: #e63946; }
-    .search-box input {
-      background: transparent;
-      border: none;
-      padding: 0.7rem 0;
-      width: 100%;
-      color: white;
-      outline: none;
-    }
-    .filter-group {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .filter-chip {
-      background: rgba(255,255,255,0.05);
-      border: none;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: 0.2s;
-      color: #ddd;
-    }
-    .filter-chip.active, .filter-chip:hover { background: #e63946; color: white; }
-    .product-grid {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-    .product-card {
-      background: rgba(15,15,20,0.8);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(230,57,70,0.2);
-      border-radius: 1.5rem;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    .product-card:hover { transform: translateY(-8px); border-color: rgba(230,57,70,0.5); box-shadow: 0 20px 30px -12px rgba(230,57,70,0.2); }
-    .product-img {
-      background: linear-gradient(145deg, #101018, #1a1a28);
-      text-align: center;
-      padding: 2rem 1rem;
-      position: relative;
-    }
-    .product-img i { font-size: 4rem; color: #ffb347; filter: drop-shadow(0 8px 12px black); }
-    .badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: #e63946;
-      font-size: 0.65rem;
-      padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      font-weight: 700;
-    }
+    .search-box input { background: transparent; border: none; padding: 0.7rem 0; width: 100%; color: white; outline: none; }
+    .filter-group { display: flex; gap: 10px; flex-wrap: wrap; max-height: 80px; overflow-y: auto; padding: 4px; }
+    .filter-chip { background: rgba(255,255,255,0.05); border: none; padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; color: #ddd; white-space: nowrap; }
+    .filter-chip.active, .filter-chip:hover { background: #e63946; color: white; box-shadow: 0 0 12px rgba(230,57,70,0.5); transform: scale(1.02); }
+    
+    .product-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+    .product-card { background: rgba(12,12,18,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(230,57,70,0.25); border-radius: 1.8rem; overflow: hidden; transition: all 0.4s cubic-bezier(0.2,0.9,0.4,1.2); opacity: 0; transform: translateY(30px); }
+    .product-card:hover { transform: translateY(-8px) scale(1.01); border-color: rgba(230,57,70,0.7); box-shadow: 0 25px 40px -15px rgba(230,57,70,0.3); }
+    .product-img { background: linear-gradient(145deg, #0c0c14, #12121c); text-align: center; padding: 2rem 1rem; position: relative; }
+    .product-img i { font-size: 4rem; color: #ffb347; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5)); transition: 0.3s; }
+    .product-card:hover .product-img i { transform: scale(1.05); color: #e63946; }
+    .badge { position: absolute; top: 12px; left: 12px; background: linear-gradient(135deg, #e63946, #ffb347); font-size: 0.65rem; padding: 0.2rem 0.8rem; border-radius: 30px; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
     .product-info { padding: 1rem 1rem 1.2rem; }
-    .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
+    .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; }
     .product-name { font-weight: 800; font-size: 1rem; margin: 0.4rem 0; }
     .price-row { display: flex; justify-content: space-between; align-items: center; margin: 0.7rem 0 0.5rem; }
     .price { font-weight: 800; font-size: 1.2rem; }
-    .add-btn {
-      background: rgba(230,57,70,0.2);
-      border: none;
-      padding: 0.4rem 1rem;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: 0.2s;
-      color: white;
-    }
-    .add-btn:hover { background: #e63946; }
-    .official-link {
-      display: inline-block;
-      margin-top: 6px;
-      font-size: 0.65rem;
-      color: #ffb347;
-      text-decoration: none;
-    }
-    .official-link i { margin-right: 4px; }
+    .add-btn { background: rgba(230,57,70,0.2); border: none; padding: 0.4rem 1rem; border-radius: 40px; font-weight: 600; font-size: 0.7rem; cursor: pointer; transition: 0.3s; color: white; }
+    .add-btn:hover { background: #e63946; box-shadow: 0 0 12px #e63946; }
+    .official-link { display: inline-block; margin-top: 6px; font-size: 0.65rem; color: #ffb347; text-decoration: none; transition: 0.2s; }
+    .official-link:hover { color: white; text-shadow: 0 0 4px #ffb347; }
     .no-results { grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 2rem; }
     
     /* Checkout Modal */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); z-index: 3000;
-      visibility: hidden; opacity: 0; transition: 0.25s;
-    }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(16px); z-index: 3000; visibility: hidden; opacity: 0; transition: 0.3s; }
     .modal-overlay.active { visibility: visible; opacity: 1; }
-    .checkout-panel {
-      position: fixed; top: 0; right: -550px; width: 100%; max-width: 520px;
-      height: 100%; background: #0a0a10; border-left: 2px solid #e63946;
-      z-index: 3001; transition: right 0.35s cubic-bezier(0.2,0.9,0.4,1.1);
-      display: flex; flex-direction: column; overflow-y: auto;
-    }
+    .checkout-panel { position: fixed; top: 0; right: -580px; width: 100%; max-width: 540px; height: 100%; background: #0a0a10; border-left: 2px solid #e63946; z-index: 3001; transition: right 0.4s cubic-bezier(0.2,0.9,0.4,1.2); display: flex; flex-direction: column; overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,0.5); }
     .modal-overlay.active .checkout-panel { right: 0; }
-    .panel-header { padding: 1.5rem; border-bottom: 1px solid rgba(230,57,70,0.3); display: flex; justify-content: space-between; }
-    .close-panel { background: none; border: none; font-size: 1.5rem; color: white; cursor: pointer; }
+    .panel-header { padding: 1.5rem; border-bottom: 1px solid rgba(230,57,70,0.3); display: flex; justify-content: space-between; align-items: center; }
+    .close-panel { background: none; border: none; font-size: 1.5rem; color: white; cursor: pointer; transition: 0.2s; }
+    .close-panel:hover { color: #e63946; transform: rotate(90deg); }
     .cart-items { padding: 1rem; max-height: 30vh; overflow-y: auto; }
-    .cart-item { display: flex; gap: 1rem; background: rgba(255,255,255,0.03); margin-bottom: 0.8rem; padding: 0.8rem; border-radius: 1rem; }
-    .cart-item-details { flex: 1; }
+    .cart-item { display: flex; gap: 1rem; background: rgba(255,255,255,0.04); margin-bottom: 0.8rem; padding: 0.8rem; border-radius: 1.2rem; border: 1px solid rgba(230,57,70,0.2); }
     .cart-qty { display: flex; gap: 8px; margin-top: 6px; }
-    .cart-qty button { background: rgba(230,57,70,0.3); border: none; width: 26px; border-radius: 30px; cursor: pointer; color: white; }
+    .cart-qty button { background: rgba(230,57,70,0.3); border: none; width: 28px; border-radius: 30px; cursor: pointer; color: white; transition: 0.2s; }
+    .cart-qty button:hover { background: #e63946; }
     .shipping-form { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
     .form-group { margin-bottom: 1rem; }
-    .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(230,57,70,0.4); padding: 0.7rem; border-radius: 1rem; color: white; }
+    .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(230,57,70,0.4); padding: 0.7rem; border-radius: 1rem; color: white; transition: 0.2s; }
+    .form-group input:focus { border-color: #e63946; outline: none; box-shadow: 0 0 8px rgba(230,57,70,0.3); }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    .payment-methods { display: flex; gap: 1rem; margin: 1rem 0; }
-    .pay-option { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 40px; cursor: pointer; font-size: 0.75rem; }
-    .pay-option.selected { background: #e63946; }
-    .total-area { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
-    .place-order { width: 100%; background: #e63946; border: none; padding: 1rem; border-radius: 60px; font-weight: 800; cursor: pointer; margin-top: 0.5rem; }
+    .payment-methods { display: flex; gap: 1rem; margin: 1rem 0; flex-wrap: wrap; }
+    .pay-option { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 40px; cursor: pointer; font-size: 0.75rem; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+    .pay-option.selected { background: linear-gradient(135deg, #e63946, #ffb347); box-shadow: 0 0 10px #e63946; }
+    .total-area { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); background: #0a0a10; }
+    .place-order { width: 100%; background: linear-gradient(135deg, #e63946, #ffb347); border: none; padding: 1rem; border-radius: 60px; font-weight: 800; cursor: pointer; transition: 0.3s; color: white; }
+    .place-order:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(230,57,70,0.5); }
     .footer-link { color: #ffb347; text-decoration: none; font-size: 0.7rem; display: block; text-align: center; margin-top: 1rem; }
+    .main-footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #666; background: #050505; position: relative; z-index: 10; }
     
-    .main-footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #555; }
-    @media (max-width: 768px) { .nav-premium { padding: 1rem 1.5rem; } .nav-links-premium { display: none; } .logo-text { font-size: 1.8rem; } .shop-header h2 { font-size: 1.5rem; } }
+    @media (max-width: 768px) { .nav-premium { padding: 1rem 1.5rem; } .nav-links-premium { display: none; } .logo-text { font-size: 1.8rem; letter-spacing: 0.1em; } .shop-header h2 { font-size: 1.2rem; } .filter-group { max-height: 60px; } }
   </style>
 </head>
 <body>
+
+<canvas id="webgl-canvas"></canvas>
 
 <div id="musicControl" class="music-control"><i class="fas fa-music"></i></div>
 <audio id="bgMusic" loop preload="auto"><source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8c8c8c8.mp3?filename=upbeat-lofi-112191.mp3" type="audio/mpeg"></audio>
@@ -283,89 +139,226 @@
 <div class="cursor-outline"></div>
 
 <nav class="nav-premium" id="nav">
-  <div class="logo-premium">UNSEEN <span>// STUDIO</span></div>
+  <div class="logo-premium">CINEMA <span>// 4D</span></div>
   <div class="nav-links-premium"><a id="homeBtn">HOME</a><a id="shopBtn">SHOP</a><a id="contactBtn">CONTACT</a></div>
 </nav>
 
-<section class="hero" id="heroSection">
-  <div class="hero-particles" id="particleContainer"></div>
-  <div class="hero-bg-glow"></div>
-  <div class="floating-text-container" id="floatingTextContainer"></div>
-  <div class="center-logo" id="centerLogo">
-    <div class="logo-3d-wrapper"><div class="logo-icon"><i class="fas fa-basketball"></i></div><div class="logo-text">SNEAKER HYPE</div><div class="logo-sub">THE BASKETBALL VAULT</div></div>
+<section class="hero">
+  <div class="hero-content">
+    <div class="logo-icon"><i class="fas fa-crown"></i></div>
+    <div class="logo-text">SNEAKER HYPE</div>
+    <div class="logo-sub">REDSHIFT • WEBGL • CINEMATIC 4D</div>
   </div>
   <div class="scroll-indicator" id="scrollIndicator"><div class="scroll-text">SHOP NOW</div><div class="scroll-line"></div></div>
 </section>
 
-<!-- BASKETBALL SHOP SECTION -->
 <section id="shopSection" class="shop-section">
   <div class="shop-header">
-    <h2><i class="fas fa-basketball-ball"></i> CURRENT BASKETBALL KICKS</h2>
+    <h2><i class="fas fa-basketball-ball"></i> BASKETBALL ELITE COLLECTION</h2>
     <div class="cart-icon" id="cartIconBtn"><i class="fas fa-shopping-bag"></i><span class="cart-count" id="cartCountBadge">0</span></div>
   </div>
   <div class="search-filter-bar">
-    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search models..."></div>
+    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search models... LeBron, Curry, Jordan..."></div>
     <div class="filter-group" id="filterGroup"></div>
   </div>
   <div class="product-grid" id="productGrid"></div>
 </section>
 
-<footer class="main-footer"><p>© 2025 UNSEEN STUDIO — BASKETBALL EDITION | OFFICIAL STORE INTEGRATION</p></footer>
+<footer class="main-footer"><p>© 2025 CINEMA 4D + REDSHIFT | UNSEEN STUDIO — HIGH QUALITY VFX RENDERING</p></footer>
 
-<!-- CHECKOUT MODAL -->
 <div id="checkoutModal" class="modal-overlay">
   <div class="checkout-panel">
-    <div class="panel-header"><h3>🛒 YOUR CART</h3><button class="close-panel" id="closeCheckoutBtn">✕</button></div>
+    <div class="panel-header"><h3>🎬 YOUR CART</h3><button class="close-panel" id="closeCheckoutBtn">✕</button></div>
     <div class="cart-items" id="cartItemsList"></div>
     <div class="shipping-form">
-      <h4 style="margin-bottom:1rem;">Shipping Details</h4>
-      <div class="form-group"><input type="text" id="fullName" placeholder="Full Name"></div>
-      <div class="form-group"><input type="email" id="email" placeholder="Email"></div>
-      <div class="form-group"><input type="text" id="address" placeholder="Address"></div>
-      <div class="row-2"><input type="text" id="city" placeholder="City"><input type="text" id="zip" placeholder="ZIP"></div>
-      <div class="form-group"><select id="country"><option>United States</option><option>Canada</option><option>UK</option><option>Germany</option></select></div>
-      <div class="payment-methods" id="paymentMethods"><div class="pay-option selected" data-method="card"><i class="fab fa-cc-visa"></i> Card</div><div class="pay-option" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div><div class="pay-option" data-method="apple"><i class="fab fa-apple-pay"></i> Apple Pay</div></div>
+      <h4 style="margin-bottom:1rem;">📦 Shipping Details (Required)</h4>
+      <div class="form-group"><input type="text" id="fullName" placeholder="Full Name *" required></div>
+      <div class="form-group"><input type="email" id="email" placeholder="Email Address *" required></div>
+      <div class="form-group"><input type="text" id="address" placeholder="Street Address *" required></div>
+      <div class="row-2"><input type="text" id="city" placeholder="City *"><input type="text" id="zip" placeholder="ZIP Code *"></div>
+      <div class="form-group"><select id="country"><option>United States</option><option>Canada</option><option>UK</option><option>Germany</option><option>France</option><option>Japan</option><option>Australia</option></select></div>
+      <div class="payment-methods" id="paymentMethods">
+        <div class="pay-option selected" data-method="card"><i class="fab fa-cc-visa"></i> Credit Card</div>
+        <div class="pay-option" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div>
+      </div>
     </div>
-    <div class="total-area"><div style="display:flex; justify-content:space-between; font-weight:800;"><span>TOTAL</span><span id="cartTotal">$0</span></div><button class="place-order" id="placeOrderBtn">✅ PLACE ORDER</button><a href="#" id="officialStoreLink" class="footer-link"><i class="fas fa-store"></i> Official Brand Store →</a></div>
+    <div class="total-area">
+      <div style="display:flex; justify-content:space-between; font-weight:800;"><span>TOTAL</span><span id="cartTotal">$0</span></div>
+      <button class="place-order" id="placeOrderBtn">✅ PLACE ORDER (Secure)</button>
+      <a href="#" id="officialStoreLink" class="footer-link"><i class="fas fa-store"></i> Official Brand Store →</a>
+    </div>
   </div>
 </div>
 
+<!-- Three.js WebGL + Redshift Cinematic Style -->
+<script type="importmap">
+  { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
+</script>
+<script type="module">
+  import * as THREE from 'three';
+
+  const canvas = document.getElementById('webgl-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setClearColor(0x000000, 0);
+  
+  const scene = new THREE.Scene();
+  scene.background = null;
+  scene.fog = new THREE.FogExp2(0x050505, 0.006);
+  
+  const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 1.2, 13);
+  camera.lookAt(0, 0, 0);
+  
+  // Cinematic Redshift-style lighting
+  const ambientLight = new THREE.AmbientLight(0x111111);
+  scene.add(ambientLight);
+  
+  const keyLight = new THREE.PointLight(0xe63946, 1.2);
+  keyLight.position.set(3, 4, 5);
+  scene.add(keyLight);
+  
+  const fillLight = new THREE.PointLight(0xffb347, 0.7);
+  fillLight.position.set(-2, 2, 6);
+  scene.add(fillLight);
+  
+  const rimLight = new THREE.PointLight(0xffffff, 0.5);
+  rimLight.position.set(0, 3, -5);
+  scene.add(rimLight);
+  
+  const backLight = new THREE.DirectionalLight(0x4466cc, 0.4);
+  backLight.position.set(0, 2, -4);
+  scene.add(backLight);
+  
+  // Floating particles (cinematic dust)
+  const particleCount = 1800;
+  const particleGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
+    positions[i*3] = (Math.random() - 0.5) * 50;
+    positions[i*3+1] = (Math.random() - 0.5) * 28;
+    positions[i*3+2] = (Math.random() - 0.5) * 40 - 20;
+  }
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color: 0xe63946, size: 0.06, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+  
+  // Central Torus Knot (Cinematic 4D style)
+  const knotGeo = new THREE.TorusKnotGeometry(1.0, 0.22, 200, 32, 3, 4);
+  const knotMat = new THREE.MeshStandardMaterial({ color: 0xe63946, emissive: 0x441111, roughness: 0.25, metalness: 0.85, emissiveIntensity: 0.6 });
+  const knot = new THREE.Mesh(knotGeo, knotMat);
+  scene.add(knot);
+  
+  // Outer Ring with redshift gloss
+  const ringGeo = new THREE.TorusGeometry(1.6, 0.04, 128, 300);
+  const ringMat = new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0x552200, metalness: 0.9, roughness: 0.2 });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  scene.add(ring);
+  
+  // Floating Orbs
+  const orbGroup = new THREE.Group();
+  const orbMat = new THREE.MeshStandardMaterial({ color: 0xff6b6b, emissive: 0x331111, emissiveIntensity: 0.5 });
+  for (let i = 0; i < 80; i++) {
+    const orb = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 12), orbMat);
+    const radius = 2.4;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    orb.position.set(radius * Math.sin(phi) * Math.cos(theta), radius * Math.sin(phi) * Math.sin(theta), radius * Math.cos(phi));
+    orbGroup.add(orb);
+  }
+  scene.add(orbGroup);
+  
+  let time = 0;
+  
+  function animateWebGL() {
+    requestAnimationFrame(animateWebGL);
+    time += 0.008;
+    
+    knot.rotation.x = time * 0.5;
+    knot.rotation.y = time * 0.7;
+    knot.rotation.z = time * 0.3;
+    knot.material.emissiveIntensity = 0.5 + Math.sin(time * 2) * 0.2;
+    
+    ring.rotation.x = Math.sin(time * 0.4) * 0.2;
+    ring.rotation.y = time * 0.5;
+    
+    orbGroup.rotation.y = time * 0.2;
+    orbGroup.rotation.x = Math.sin(time * 0.3) * 0.1;
+    
+    particles.rotation.y = time * 0.03;
+    particles.rotation.x = Math.sin(time * 0.1) * 0.05;
+    
+    // Cinematic camera drift
+    camera.position.x += (Math.sin(time * 0.2) * 0.06 - camera.position.x) * 0.02;
+    camera.position.y += (Math.sin(time * 0.5) * 0.04 - camera.position.y) * 0.03;
+    camera.lookAt(0, 0, 0);
+    
+    renderer.render(scene, camera);
+  }
+  animateWebGL();
+  
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+  
+  // ScrollTrigger for scroll effects
+  ScrollTrigger.create({
+    trigger: "body",
+    start: "top top",
+    end: "bottom bottom",
+    onUpdate: (self) => {
+      const prog = self.progress;
+      knot.material.emissiveIntensity = 0.4 + prog * 0.6;
+      particleMat.opacity = 0.3 + prog * 0.3;
+    }
+  });
+</script>
+
 <script>
-  // ========== 50+ CURRENT BASKETBALL SHOES (2024-2025 MODELS) ==========
-  const basketballShoes = [
-    { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", icon: "fa-basketball-ball", official: "https://www.nike.com/lebron-21" },
-    { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", icon: "fa-basketball", official: "https://www.nike.com/kobe-6" },
-    { id: 3, name: "Air Jordan 38", brand: "Jordan", price: 189, badge: "ICON", icon: "fa-crown", official: "https://www.nike.com/jordan-38" },
-    { id: 4, name: "Curry 11", brand: "Under Armour", price: 169, badge: "SPLASH", icon: "fa-fire", official: "https://www.underarmour.com/curry-11" },
-    { id: 5, name: "Harden Vol 8", brand: "Adidas", price: 159, badge: "ELITE", icon: "fa-bolt", official: "https://www.adidas.com/harden-vol-8" },
-    { id: 6, name: "Ja Morant 2", brand: "Nike", price: 129, badge: "RISING", icon: "fa-basketball-ball", official: "https://www.nike.com/ja-morant-2" },
-    { id: 7, name: "Dame 9", brand: "Adidas", price: 129, badge: "SIGNATURE", icon: "fa-shoe-prints", official: "https://www.adidas.com/dame-9" },
-    { id: 8, name: "Zion 3", brand: "Jordan", price: 159, badge: "POWER", icon: "fa-bolt", official: "https://www.nike.com/zion-3" },
-    { id: 9, name: "Paul George 6", brand: "Nike", price: 149, badge: "PLAYOFF", icon: "fa-shoe-prints", official: "https://www.nike.com/pg-6" },
-    { id: 10, name: "Kyrie Low 5", brand: "Nike", price: 119, badge: "QUICK", icon: "fa-basketball-ball", official: "https://www.nike.com/kyrie-low" },
-    { id: 11, name: "Trae Young 3", brand: "Adidas", price: 139, badge: "ICE", icon: "fa-bolt", official: "https://www.adidas.com/trae-young-3" },
-    { id: 12, name: "MB.03", brand: "Puma", price: 139, badge: "FUTURE", icon: "fa-bolt", official: "https://us.puma.com/mb-03" },
-    { id: 13, name: "Kawhi 4", brand: "New Balance", price: 179, badge: "CLAW", icon: "fa-hand-peace", official: "https://www.newbalance.com/kawhi-4" },
-    { id: 14, name: "Giannis Freak 5", brand: "Nike", price: 149, badge: "FREAK", icon: "fa-bolt", official: "https://www.nike.com/freak-5" },
-    { id: 15, name: "Don Issue 5", brand: "Adidas", price: 119, badge: "DON", icon: "fa-shoe-prints", official: "https://www.adidas.com/don-issue-5" },
-    { id: 16, name: "Jordan Luka 2", brand: "Jordan", price: 139, badge: "LUKA", icon: "fa-basketball", official: "https://www.nike.com/luka-2" },
-    { id: 17, name: "Clyde All-Pro", brand: "Puma", price: 129, badge: "RETRO", icon: "fa-shoe-prints", official: "https://us.puma.com/clyde-all-pro" },
-    { id: 18, name: "Two WXY v4", brand: "New Balance", price: 149, badge: "TWO-WAY", icon: "fa-shoe-prints", official: "https://www.newbalance.com/two-wxy" },
-    { id: 19, name: "Curry 4 Flotro", brand: "Under Armour", price: 159, badge: "FLOTRO", icon: "fa-fire", official: "https://www.underarmour.com/curry-4" },
-    { id: 20, name: "Crazy 1", brand: "Adidas", price: 149, badge: "KOBE", icon: "fa-bolt", official: "https://www.adidas.com/crazy-1" },
-    { id: 21, name: "Way of Wade 10", brand: "Li-Ning", price: 209, badge: "PREMIUM", icon: "fa-crown", official: "https://www.wayofwade.com" },
-    { id: 22, name: "KT9", brand: "Anta", price: 139, badge: "SHOCK", icon: "fa-basketball", official: "https://www.anta.com" },
-    { id: 23, name: "Nova Surge", brand: "ASICS", price: 159, badge: "JAPAN", icon: "fa-running", official: "https://www.asics.com" },
-    { id: 24, name: "Savage Motion", brand: "Peak", price: 119, badge: "ELITE", icon: "fa-bolt", official: "https://www.peak.com" },
-    { id: 25, name: "Air Jordan 39", brand: "Jordan", price: 199, badge: "UPCOMING", icon: "fa-crown", official: "https://www.nike.com/jordan" },
+  // ========== MASSIVE SNEAKER COLLECTION (120+ SHOES) ==========
+  const brandList = ["Nike", "Jordan", "Adidas", "Under Armour", "Puma", "New Balance", "Reebok", "ASICS", "Li-Ning", "Anta", "Converse", "Vans"];
+  const shoeNames = [
+    "LeBron XXI", "Kobe 6 Protro", "Air Jordan 38", "Curry 11", "Harden Vol 8", "Ja Morant 2", "Dame 9", "Zion 3",
+    "Paul George 6", "Kyrie Low 5", "Trae Young 3", "MB.03", "Kawhi 4", "Giannis Freak 5", "Don Issue 5", "Jordan Luka 2",
+    "Clyde All-Pro", "Two WXY v4", "Curry 4 Flotro", "Crazy 1", "Way of Wade 10", "KT9", "Nova Surge", "Savage Motion",
+    "Air Jordan 39", "LeBron NXXT Gen", "Jordan Tatum 2", "Curry 12", "Adidas AE 1", "Puma Scoot 1", "Kobe 8 Protro",
+    "Air Max 95", "Dunk Low", "Forum 84", "574 Legacy", "RS-X", "Ultraboost 1.0", "Vaporfly Next%", "Gel-Kayano 30",
+    "Fresh Foam X", "Pegasus 41", "Chuck 70 High", "Old Skool", "Slip-On", "Campus 00s", "550", "Yeezy 350 V2",
+    "Disruptor 2", "Club C 85", "Jordan 1 Mid", "Cloudmonster", "Triumph 22", "Speedgoat 5", "XT-6"
   ];
   
-  // Cart state
+  let allProducts = [];
+  let idCounter = 1;
+  
+  // Generate 125 shoes
+  for (let i = 0; i < 130; i++) {
+    const brand = brandList[i % brandList.length];
+    const nameIdx = i % shoeNames.length;
+    let name = shoeNames[nameIdx];
+    if (i > 80) name += " SE";
+    if (i > 100) name += " LX";
+    const isBasketball = i < 70 || (i % 3 === 0);
+    allProducts.push({
+      id: idCounter++,
+      name: name,
+      brand: brand,
+      price: 69 + (i * 2) % 180,
+      badge: i < 25 ? "🔥 NEW" : (i < 60 ? "SIGNATURE" : "ELITE"),
+      icon: isBasketball ? "fa-basketball-ball" : "fa-shoe-prints",
+      official: "https://www.nike.com/"
+    });
+  }
+  allProducts = allProducts.sort(() => Math.random() - 0.5);
+  
+  // Cart State
   let cart = [];
   let currentSearch = "";
   let currentBrand = "all";
   
-  // DOM elements
   const productGrid = document.getElementById("productGrid");
   const searchInput = document.getElementById("searchInput");
   const filterGroup = document.getElementById("filterGroup");
@@ -377,15 +370,14 @@
   const cartTotalSpan = document.getElementById("cartTotal");
   const placeOrderBtn = document.getElementById("placeOrderBtn");
   
-  // Save/load cart
-  function saveCart() { localStorage.setItem("basketball_cart", JSON.stringify(cart)); updateCartUI(); }
+  function saveCart() { localStorage.setItem("cinematic_cart", JSON.stringify(cart)); updateCartUI(); }
   function updateCartUI() { const totalQty = cart.reduce((s,i)=>s+i.quantity,0); cartCountBadge.innerText = totalQty; renderCartModal(); }
   function renderCartModal() {
     if(!cartItemsList) return;
-    if(cart.length===0) { cartItemsList.innerHTML = "<div style='text-align:center;padding:2rem;'>Empty</div>"; cartTotalSpan.innerText="$0"; return; }
+    if(cart.length===0) { cartItemsList.innerHTML = "<div style='text-align:center;padding:2rem;'>📦 Your cart is empty</div>"; cartTotalSpan.innerText="$0"; return; }
     let html = "", total = 0;
     cart.forEach(item => { total += item.price * item.quantity;
-      html += `<div class="cart-item"><div><i class="fas ${item.icon}"></i></div><div class="cart-item-details"><b>${escapeHtml(item.name)}</b><div>$${item.price}</div><div class="cart-qty"><button class="qty-dec" data-id="${item.id}">-</button><span>${item.quantity}</span><button class="qty-inc" data-id="${item.id}">+</button><button class="cart-remove" data-id="${item.id}" style="background:none;margin-left:8px;">🗑️</button></div></div></div>`;
+      html += `<div class="cart-item"><div style="font-size:2rem;"><i class="fas ${item.icon}"></i></div><div style="flex:1"><b>${escapeHtml(item.name)}</b><div>$${item.price}</div><div class="cart-qty"><button class="qty-dec" data-id="${item.id}">-</button><span>${item.quantity}</span><button class="qty-inc" data-id="${item.id}">+</button><button class="cart-remove" data-id="${item.id}" style="background:none;margin-left:6px;">🗑️</button></div></div></div>`;
     });
     cartItemsList.innerHTML = html; cartTotalSpan.innerText = "$"+total;
     document.querySelectorAll(".qty-dec").forEach(b=>b.addEventListener("click",()=>updateQty(parseInt(b.dataset.id),-1)));
@@ -394,31 +386,31 @@
   }
   function updateQty(id, delta) { let idx = cart.findIndex(i=>i.id===id); if(idx!==-1) { let newQ = cart[idx].quantity+delta; if(newQ<=0) cart.splice(idx,1); else cart[idx].quantity=newQ; saveCart(); renderProducts(); } }
   function removeFromCart(id) { cart = cart.filter(i=>i.id!==id); saveCart(); renderProducts(); }
-  function addToCart(shoe) { let exist = cart.find(i=>i.id===shoe.id); if(exist) exist.quantity++; else cart.push({id:shoe.id,name:shoe.name,price:shoe.price,quantity:1,icon:shoe.icon,official:shoe.official}); saveCart(); showToast(`+ ${shoe.name} added`); }
-  function showToast(msg) { let t=document.createElement("div"); t.innerText=msg; t.style.cssText="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#e63946;padding:10px 24px;border-radius:60px;z-index:9999"; document.body.appendChild(t); setTimeout(()=>t.remove(),1500); }
+  function addToCart(product) { let exist = cart.find(i=>i.id===product.id); if(exist) exist.quantity++; else cart.push({id:product.id,name:product.name,price:product.price,quantity:1,icon:product.icon}); saveCart(); showToast(`✓ ${product.name} added to cart`); }
+  function showToast(msg) { let t=document.createElement("div"); t.innerText=msg; t.style.cssText="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#e63946;padding:10px 24px;border-radius:60px;z-index:9999;font-size:0.8rem;"; document.body.appendChild(t); setTimeout(()=>t.remove(),1500); }
   
   function getFiltered() {
-    let res = [...basketballShoes];
-    if(currentBrand !== "all") res = res.filter(s => s.brand.toLowerCase() === currentBrand.toLowerCase());
-    if(currentSearch.trim()) { let term = currentSearch.trim().toLowerCase(); res = res.filter(s => s.name.toLowerCase().includes(term) || s.brand.toLowerCase().includes(term)); }
+    let res = [...allProducts];
+    if(currentBrand !== "all") res = res.filter(p => p.brand.toLowerCase() === currentBrand.toLowerCase());
+    if(currentSearch.trim()) { let term = currentSearch.trim().toLowerCase(); res = res.filter(p => p.name.toLowerCase().includes(term) || p.brand.toLowerCase().includes(term)); }
     return res;
   }
   function renderProducts() {
     const filtered = getFiltered();
     if(filtered.length===0) { productGrid.innerHTML = `<div class="no-results">No sneakers found 🔥</div>`; return; }
     let html = "";
-    filtered.forEach(shoe => {
-      html += `<div class="product-card"><div class="product-img"><i class="fas ${shoe.icon}"></i>${shoe.badge?`<div class="badge">${shoe.badge}</div>`:''}</div><div class="product-info"><div class="brand">${shoe.brand}</div><div class="product-name">${escapeHtml(shoe.name)}</div><div class="price-row"><div class="price">$${shoe.price}</div><button class="add-btn add-to-cart" data-id="${shoe.id}">ADD</button></div><a href="${shoe.official}" target="_blank" class="official-link"><i class="fas fa-external-link-alt"></i> Official Store</a></div></div>`;
+    filtered.forEach(prod => {
+      html += `<div class="product-card"><div class="product-img"><i class="fas ${prod.icon}"></i>${prod.badge?`<div class="badge">${prod.badge}</div>`:''}</div><div class="product-info"><div class="brand">${prod.brand}</div><div class="product-name">${escapeHtml(prod.name)}</div><div class="price-row"><div class="price">$${prod.price}</div><button class="add-btn add-to-cart" data-id="${prod.id}">ADD</button></div><a href="${prod.official}" target="_blank" class="official-link"><i class="fas fa-external-link-alt"></i> Official Store</a></div></div>`;
     });
     productGrid.innerHTML = html;
-    document.querySelectorAll(".add-to-cart").forEach(btn => { btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.id); const shoe = basketballShoes.find(s=>s.id===id); if(shoe) addToCart(shoe); }); });
+    document.querySelectorAll(".add-to-cart").forEach(btn => { btn.addEventListener("click", (e) => { const id = parseInt(btn.dataset.id); const prod = allProducts.find(p=>p.id===id); if(prod) addToCart(prod); }); });
     gsap.fromTo(".product-card", { opacity:0, y:30 }, { opacity:1, y:0, duration:0.5, stagger:0.04, ease:"power2.out" });
   }
   function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
   
   function initFilters() {
-    const brands = ["all", "Nike", "Jordan", "Adidas", "Under Armour", "Puma", "New Balance"];
-    filterGroup.innerHTML = brands.map(b => `<button class="filter-chip ${b==='all'?'active':''}" data-brand="${b}">${b.toUpperCase()}</button>`).join('');
+    const uniqueBrands = ["all", ...new Set(allProducts.map(p=>p.brand))];
+    filterGroup.innerHTML = uniqueBrands.map(b => `<button class="filter-chip ${b==='all'?'active':''}" data-brand="${b}">${b.toUpperCase().slice(0,12)}</button>`).join('');
     document.querySelectorAll(".filter-chip").forEach(chip => { chip.addEventListener("click", () => { currentBrand = chip.dataset.brand; document.querySelectorAll(".filter-chip").forEach(c=>c.classList.remove("active")); chip.classList.add("active"); renderProducts(); }); });
     searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderProducts(); });
   }
@@ -429,42 +421,42 @@
     checkoutModal.addEventListener("click", (e) => { if(e.target === checkoutModal) checkoutModal.classList.remove("active"); });
     document.getElementById("paymentMethods")?.addEventListener("click", (e) => { let div = e.target.closest(".pay-option"); if(div) { document.querySelectorAll(".pay-option").forEach(p=>p.classList.remove("selected")); div.classList.add("selected"); } });
     placeOrderBtn.addEventListener("click", () => {
-      if(cart.length===0) { showToast("Cart is empty"); return; }
-      let name = document.getElementById("fullName").value.trim(), email = document.getElementById("email").value.trim();
-      if(!name || !email) { showToast("Fill shipping details"); return; }
-      let method = document.querySelector(".pay-option.selected")?.dataset.method || "card";
-      let total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
-      showToast(`✅ Order placed! (${method}) Total $${total}. Thank you.`);
-      cart = []; saveCart(); renderProducts(); checkoutModal.classList.remove("active");
+      if(cart.length===0) { showToast("Your cart is empty — add some shoes first!"); return; }
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const zip = document.getElementById("zip").value.trim();
+      if(!fullName || !email || !address || !city || !zip) {
+        showToast("❌ Please fill in all shipping details (Name, Email, Address, City, ZIP)");
+        return;
+      }
+      if(!email.includes("@")) { showToast("Invalid email address"); return; }
+      const selectedPay = document.querySelector(".pay-option.selected")?.dataset.method || "card";
+      const total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+      const methodName = selectedPay === "card" ? "Credit Card" : "PayPal";
+      showToast(`✅ Order placed! ${methodName} payment of $${total} processed. Shipping to ${fullName}. Thank you!`);
+      cart = [];
+      saveCart();
+      renderProducts();
+      checkoutModal.classList.remove("active");
+      document.getElementById("fullName").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("address").value = "";
+      document.getElementById("city").value = "";
+      document.getElementById("zip").value = "";
     });
     document.getElementById("officialStoreLink")?.addEventListener("click", (e) => { e.preventDefault(); window.open("https://www.nike.com/", "_blank"); });
   }
   
-  // Load cart from storage
-  const savedCart = localStorage.getItem("basketball_cart");
+  const savedCart = localStorage.getItem("cinematic_cart");
   if(savedCart) cart = JSON.parse(savedCart);
   initFilters(); renderProducts(); initCheckout(); updateCartUI();
-  
-  // Floating particles & animations
-  const floatingWords = ["BASKETBALL", "HYPE", "GRAIL", "COURT", "ICON", "SIGNATURE", "ELITE", "DUNK", "CROSSOVER"];
-  const container = document.getElementById("floatingTextContainer");
-  for(let i=0;i<35;i++) { let w=document.createElement("div"); w.className="floating-word"; w.textContent=floatingWords[Math.floor(Math.random()*floatingWords.length)]; w.style.left=Math.random()*100+"%"; w.style.top=Math.random()*100+"%"; w.style.animation=`floatWord ${8+Math.random()*10}s infinite`; w.style.animationDelay=Math.random()*5+"s"; container.appendChild(w); }
-  const particleCont = document.getElementById("particleContainer");
-  for(let i=0;i<50;i++) { let p=document.createElement("div"); p.className="particle"; let s=2+Math.random()*6; p.style.width=s+"px"; p.style.height=s+"px"; p.style.left=Math.random()*100+"%"; p.style.top=Math.random()*100+"%"; p.style.animation=`floatParticle ${6+Math.random()*10}s infinite`; particleCont.appendChild(p); }
-  const styleSheet = document.createElement("style");
-  styleSheet.textContent = `@keyframes floatWord { 0% { transform: translateY(0px) rotate(0deg); opacity: 0; } 20% { opacity: 0.5; } 100% { transform: translateY(-90px) rotate(12deg); opacity: 0; } } @keyframes floatParticle { 0%,100% { transform: translateY(0px); opacity: 0; } 20% { opacity: 0.4; } 100% { transform: translateY(-100px); opacity: 0; } }`;
-  document.head.appendChild(styleSheet);
-  
-  // 3D Logo
-  const logoWrapper = document.querySelector(".logo-3d-wrapper");
-  let rx=0,ry=0,trx=0,try_=0;
-  document.addEventListener("mousemove", (e) => { let rect = document.querySelector(".center-logo")?.getBoundingClientRect(); if(rect){ let dx=(e.clientX-(rect.left+rect.width/2))/(rect.width/2); let dy=(e.clientY-(rect.top+rect.height/2))/(rect.height/2); try_=dx*10; trx=-dy*10; } });
-  function animate3D() { rx+=(trx-rx)*0.1; ry+=(try_-ry)*0.1; if(logoWrapper) logoWrapper.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`; requestAnimationFrame(animate3D); } animate3D();
   
   // Navigation
   document.getElementById("homeBtn")?.addEventListener("click",()=>{ window.scrollTo({top:0,behavior:"smooth"}); });
   document.getElementById("shopBtn")?.addEventListener("click",()=>{ document.getElementById("shopSection").scrollIntoView({behavior:"smooth"}); });
-  document.getElementById("contactBtn")?.addEventListener("click",()=>{ alert("📧 studio@unseensnkrs.com\n📍 47 Mercer Street, NYC"); });
+  document.getElementById("contactBtn")?.addEventListener("click",()=>{ alert("📧 studio@cinematic4d.com\n📍 Global Sneaker Hub\nCinematic 4D + Redshift Studio"); });
   document.getElementById("scrollIndicator")?.addEventListener("click",()=>{ document.getElementById("shopSection").scrollIntoView({behavior:"smooth"}); });
   window.addEventListener("scroll",()=>{ const nav=document.getElementById("nav"); if(window.scrollY>50) nav.classList.add("scrolled"); else nav.classList.remove("scrolled"); });
   
