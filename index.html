@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | Unseen Studio — Cinematic 4D VFX</title>
+  <title>SNEAKER HYPE | Unseen Studio — Cinematic WebGL</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -20,18 +20,18 @@
       overflow-x: hidden;
     }
     
+    /* Fast Page Transition */
     .page-transition {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, #e63946, #000000);
+      background: #000000;
       z-index: 20000;
       pointer-events: none;
-      transform: scaleY(0);
-      transform-origin: top;
-      opacity: 0;
+      transform: translateY(100%);
+      visibility: hidden;
     }
     
     @media (min-width: 769px) {
@@ -137,7 +137,7 @@
     }
     .nav-links-premium a:hover { opacity: 0.6; }
     
-    /* CINEMATIC 4D LOADING SCREEN */
+    /* LOADING SCREEN */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -150,7 +150,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     #cinematicCanvas {
@@ -171,32 +171,30 @@
     }
     
     .loading-brand {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      letter-spacing: 15px;
+      letter-spacing: 12px;
       background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: cinematicShine 3s ease infinite;
-      margin-bottom: 30px;
-      text-transform: uppercase;
+      animation: cinematicShine 2.5s ease infinite;
+      margin-bottom: 25px;
     }
     
     @keyframes cinematicShine {
-      0% { background-position: 0% 50%; letter-spacing: 15px; opacity: 0.8; }
-      50% { background-position: 100% 50%; letter-spacing: 18px; opacity: 1; }
-      100% { background-position: 0% 50%; letter-spacing: 15px; opacity: 0.8; }
+      0% { background-position: 0% 50%; letter-spacing: 12px; opacity: 0.8; }
+      50% { background-position: 100% 50%; letter-spacing: 14px; opacity: 1; }
+      100% { background-position: 0% 50%; letter-spacing: 12px; opacity: 0.8; }
     }
     
     .cinematic-bar {
-      width: 320px;
+      width: 280px;
       height: 2px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
       margin: 0 auto;
       overflow: hidden;
-      position: relative;
       border-radius: 2px;
     }
     
@@ -204,21 +202,20 @@
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #e63946, #ffb347, #ffffff);
-      transition: width 0.08s linear;
-      box-shadow: 0 0 20px #e63946;
-      position: relative;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 15px #e63946;
     }
     
     .cinematic-text {
-      margin-top: 25px;
-      font-size: 0.7rem;
-      letter-spacing: 6px;
-      color: rgba(255,255,255,0.5);
+      margin-top: 20px;
+      font-size: 0.65rem;
+      letter-spacing: 5px;
+      color: rgba(255,255,255,0.45);
       text-transform: uppercase;
       font-family: monospace;
     }
     
-    /* Hero Section */
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -556,9 +553,8 @@
       .showcase-grid { grid-template-columns: 1fr; gap: 1.2rem; }
       .showcase-title { font-size: 1.8rem; }
       .contact-header h2 { font-size: 1.6rem; }
-      .floating-word { font-size: 0.65rem; letter-spacing: 2px; }
       .loading-brand { font-size: 1rem; letter-spacing: 8px; }
-      .cinematic-bar { width: 220px; }
+      .cinematic-bar { width: 200px; }
     }
   </style>
 </head>
@@ -566,7 +562,7 @@
 
 <div id="pageTransition" class="page-transition"></div>
 
-<!-- CINEMATIC 4D LOADING SCREEN -->
+<!-- LOADING SCREEN -->
 <div id="loadingScreen" class="loading-screen">
   <canvas id="cinematicCanvas"></canvas>
   <div class="loading-overlay">
@@ -574,7 +570,7 @@
     <div class="cinematic-bar">
       <div class="cinematic-bar-fill" id="loaderFill"></div>
     </div>
-    <div class="cinematic-text" id="loaderMsg">▶ CINEMATIC 4D RENDER ◀</div>
+    <div class="cinematic-text" id="loaderMsg">▶ CINEMATIC RENDER ◀</div>
   </div>
 </div>
 
@@ -648,16 +644,15 @@
 <footer class="main-footer"><p>© 2025 UNSEEN STUDIO — CULTURE & DISRUPTION | ALL RIGHTS RESERVED</p></footer>
 
 <script>
-  // ========== CINEMATIC 4D WEBGL VORTEX ==========
+  // ========== WEBGL CINEMATIC RENDER (Optimized) ==========
   const canvas = document.getElementById('cinematicCanvas');
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
-  scene.fog = new THREE.FogExp2(0x000000, 0.008);
   
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 12);
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 10);
   
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "high-performance" });
   
   function resizeCanvas() {
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -667,128 +662,65 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
   
-  // Central energy torus knot
-  const knotGeometry = new THREE.TorusKnotGeometry(1.2, 0.25, 200, 32, 3, 4);
-  const knotMaterial = new THREE.MeshStandardMaterial({
-    color: 0xe63946,
-    emissive: 0xe63946,
-    emissiveIntensity: 0.9,
-    metalness: 0.8,
-    roughness: 0.2
-  });
-  const knot = new THREE.Mesh(knotGeometry, knotMaterial);
+  // Optimized geometry (fewer segments for performance)
+  const knotGeo = new THREE.TorusKnotGeometry(1.1, 0.22, 160, 24, 3, 4);
+  const knotMat = new THREE.MeshStandardMaterial({ color: 0xe63946, emissive: 0xe63946, emissiveIntensity: 0.9, metalness: 0.7, roughness: 0.3 });
+  const knot = new THREE.Mesh(knotGeo, knotMat);
   scene.add(knot);
   
-  // Inner glowing sphere
-  const coreMat = new THREE.MeshStandardMaterial({
-    color: 0xffb347,
-    emissive: 0xff6b4a,
-    emissiveIntensity: 1.2,
-    transparent: true,
-    opacity: 0.7
-  });
-  const core = new THREE.Mesh(new THREE.SphereGeometry(0.7, 64, 64), coreMat);
+  const coreMat = new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0xff6b4a, emissiveIntensity: 1.0 });
+  const core = new THREE.Mesh(new THREE.SphereGeometry(0.65, 48, 48), coreMat);
   scene.add(core);
   
-  // Outer particle halo
-  const particleCount = 2500;
+  // Particle system
+  const particleCount = 1500;
   const particleGeo = new THREE.BufferGeometry();
-  const particlePositions = new Float32Array(particleCount * 3);
+  const positions = new Float32Array(particleCount * 3);
   for (let i = 0; i < particleCount; i++) {
-    const radius = 2.2 + Math.random() * 0.8;
+    const r = 2.0 + Math.random() * 0.8;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
-    particlePositions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
-    particlePositions[i*3+1] = radius * Math.sin(phi) * Math.sin(theta);
-    particlePositions[i*3+2] = radius * Math.cos(phi);
+    positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+    positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    positions[i*3+2] = r * Math.cos(phi);
   }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-  const particleMat = new THREE.PointsMaterial({
-    color: 0xff8866,
-    size: 0.025,
-    transparent: true,
-    blending: THREE.AdditiveBlending
-  });
-  const particles = new THREE.Points(particleGeo, particleMat);
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particlesMat = new THREE.PointsMaterial({ color: 0xff8866, size: 0.022, transparent: true, blending: THREE.AdditiveBlending });
+  const particles = new THREE.Points(particleGeo, particlesMat);
   scene.add(particles);
   
-  // Orbiting ring
-  const ringGeo = new THREE.TorusGeometry(1.8, 0.04, 128, 300);
-  const ringMat = new THREE.MeshStandardMaterial({
-    color: 0xffb347,
-    emissive: 0xffb347,
-    emissiveIntensity: 0.6
-  });
+  const ringGeo = new THREE.TorusGeometry(1.7, 0.04, 96, 200);
+  const ringMat = new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0xffb347, emissiveIntensity: 0.5 });
   const ring = new THREE.Mesh(ringGeo, ringMat);
   scene.add(ring);
   
-  const ring2Geo = new THREE.TorusGeometry(2.1, 0.03, 128, 300);
-  const ring2Mat = new THREE.MeshStandardMaterial({
-    color: 0xe63946,
-    emissive: 0xe63946,
-    emissiveIntensity: 0.5
-  });
+  const ring2Geo = new THREE.TorusGeometry(2.0, 0.03, 96, 200);
+  const ring2Mat = new THREE.MeshStandardMaterial({ color: 0xe63946, emissive: 0xe63946, emissiveIntensity: 0.4 });
   const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
   scene.add(ring2);
   
-  // Floating dust particles
-  const dustCount = 4000;
-  const dustGeo = new THREE.BufferGeometry();
-  const dustPositions = new Float32Array(dustCount * 3);
-  for (let i = 0; i < dustCount; i++) {
-    dustPositions[i*3] = (Math.random() - 0.5) * 12;
-    dustPositions[i*3+1] = (Math.random() - 0.5) * 8;
-    dustPositions[i*3+2] = (Math.random() - 0.5) * 10 - 3;
-  }
-  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
-  const dustMat = new THREE.PointsMaterial({
-    color: 0xffaa77,
-    size: 0.012,
-    transparent: true,
-    opacity: 0.3,
-    blending: THREE.AdditiveBlending
-  });
-  const dust = new THREE.Points(dustGeo, dustMat);
-  scene.add(dust);
-  
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0x111111);
-  scene.add(ambientLight);
-  const mainLight = new THREE.PointLight(0xe63946, 1.5);
-  mainLight.position.set(3, 3, 4);
+  const ambient = new THREE.AmbientLight(0x111111);
+  scene.add(ambient);
+  const mainLight = new THREE.PointLight(0xe63946, 1.2);
+  mainLight.position.set(2, 2, 3);
   scene.add(mainLight);
-  const fillLight = new THREE.PointLight(0xffb347, 0.8);
+  const fillLight = new THREE.PointLight(0xffb347, 0.7);
   fillLight.position.set(-2, -1, 3);
   scene.add(fillLight);
-  const backLight = new THREE.PointLight(0xffffff, 0.5);
-  backLight.position.set(0, 0, -5);
-  scene.add(backLight);
   
-  let updateTime = 0;
+  let animTime = 0;
   function animateCinematic() {
     requestAnimationFrame(animateCinematic);
-    updateTime += 0.018;
-    
-    knot.rotation.x = updateTime * 0.3;
-    knot.rotation.y = updateTime * 0.5;
-    knot.rotation.z = updateTime * 0.2;
-    
-    core.scale.setScalar(1 + Math.sin(updateTime * 6) * 0.05);
-    coreMat.emissiveIntensity = 1.0 + Math.sin(updateTime * 5) * 0.4;
-    
-    ring.rotation.x = Math.sin(updateTime * 0.4) * 0.3;
-    ring.rotation.y = updateTime * 0.6;
-    ring2.rotation.x = Math.cos(updateTime * 0.3) * 0.2;
-    ring2.rotation.z = updateTime * 0.4;
-    
-    particles.rotation.y = updateTime * 0.08;
-    particles.rotation.x = Math.sin(updateTime * 0.15) * 0.1;
-    dust.rotation.y = updateTime * 0.03;
-    
-    camera.position.x = Math.sin(updateTime * 0.1) * 0.3;
-    camera.position.y = Math.cos(updateTime * 0.12) * 0.2;
-    camera.lookAt(0, 0, 0);
-    
+    animTime += 0.016;
+    knot.rotation.x = animTime * 0.3;
+    knot.rotation.y = animTime * 0.5;
+    core.scale.setScalar(1 + Math.sin(animTime * 6) * 0.04);
+    coreMat.emissiveIntensity = 0.9 + Math.sin(animTime * 5) * 0.3;
+    ring.rotation.x = Math.sin(animTime * 0.4) * 0.2;
+    ring.rotation.y = animTime * 0.5;
+    ring2.rotation.x = Math.cos(animTime * 0.3) * 0.15;
+    ring2.rotation.z = animTime * 0.35;
+    particles.rotation.y = animTime * 0.07;
     renderer.render(scene, camera);
   }
   animateCinematic();
@@ -798,36 +730,47 @@
   const fill = document.getElementById('loaderFill');
   const loaderMsg = document.getElementById('loaderMsg');
   const loadingScreen = document.getElementById('loadingScreen');
-  const msgs = ["▶ CINEMATIC 4D RENDER ◀", "▶ REDSHIFT VOLUMETRICS ◀", "▶ CALCULATING LIGHT PATHS ◀", "▶ RENDERING PARTICLES ◀", "▶ FINALIZING VFX ◀", "▶ PORTAL ACTIVE ◀"];
+  const msgs = ["▶ LOADING SHADERS ◀", "▶ RENDERING VOLUMETRICS ◀", "▶ CALCULATING LIGHT ◀", "▶ FINALIZING VFX ◀", "▶ READY ◀"];
   let mi = 0;
-  const msgInt = setInterval(() => { if(loadPercent < 100) { mi = (mi+1)%msgs.length; loaderMsg.innerText = msgs[mi]; } }, 400);
+  const msgInt = setInterval(() => { if(loadPercent < 100) { mi = (mi+1)%msgs.length; loaderMsg.innerText = msgs[mi]; } }, 380);
   const loadInt = setInterval(() => {
-    loadPercent += Math.floor(Math.random() * 5) + 2;
+    loadPercent += Math.floor(Math.random() * 6) + 2;
     if(loadPercent >= 100) { loadPercent = 100; clearInterval(loadInt); clearInterval(msgInt);
       loaderMsg.innerText = "▶ CINEMATIC READY ◀";
-      gsap.to("#cinematicCanvas", { duration: 1.2, scale: 1.5, opacity: 0, ease: "power2.in" });
-      gsap.to(".loading-overlay", { duration: 0.6, y: -50, opacity: 0 });
+      gsap.to("#cinematicCanvas", { duration: 0.8, scale: 1.3, opacity: 0, ease: "power2.in" });
+      gsap.to(".loading-overlay", { duration: 0.5, y: -40, opacity: 0 });
       setTimeout(() => {
         loadingScreen.style.opacity = '0';
-        setTimeout(() => { loadingScreen.style.display = 'none'; initMainAnimations(); }, 500);
-      }, 800);
+        setTimeout(() => { loadingScreen.style.display = 'none'; initMainAnimations(); }, 400);
+      }, 700);
     }
     fill.style.width = loadPercent + '%';
-  }, 38);
+  }, 32);
   
-  // ========== TOUGH PAGE TRANSITION & SHOP REDIRECT ==========
+  // ========== FAST PAGE TRANSITION TO SHOP (GitHub Pages) ==========
   function navigateToShop() {
     const transition = document.getElementById('pageTransition');
-    gsap.set(transition, { scaleY: 0, opacity: 1 });
-    gsap.to(transition, { duration: 0.7, scaleY: 1, opacity: 1, ease: "power4.inOut", transformOrigin: "top" });
+    gsap.set(transition, { visibility: 'visible', y: '100%' });
+    gsap.to(transition, { duration: 0.4, y: '0%', ease: "power2.inOut" });
+    
     setTimeout(() => {
-      const shopHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SHOP | SNEAKER HYPE</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#070708;font-family:'Inter',sans-serif;color:#fff}.shop-container{max-width:1200px;margin:0 auto;padding:120px 2rem 4rem}.shop-header{text-align:center;margin-bottom:3rem}.shop-header h1{font-size:2.5rem;background:linear-gradient(135deg,#fff,#e63946,#ffb347);-webkit-background-clip:text;background-clip:text;color:transparent}.shop-header p{color:rgba(255,255,255,0.4);margin-top:0.8rem;letter-spacing:2px}.back-home{position:fixed;top:2rem;left:2rem;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:0.7rem 1.3rem;border-radius:40px;color:#fff;text-decoration:none;font-size:0.75rem;letter-spacing:2px;border:1px solid rgba(230,57,70,0.5);transition:.3s;z-index:100}.back-home:hover{background:#e63946}.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}.product-card{background:#0f0f10;border:1px solid rgba(255,255,255,0.05);border-radius:24px;overflow:hidden;transition:transform .3s}.product-card:hover{transform:translateY(-5px);border-color:rgba(230,57,70,0.3)}.product-card img{width:100%;height:240px;object-fit:cover}.product-info{padding:1.2rem}.product-brand{color:#e63946;font-size:0.7rem;letter-spacing:3px}.product-name{font-size:1rem;margin:0.4rem 0}.product-price{color:#ffb347;font-weight:700;font-size:1.1rem}.footer{text-align:center;padding:2rem;color:#333;font-size:0.7rem}@media(max-width:768px){.shop-container{padding:100px 1rem 2rem}.shop-header h1{font-size:1.8rem}}</style></head><body><a href="javascript:history.back()" class="back-home"><i class="fas fa-arrow-left"></i> BACK</a><div class="shop-container"><div class="shop-header"><h1>OFFICIAL SHOP</h1><p>BASKETBALL COLLECTION</p></div><div class="product-grid" id="shopGrid"></div><div class="footer"><p>© 2025 UNSEEN STUDIO</p></div></div><script>const products=[{id:1,brand:"Nike",name:"LeBron 21",price:200,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format"},{id:2,brand:"Nike",name:"Kobe 6 Protro",price:240,image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format"},{id:3,brand:"Jordan",name:"Air Jordan 38",price:200,image:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=600&auto=format"},{id:4,brand:"Adidas",name:"Harden Vol. 8",price:160,image:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&auto=format"},{id:5,brand:"New Balance",name:"Kawhi 2",price:170,image:"https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format"},{id:6,brand:"Under Armour",name:"Curry 11",price:160,image:"https://images.unsplash.com/photo-1584735175090-9c8fccdca87c?w=600&auto=format"}];document.getElementById('shopGrid').innerHTML=products.map(p=>'<div class="product-card"><img src="'+p.image+'" onerror="this.src=\'https://placehold.co/600x400/1a1a1a/444?text=SNEAKER\'"><div class="product-info"><div class="product-brand">'+p.brand+'</div><div class="product-name">'+p.name+'</div><div class="product-price">$'+p.price+'</div></div></div>').join('');<\/script></body></html>`;
-      const blob = new Blob([shopHTML], { type: 'text/html' });
-      window.location.href = URL.createObjectURL(blob);
-    }, 700);
+      // Direct redirect to hosted shop page on GitHub
+      window.location.href = 'https://raw.githack.com/your-repo/shop.html';
+    }, 400);
   }
   
-  // ========== LOGO REGENERATION & DISINTEGRATION ==========
+  // Fallback shop page generator (in case GitHub Pages not set up)
+  function generateAndRedirect() {
+    const shopHTML = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SHOP | SNEAKER HYPE</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#070708;font-family:'Inter',sans-serif;color:#fff}.shop-container{max-width:1200px;margin:0 auto;padding:120px 2rem 4rem}.shop-header{text-align:center;margin-bottom:3rem}.shop-header h1{font-size:2.5rem;background:linear-gradient(135deg,#fff,#e63946,#ffb347);-webkit-background-clip:text;background-clip:text;color:transparent}.shop-header p{color:rgba(255,255,255,0.4);margin-top:0.8rem;letter-spacing:2px}.back-home{position:fixed;top:2rem;left:2rem;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:0.7rem 1.3rem;border-radius:40px;color:#fff;text-decoration:none;font-size:0.75rem;letter-spacing:2px;border:1px solid rgba(230,57,70,0.5);transition:.3s;z-index:100}.back-home:hover{background:#e63946}.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}.product-card{background:#0f0f10;border:1px solid rgba(255,255,255,0.05);border-radius:24px;overflow:hidden;transition:transform .3s}.product-card:hover{transform:translateY(-5px);border-color:rgba(230,57,70,0.3)}.product-card img{width:100%;height:240px;object-fit:cover}.product-info{padding:1.2rem}.product-brand{color:#e63946;font-size:0.7rem;letter-spacing:3px}.product-name{font-size:1rem;margin:0.4rem 0}.product-price{color:#ffb347;font-weight:700;font-size:1.1rem}.footer{text-align:center;padding:2rem;color:#333;font-size:0.7rem}@media(max-width:768px){.shop-container{padding:100px 1rem 2rem}.shop-header h1{font-size:1.8rem}}</style></head>
+<body><a href="javascript:history.back()" class="back-home"><i class="fas fa-arrow-left"></i> BACK</a><div class="shop-container"><div class="shop-header"><h1>OFFICIAL SHOP</h1><p>BASKETBALL COLLECTION</p></div><div class="product-grid" id="shopGrid"></div><div class="footer"><p>© 2025 UNSEEN STUDIO</p></div></div>
+<script>const products=[{id:1,brand:"Nike",name:"LeBron 21",price:200,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format"},{id:2,brand:"Nike",name:"Kobe 6 Protro",price:240,image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format"},{id:3,brand:"Jordan",name:"Air Jordan 38",price:200,image:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=600&auto=format"},{id:4,brand:"Adidas",name:"Harden Vol. 8",price:160,image:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&auto=format"},{id:5,brand:"New Balance",name:"Kawhi 2",price:170,image:"https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format"},{id:6,brand:"Under Armour",name:"Curry 11",price:160,image:"https://images.unsplash.com/photo-1584735175090-9c8fccdca87c?w=600&auto=format"}];document.getElementById('shopGrid').innerHTML=products.map(p=>'<div class="product-card"><img src="'+p.image+'" onerror="this.src=\'https://placehold.co/600x400/1a1a1a/444?text=SNEAKER\'"><div class="product-info"><div class="product-brand">'+p.brand+'</div><div class="product-name">'+p.name+'</div><div class="product-price">$'+p.price+'</div></div></div>').join('');<\/script></body></html>`;
+    const blob = new Blob([shopHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    window.location.href = url;
+  }
+  
+  // ========== LOGO DISINTEGRATION & REGENERATION ==========
   let disintegrated = false;
   let regenTimeout = null;
   
@@ -843,12 +786,11 @@
     logoIcon.style.opacity = '1';
     logoSub.style.opacity = '1';
     wrapper.style.opacity = '1';
-    wrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
     gsap.set(wrapper, { scale: 0, opacity: 0 });
-    gsap.to(wrapper, { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(0.8)" });
-    gsap.fromTo(logoText, { scale: 0, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 0.7, ease: "elastic.out(1, 0.5)" });
-    gsap.fromTo(logoIcon, { scale: 0, rotation: -180 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out" });
-    gsap.fromTo(logoSub, { y: 20, opacity: 0 }, { y: 0, opacity: 0.5, duration: 0.5 });
+    gsap.to(wrapper, { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(0.7)" });
+    gsap.fromTo(logoText, { scale: 0, filter: "blur(8px)" }, { scale: 1, filter: "blur(0px)", duration: 0.6, ease: "elastic.out(1, 0.5)" });
+    gsap.fromTo(logoIcon, { scale: 0, rotation: -180 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out" });
+    gsap.fromTo(logoSub, { y: 20, opacity: 0 }, { y: 0, opacity: 0.5, duration: 0.4 });
     disintegrated = false;
   }
   
@@ -864,53 +806,55 @@
     const wrapper = document.getElementById('logo3dWrapper');
     
     logoText.style.opacity = '0';
-    for(let i = 0; i < 130; i++) {
+    for(let i = 0; i < 100; i++) {
       const p = document.createElement('div');
       p.className = 'disintegration-particle';
       p.style.position = 'fixed';
-      p.style.left = cx + (Math.random() - 0.5) * 150 + 'px';
-      p.style.top = cy + (Math.random() - 0.5) * 100 + 'px';
-      p.style.width = (3 + Math.random() * 14) + 'px';
-      p.style.height = (3 + Math.random() * 14) + 'px';
+      p.style.left = cx + (Math.random() - 0.5) * 130 + 'px';
+      p.style.top = cy + (Math.random() - 0.5) * 90 + 'px';
+      p.style.width = (3 + Math.random() * 12) + 'px';
+      p.style.height = (3 + Math.random() * 12) + 'px';
       p.style.background = `radial-gradient(circle, #e63946, #ffb347)`;
-      p.style.boxShadow = `0 0 18px rgba(230,57,70,0.9)`;
+      p.style.boxShadow = `0 0 15px rgba(230,57,70,0.8)`;
       document.body.appendChild(p);
       const angle = Math.random() * Math.PI * 2;
-      const dist = 150 + Math.random() * 380;
-      gsap.to(p, { duration: 0.8 + Math.random() * 0.6, x: Math.cos(angle) * dist, y: Math.sin(angle) * dist, rotation: (Math.random() - 0.5) * 720, scale: 1.6, opacity: 0, ease: "back.out(0.7)", onComplete: () => p.remove() });
+      const dist = 130 + Math.random() * 320;
+      gsap.to(p, { duration: 0.7 + Math.random() * 0.5, x: Math.cos(angle) * dist, y: Math.sin(angle) * dist, rotation: (Math.random() - 0.5) * 720, scale: 1.5, opacity: 0, ease: "back.out(0.6)", onComplete: () => p.remove() });
     }
-    gsap.to(logoIcon, { duration: 0.5, opacity: 0, scale: 0, rotation: 180 });
-    gsap.to(logoSub, { duration: 0.5, opacity: 0, y: -50 });
-    gsap.to(wrapper, { duration: 0.6, scale: 1.5, opacity: 0, rotationX: 40 });
+    gsap.to(logoIcon, { duration: 0.4, opacity: 0, scale: 0, rotation: 180 });
+    gsap.to(logoSub, { duration: 0.4, opacity: 0, y: -40 });
+    gsap.to(wrapper, { duration: 0.5, scale: 1.4, opacity: 0, rotationX: 30 });
+    
     const flash = document.createElement('div');
-    flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle, rgba(230,57,70,0.6), transparent);pointer-events:none;z-index:9999';
+    flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle, rgba(230,57,70,0.5), transparent);pointer-events:none;z-index:9999';
     document.body.appendChild(flash);
-    gsap.to(flash, { duration: 0.5, opacity: 0, onComplete: () => flash.remove() });
+    gsap.to(flash, { duration: 0.4, opacity: 0, onComplete: () => flash.remove() });
+    
     if(regenTimeout) clearTimeout(regenTimeout);
-    regenTimeout = setTimeout(() => regenerateLogo(), 3200);
+    regenTimeout = setTimeout(() => regenerateLogo(), 2800);
   }
   
   // ========== CALM FLOATING WORDS ==========
   const words = ["SNEAKER", "HYPE", "CULTURE", "RARE", "EXCLUSIVE", "LIMITED", "ARCHIVE", "STREETWEAR", "COLLECTOR", "GRAIL", "DISRUPT", "ICONIC"];
   function createFloatingText() {
     const container = document.getElementById('floatingTextContainer');
-    for(let i = 0; i < 35; i++) {
+    for(let i = 0; i < 30; i++) {
       const w = document.createElement('div');
       w.className = 'floating-word';
       w.textContent = words[Math.floor(Math.random() * words.length)];
       w.style.left = Math.random() * 100 + '%';
       w.style.top = Math.random() * 100 + '%';
-      w.style.animation = `calmFloat ${14 + Math.random() * 14}s infinite ease-in-out`;
-      w.style.animationDelay = Math.random() * 7 + 's';
+      w.style.animation = `calmFloat ${14 + Math.random() * 12}s infinite ease-in-out`;
+      w.style.animationDelay = Math.random() * 6 + 's';
       w.style.fontSize = 0.7 + Math.random() * 0.6 + 'rem';
-      w.style.opacity = 0.12 + Math.random() * 0.2;
+      w.style.opacity = 0.12 + Math.random() * 0.18;
       container.appendChild(w);
     }
   }
   
   function createBgParticles() {
     const container = document.getElementById('particleContainer');
-    for(let i = 0; i < 50; i++) {
+    for(let i = 0; i < 45; i++) {
       const p = document.createElement('div');
       p.className = 'particle';
       const s = 2 + Math.random() * 5;
@@ -918,16 +862,16 @@
       p.style.height = s + 'px';
       p.style.left = Math.random() * 100 + '%';
       p.style.top = Math.random() * 100 + '%';
-      p.style.animation = `calmParticle ${12 + Math.random() * 14}s infinite`;
-      p.style.animationDelay = Math.random() * 7 + 's';
+      p.style.animation = `calmParticle ${12 + Math.random() * 12}s infinite`;
+      p.style.animationDelay = Math.random() * 6 + 's';
       container.appendChild(p);
     }
   }
   
   const styleSheet = document.createElement('style');
   styleSheet.textContent = `
-    @keyframes calmFloat { 0% { transform: translateY(0px) translateX(0px); opacity: 0.08; } 25% { opacity: 0.25; } 75% { opacity: 0.2; } 100% { transform: translateY(-60px) translateX(30px); opacity: 0; } }
-    @keyframes calmParticle { 0%, 100% { transform: translateY(0px); opacity: 0; } 25% { opacity: 0.25; } 75% { opacity: 0.1; } 100% { transform: translateY(-80px); opacity: 0; } }
+    @keyframes calmFloat { 0% { transform: translateY(0px) translateX(0px); opacity: 0.08; } 25% { opacity: 0.22; } 75% { opacity: 0.18; } 100% { transform: translateY(-55px) translateX(25px); opacity: 0; } }
+    @keyframes calmParticle { 0%, 100% { transform: translateY(0px); opacity: 0; } 25% { opacity: 0.22; } 75% { opacity: 0.1; } 100% { transform: translateY(-70px); opacity: 0; } }
   `;
   document.head.appendChild(styleSheet);
   
@@ -955,9 +899,9 @@
     createBgParticles();
     animateLogo3D();
     gsap.registerPlugin(ScrollTrigger);
-    gsap.fromTo(".showcase-card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, scrollTrigger: { trigger: ".showcase", start: "top 80%" } });
-    gsap.fromTo("#showcaseTitle", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.7, scrollTrigger: { trigger: ".showcase", start: "top 85%" } });
-    gsap.fromTo(".contact-card", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, scrollTrigger: { trigger: ".contact-section", start: "top 80%" } });
+    gsap.fromTo(".showcase-card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.12, scrollTrigger: { trigger: ".showcase", start: "top 80%" } });
+    gsap.fromTo("#showcaseTitle", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: ".showcase", start: "top 85%" } });
+    gsap.fromTo(".contact-card", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, scrollTrigger: { trigger: ".contact-section", start: "top 80%" } });
     document.getElementById('scrollIndicator').addEventListener('click', () => document.getElementById('showcaseSection').scrollIntoView({ behavior: 'smooth' }));
     document.getElementById('discoverBtn').addEventListener('click', (e) => { e.preventDefault(); navigateToShop(); });
     document.getElementById('archiveBtn').addEventListener('click', () => document.getElementById('contactSection').scrollIntoView({ behavior: 'smooth' }));
