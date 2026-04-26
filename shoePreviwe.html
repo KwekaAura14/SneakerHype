@@ -1,1 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>SNEAKER HYPE | MULTI-SHOE STUDIO — PREVIEW, SIZE, PRICE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      background: #050508;
+      font-family: 'Inter', sans-serif;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* cinematic particle background */
+    .bg-particle-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-particle {
+      position: absolute;
+      background: radial-gradient(circle, rgba(230,57,70,0.25), rgba(255,180,71,0.08));
+      border-radius: 50%;
+      pointer-events: none;
+      animation: floatParticle 22s infinite alternate;
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+      100% { transform: translateY(-100px) translateX(60px); opacity: 0.5; }
+    }
+
+    .shop-main {
+      position: relative;
+      z-index: 10;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 4rem;
+    }
+
+    .shop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1rem 0 2rem;
+      border-bottom: 1px solid rgba(230,57,70,0.3);
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo-shop {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff, #e63946);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo-shop span { font-weight: 800; color: #e63946; background: none; }
+    .back-link {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      border: 1px solid rgba(230,57,70,0.5);
+      padding: 0.45rem 1.2rem;
+      border-radius: 60px;
+      transition: 0.2s;
+    }
+    .back-link i { margin-right: 6px; }
+    .back-link:hover { background: #e63946; border-color: #e63946; color: white; }
+
+    /* CAROUSEL / SHOE SELECTOR */
+    .shoe-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .shoe-tab {
+      background: rgba(10,10,16,0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(230,57,70,0.3);
+      border-radius: 100px;
+      padding: 0.7rem 1.8rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .shoe-tab i { color: #e63946; font-size: 1rem; }
+    .shoe-tab.active {
+      background: linear-gradient(95deg, #e63946, #ffb347);
+      border-color: #ffb347;
+      color: #0a0a0a;
+      box-shadow: 0 5px 20px rgba(230,57,70,0.4);
+    }
+    .shoe-tab.active i { color: #0a0a0a; }
+    .shoe-tab:hover:not(.active) { background: rgba(230,57,70,0.2); transform: translateY(-2px); }
+
+    /* product grid */
+    .product-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 900px) {
+      .product-container { grid-template-columns: 1fr; gap: 2rem; }
+      .shop-main { padding: 1.2rem; }
+    }
+
+    /* 3D preview glass card */
+    .preview-card {
+      background: rgba(12,12,18,0.6);
+      backdrop-filter: blur(16px);
+      border-radius: 48px;
+      border: 1px solid rgba(230,57,70,0.3);
+      padding: 1.5rem;
+      transition: 0.3s;
+    }
+    .preview-title {
+      font-size: 0.75rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #e63946;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .shoe-canvas-wrapper {
+      background: #010105;
+      border-radius: 32px;
+      width: 100%;
+      aspect-ratio: 1 / 0.9;
+      position: relative;
+      overflow: hidden;
+      cursor: grab;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    }
+    #activeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .hint-rotate {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+    }
+
+    /* purchase section dynamic */
+    .purchase-card {
+      background: rgba(8,8,14,0.75);
+      backdrop-filter: blur(20px);
+      border-radius: 48px;
+      border: 1px solid rgba(230,57,70,0.4);
+      padding: 2rem;
+    }
+    .dynamic-price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #e63946;
+      margin: 1rem 0 0.6rem;
+      font-weight: 600;
+    }
+    .size-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin: 0.8rem 0 1.6rem;
+    }
+    .size-btn {
+      background: rgba(25,25,32,0.9);
+      border: 1px solid rgba(230,57,70,0.4);
+      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .size-btn.active {
+      background: #e63946;
+      border-color: #ffb347;
+      box-shadow: 0 0 12px rgba(230,57,70,0.6);
+    }
+    .size-btn:hover { background: #e63946; transform: scale(1.02); }
+
+    .payment-methods {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0 1.5rem;
+      flex-wrap: wrap;
+    }
+    .payment-icon {
+      background: rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 0.45rem 1rem;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .proceed-btn {
+      width: 100%;
+      background: linear-gradient(95deg, #e63946, #ffb347);
+      border: none;
+      padding: 1rem;
+      border-radius: 80px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      color: #0a0a0a;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-family: inherit;
+      margin-top: 0.8rem;
+    }
+    .proceed-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
+    .selected-info {
+      background: rgba(255,255,255,0.02);
+      border-radius: 20px;
+      padding: 0.9rem;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: #bbb;
+      border-left: 3px solid #e63946;
+    }
+    .toast-message {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #121218cc;
+      backdrop-filter: blur(12px);
+      border: 1px solid #e63946;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      z-index: 2000;
+      opacity: 0;
+      transition: 0.2s;
+      pointer-events: none;
+      white-space: nowrap;
+      font-size: 0.8rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      font-size: 0.6rem;
+      color: #444;
+      margin-top: 2rem;
+    }
+    @media (max-width: 500px) {
+      .toast-message { white-space: normal; width: 80%; text-align: center; }
+      .shoe-tab { padding: 0.5rem 1rem; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-particle-field" id="particleField"></div>
+
+<main class="shop-main">
+  <div class="shop-header">
+    <div class="logo-shop"><span>MULTI</span> // SNEAKER STUDIO</div>
+    <a href="#" class="back-link" id="backToHomeBtn"><i class="fas fa-arrow-left"></i> BACK TO MAIN</a>
+  </div>
+
+  <!-- Shoe selector tabs for each shoe model -->
+  <div class="shoe-selector" id="shoeSelector"></div>
+
+  <div class="product-container">
+    <!-- LEFT: 3D PREVIEW (realtime WebGL) -->
+    <div class="preview-card">
+      <div class="preview-title"><i class="fas fa-cube"></i> CINEMATIC 3D PREVIEW</div>
+      <div class="shoe-canvas-wrapper">
+        <canvas id="activeCanvas"></canvas>
+      </div>
+      <div class="hint-rotate"><i class="fas fa-mouse-pointer"></i> drag to rotate • premium render</div>
+    </div>
+
+    <!-- RIGHT: SIZE + PAYMENT with dynamic price -->
+    <div class="purchase-card">
+      <div class="dynamic-price" id="dynamicPrice">$0</div>
+      <div class="section-label"><i class="fas fa-ruler-combined"></i> SELECT SIZE</div>
+      <div class="size-grid" id="sizeGrid"></div>
+
+      <div class="section-label"><i class="fas fa-credit-card"></i> PAYMENT METHOD</div>
+      <div class="payment-methods">
+        <div class="payment-icon"><i class="fab fa-cc-visa"></i> Visa</div>
+        <div class="payment-icon"><i class="fab fa-cc-mastercard"></i> Mastercard</div>
+        <div class="payment-icon"><i class="fab fa-paypal"></i> PayPal</div>
+        <div class="payment-icon"><i class="fas fa-mobile-alt"></i> Apple Pay</div>
+      </div>
+
+      <button class="proceed-btn" id="proceedPaymentBtn">
+        <i class="fas fa-lock"></i> PROCEED TO PAYMENT
+      </button>
+
+      <div class="selected-info" id="selectedInfoBox">
+        <i class="fas fa-shoe-prints"></i> No size selected. <span id="selectedSizeSpan">—</span>
+      </div>
+      <div class="selected-info" style="margin-top: 0.6rem; border-left-color: #ffb347;">
+        <i class="fas fa-truck-fast"></i> Express worldwide shipping • free returns
+      </div>
+    </div>
+  </div>
+  <footer>© 2025 SNEAKER HYPE — LIMITED EDITIONS | EACH SHOE UNIQUE PRICE & 3D DNA</footer>
+</main>
+
+<div id="toastMsg" class="toast-message"></div>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+
+  // ----- SHOE DATABASE: each shoe has unique name, price, and specific 3D styling parameters -----
+  const shoesData = [
+    { 
+      id: "cyber-pulse", name: "CYBER PULSE", price: 289, 
+      primaryColor: 0xe63946, secondaryColor: 0xffb347, accentColor: 0x44aaff, metalnessVal: 0.75, 
+      emissiveIntensity: 0.45, soleColor: 0x22223b, upperColor: 0x1a1a2e
+    },
+    { 
+      id: "phantom-veil", name: "PHANTOM VEIL", price: 349, 
+      primaryColor: 0xaa88ff, secondaryColor: 0xdd66cc, accentColor: 0xffaa88, metalnessVal: 0.85,
+      emissiveIntensity: 0.6, soleColor: 0x2d1b36, upperColor: 0x191024
+    },
+    { 
+      id: "midnight-edition", name: "MIDNIGHT EDITION", price: 399, 
+      primaryColor: 0x3b82f6, secondaryColor: 0xa855f7, accentColor: 0x60a5fa, metalnessVal: 0.8,
+      emissiveIntensity: 0.5, soleColor: 0x1e1b2e, upperColor: 0x0f172a
+    },
+    { 
+      id: "carbon-shadow", name: "CARBON SHADOW", price: 459, 
+      primaryColor: 0x475569, secondaryColor: 0x94a3b8, accentColor: 0xcbd5e1, metalnessVal: 0.92,
+      emissiveIntensity: 0.3, soleColor: 0x111827, upperColor: 0x1e293b
+    }
+  ];
+
+  let activeShoeIndex = 0;
+  let selectedSize = null;
+  let currentScene, currentCamera, currentRenderer, currentControls, currentShoeGroup, currentParticles, currentGlowRing;
+  let animationFrameId;
+  let currentActiveCanvas = null;
+
+  // --- Helper: generate size grid UI (global)
+  const sizeList = ['US 6', 'US 7', 'US 8', 'US 9', 'US 10', 'US 11', 'US 12'];
+  const sizeGridContainer = document.getElementById('sizeGrid');
+  const selectedSizeSpan = document.getElementById('selectedSizeSpan');
+  const dynamicPriceSpan = document.getElementById('dynamicPrice');
+  const proceedBtn = document.getElementById('proceedPaymentBtn');
+  const toast = document.getElementById('toastMsg');
+
+  function showToastMessage(msg, isError = false) {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) scale(1)';
+    toast.innerText = msg;
+    toast.style.background = isError ? '#2a0a0ecc' : '#121218cc';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) scale(0.9)';
+    }, 2500);
+  }
+
+  function renderSizeButtons(selectedShoePrice) {
+    sizeGridContainer.innerHTML = '';
+    sizeList.forEach(size => {
+      const btn = document.createElement('div');
+      btn.classList.add('size-btn');
+      btn.textContent = size;
+      if (selectedSize === size) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.size-btn').forEach(el => el.classList.remove('active'));
+        btn.classList.add('active');
+        selectedSize = size;
+        selectedSizeSpan.innerText = selectedSize;
+        showToastMessage(`✓ Size ${selectedSize} selected for ${shoesData[activeShoeIndex].name}`, false);
+      });
+      sizeGridContainer.appendChild(btn);
+    });
+  }
+
+  function updateUIForShoe(shoe) {
+    dynamicPriceSpan.innerHTML = `$${shoe.price} <small style="font-size:0.9rem;">USD</small>`;
+    selectedSize = null;
+    selectedSizeSpan.innerText = '—';
+    // reset active size buttons style
+    if (sizeGridContainer) {
+      const btns = document.querySelectorAll('.size-btn');
+      btns.forEach(btn => btn.classList.remove('active'));
+    }
+    // also update the selected info box hint
+    const infoBox = document.getElementById('selectedInfoBox');
+    if (infoBox) infoBox.style.borderLeftColor = '#e63946';
+  }
+
+  // ---------- 3D SHOE GENERATOR (dynamic per shoe) ----------
+  function init3DForShoe(shoeData, canvasElement) {
+    // dispose previous scene if exists
+    if (currentScene && currentRenderer) {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      currentRenderer.dispose();
+      canvasElement.removeEventListener('webglcontextlost', () => {});
+    }
+    const width = canvasElement.clientWidth;
+    const height = canvasElement.clientHeight;
+    
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x030308);
+    scene.fog = new THREE.FogExp2(0x030308, 0.01);
+    
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
+    camera.position.set(2.4, 1.6, 3.4);
+    camera.lookAt(0, 0.2, 0);
+    
+    const renderer = new THREE.WebGLRenderer({ canvas: canvasElement, alpha: false, antialias: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
+    
+    const controls = new OrbitControls(camera, canvasElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.autoRotate = false;
+    controls.enableZoom = true;
+    controls.zoomSpeed = 1.0;
+    controls.rotateSpeed = 1.2;
+    controls.target.set(0, 0.3, 0);
+    
+    // LIGHTS
+    const ambient = new THREE.AmbientLight(0x222222);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffeedd, 1.2);
+    dirLight.position.set(2, 3, 2);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+    const fillLight = new THREE.PointLight(shoeData.primaryColor, 0.55);
+    fillLight.position.set(1.2, 1, 2.2);
+    scene.add(fillLight);
+    const backRim = new THREE.PointLight(shoeData.secondaryColor, 0.6);
+    backRim.position.set(-1, 1.2, -2);
+    scene.add(backRim);
+    const accentLight = new THREE.PointLight(shoeData.accentColor, 0.5);
+    accentLight.position.set(1.5, 0.8, 1.2);
+    scene.add(accentLight);
+    
+    const gridHelper = new THREE.GridHelper(5, 20, shoeData.primaryColor, 0x333333);
+    gridHelper.position.y = -0.65;
+    gridHelper.material.transparent = true;
+    gridHelper.material.opacity = 0.18;
+    scene.add(gridHelper);
+    
+    const shoeGroup = new THREE.Group();
+    
+    // sole
+    const soleGeo = new THREE.BoxGeometry(1.65, 0.26, 2.85);
+    const soleMat = new THREE.MeshStandardMaterial({ color: shoeData.soleColor, roughness: 0.45, metalness: 0.6 });
+    const sole = new THREE.Mesh(soleGeo, soleMat);
+    sole.position.y = -0.28;
+    shoeGroup.add(sole);
+    
+    // midsole accent stripe
+    const midStripe = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.1, 2.7), 
+      new THREE.MeshStandardMaterial({ color: shoeData.primaryColor, metalness: 0.8, roughness: 0.3, emissive: shoeData.primaryColor, emissiveIntensity: shoeData.emissiveIntensity * 0.6 }));
+    midStripe.position.y = -0.12;
+    shoeGroup.add(midStripe);
+    
+    // upper body
+    const upperGeo = new THREE.CylinderGeometry(0.88, 0.96, 1.15, 28);
+    const upperMat = new THREE.MeshStandardMaterial({ color: shoeData.upperColor, roughness: 0.35, metalness: 0.2 });
+    const upper = new THREE.Mesh(upperGeo, upperMat);
+    upper.position.y = 0.38;
+    upper.scale.set(1, 0.92, 1.05);
+    shoeGroup.add(upper);
+    
+    // toe guard (gloss)
+    const toeMat = new THREE.MeshStandardMaterial({ color: shoeData.secondaryColor, metalness: 0.85, roughness: 0.2, emissive: shoeData.secondaryColor, emissiveIntensity: 0.2 });
+    const toeCap = new THREE.Mesh(new THREE.SphereGeometry(0.64, 32, 32), toeMat);
+    toeCap.position.set(0.78, 0.2, 1.1);
+    toeCap.scale.set(0.7, 0.5, 0.6);
+    shoeGroup.add(toeCap);
+    
+    // heel counter
+    const heelMat = new THREE.MeshStandardMaterial({ color: shoeData.accentColor, metalness: 0.7 });
+    const heelBlock = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.65, 0.75), heelMat);
+    heelBlock.position.set(-0.78, 0.22, -1.1);
+    shoeGroup.add(heelBlock);
+    
+    // dynamic swoosh / curve
+    const points = [];
+    for (let t = 0; t <= 1; t += 0.05) {
+      const x = -0.75 + t * 1.55;
+      const z = -0.85 + t * 1.95;
+      const y = 0.32 + Math.sin(t * Math.PI) * 0.23;
+      points.push(new THREE.Vector3(x, y, z));
+    }
+    const tubeGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 28, 0.07, 8, false);
+    const swooshMat = new THREE.MeshStandardMaterial({ color: shoeData.secondaryColor, metalness: 0.9, emissive: shoeData.primaryColor, emissiveIntensity: 0.25 });
+    const swoosh = new THREE.Mesh(tubeGeo, swooshMat);
+    shoeGroup.add(swoosh);
+    
+    // laces
+    const laceMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.15 });
+    for (let i = 0; i < 4; i++) {
+      const lace = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.42, 6), laceMat);
+      lace.position.set(-0.1 + i * 0.27, 0.77, 0.58);
+      lace.rotation.z = 0.9;
+      shoeGroup.add(lace);
+    }
+    
+    // holographic ring accent
+    const ringGeo = new THREE.TorusGeometry(0.48, 0.055, 32, 80);
+    const ringMatGlow = new THREE.MeshStandardMaterial({ color: shoeData.accentColor, metalness: 0.95, emissive: shoeData.accentColor, emissiveIntensity: 0.4 });
+    const heelRing = new THREE.Mesh(ringGeo, ringMatGlow);
+    heelRing.position.set(-0.68, 0.38, -1.2);
+    heelRing.rotation.x = Math.PI / 2;
+    shoeGroup.add(heelRing);
+    
+    // floating particles unique to shoe
+    const particleCount = 340;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i*3] = (Math.random() - 0.5) * 2.8;
+      positions[i*3+1] = Math.random() * 1.5;
+      positions[i*3+2] = (Math.random() - 0.5) * 2.8;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMatPoints = new THREE.PointsMaterial({ color: shoeData.primaryColor, size: 0.02, transparent: true, blending: THREE.AdditiveBlending });
+    const particles = new THREE.Points(particleGeo, particleMatPoints);
+    shoeGroup.add(particles);
+    
+    scene.add(shoeGroup);
+    
+    // aura glow sphere
+    const auraMat = new THREE.MeshStandardMaterial({ color: shoeData.primaryColor, emissive: shoeData.primaryColor, emissiveIntensity: 0.12, transparent: true, opacity: 0.12 });
+    const auraSphere = new THREE.Mesh(new THREE.SphereGeometry(1.45, 32, 32), auraMat);
+    auraSphere.position.y = 0.2;
+    scene.add(auraSphere);
+    
+    // starfield background
+    const starCount = 900;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i*3] = (Math.random() - 0.5) * 180;
+      starPositions[i*3+1] = (Math.random() - 0.5) * 70;
+      starPositions[i*3+2] = (Math.random() - 0.5) * 70 - 30;
+    }
+    const starFieldGeo = new THREE.BufferGeometry();
+    starFieldGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starFieldMat = new THREE.PointsMaterial({ color: 0xffaa88, size: 0.045, transparent: true, opacity: 0.35 });
+    const starsField = new THREE.Points(starFieldGeo, starFieldMat);
+    scene.add(starsField);
+    
+    let animTime = 0;
+    function animateShoe() {
+      animationFrameId = requestAnimationFrame(animateShoe);
+      animTime += 0.012;
+      // dynamic light breathing
+      fillLight.intensity = 0.55 + Math.sin(animTime) * 0.12;
+      backRim.intensity = 0.55 + Math.cos(animTime * 1.2) * 0.1;
+      particles.rotation.y += 0.005;
+      particles.rotation.x = Math.sin(animTime * 0.6) * 0.1;
+      starsField.rotation.y += 0.0006;
+      starsField.rotation.x += 0.0003;
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animateShoe();
+    
+    const handleResize = () => {
+      const w = canvasElement.clientWidth;
+      const h = canvasElement.clientHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    };
+    window.addEventListener('resize', handleResize);
+    
+    return { scene, camera, renderer, controls, shoeGroup, particles, starsField, dispose: () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+      renderer.dispose();
+    } };
+  }
+
+  // function to switch shoes fully
+  let current3DInstance = null;
+  const canvasElement = document.getElementById('activeCanvas');
+  
+  function switchToShoe(index) {
+    if (current3DInstance && current3DInstance.dispose) current3DInstance.dispose();
+    const shoe = shoesData[index];
+    activeShoeIndex = index;
+    updateUIForShoe(shoe);
+    renderSizeButtons(shoe.price);
+    // reinitialize 3D scene
+    current3DInstance = init3DForShoe(shoe, canvasElement);
+    showToastMessage(`🔥 ${shoe.name} loaded — $${shoe.price}`, false);
+    // update product selector tabs active style
+    document.querySelectorAll('.shoe-tab').forEach((tab, i) => {
+      if (i === index) tab.classList.add('active');
+      else tab.classList.remove('active');
+    });
+  }
+  
+  // ---- BUILD shoe selector tabs ----
+  const selectorDiv = document.getElementById('shoeSelector');
+  shoesData.forEach((shoe, idx) => {
+    const tab = document.createElement('div');
+    tab.className = 'shoe-tab';
+    if (idx === 0) tab.classList.add('active');
+    tab.innerHTML = `<i class="fas fa-shoe-prints"></i> ${shoe.name}`;
+    tab.addEventListener('click', () => {
+      if (idx === activeShoeIndex) return;
+      switchToShoe(idx);
+    });
+    selectorDiv.appendChild(tab);
+  });
+  
+  // Payment proceed logic with dynamic price
+  proceedBtn.addEventListener('click', () => {
+    if (!selectedSize) {
+      showToastMessage('❌ Please select your shoe size first!', true);
+      return;
+    }
+    const activeShoe = shoesData[activeShoeIndex];
+    showToastMessage(`💳 Payment secured: ${activeShoe.name} | Size ${selectedSize} | Total $${activeShoe.price} (demo)`, false);
+    setTimeout(() => {
+      showToastMessage(`✨ Order confirmed! Thank you for your purchase.`, false);
+    }, 1800);
+  });
+  
+  // initial load first shoe
+  switchToShoe(0);
+  
+  // background particles effect
+  function createBgParticles() {
+    const container = document.getElementById('particleField');
+    for (let i = 0; i < 70; i++) {
+      const p = document.createElement('div');
+      p.classList.add('bg-particle');
+      const s = 2 + Math.random() * 20;
+      p.style.width = s + 'px';
+      p.style.height = s + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDuration = 12 + Math.random() * 24 + 's';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      container.appendChild(p);
+    }
+  }
+  createBgParticles();
+  
+  // Back to main (reload to full brand website)
+  const backBtn = document.getElementById('backToHomeBtn');
+  backBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle, #e63946, transparent);pointer-events:none;z-index:9999;opacity:0.6';
+    document.body.appendChild(flash);
+    let op = 0.6;
+    const fadeOut = setInterval(() => { op -= 0.05; flash.style.opacity = op; if(op <= 0) { clearInterval(fadeOut); flash.remove(); } }, 20);
+    setTimeout(() => { window.location.reload(); }, 420);
+  });
+  
+  // fix canvas initial resize
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (current3DInstance && current3DInstance.renderer) {
+        const w = canvasElement.clientWidth;
+        const h = canvasElement.clientHeight;
+        current3DInstance.renderer.setSize(w, h);
+        current3DInstance.camera.aspect = w / h;
+        current3DInstance.camera.updateProjectionMatrix();
+      }
+    }, 100);
+  });
+</script>
+</body>
+</html>
