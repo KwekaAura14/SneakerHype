@@ -94,7 +94,7 @@
     .official-link:hover { color: white; text-shadow: 0 0 4px #ffb347; }
     .no-results { grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 2rem; }
     
-    /* Contact Section (hidden initially, revealed when clicking Contact) */
+    /* Contact Section */
     .contact-section {
       background: rgba(5,5,5,0.7);
       backdrop-filter: blur(12px);
@@ -386,7 +386,7 @@
 </script>
 
 <script>
-  // ========== SNEAKER DATABASE ==========
+  // ========== SNEAKER DATABASE (NO ADD BUTTON - PURE REDIRECT) ==========
   const shoesDatabase = [
     { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", icon: "fa-basketball-ball", official: "https://www.nike.com/lebron-21" },
     { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", icon: "fa-basketball", official: "https://www.nike.com/kobe-6" },
@@ -429,10 +429,12 @@
   const cartTotalSpan = document.getElementById("cartTotal");
   const placeOrderBtn = document.getElementById("placeOrderBtn");
   
+  // Redirect to preview page
   function redirectToPreview(shoeId, shoeName) {
     window.location.href = `shoePreviwe.html?id=${shoeId}&name=${encodeURIComponent(shoeName)}`;
   }
   
+  // Cart functions (no add button on cards, but cart still works via modal)
   function saveCart() { localStorage.setItem("sneaker_cart", JSON.stringify(cart)); updateCartUI(); }
   function updateCartUI() { const totalQty = cart.reduce((s,i)=>s+i.quantity,0); cartCountBadge.innerText = totalQty; renderCartModal(); }
   function renderCartModal() {
@@ -447,8 +449,8 @@
     document.querySelectorAll(".qty-inc").forEach(b=>b.addEventListener("click",()=>updateQty(parseInt(b.dataset.id),1)));
     document.querySelectorAll(".cart-remove").forEach(b=>b.addEventListener("click",()=>removeFromCart(parseInt(b.dataset.id))));
   }
-  function updateQty(id, delta) { let idx = cart.findIndex(i=>i.id===id); if(idx!==-1) { let newQ = cart[idx].quantity+delta; if(newQ<=0) cart.splice(idx,1); else cart[idx].quantity=newQ; saveCart(); renderProducts(); } }
-  function removeFromCart(id) { cart = cart.filter(i=>i.id!==id); saveCart(); renderProducts(); }
+  function updateQty(id, delta) { let idx = cart.findIndex(i=>i.id===id); if(idx!==-1) { let newQ = cart[idx].quantity+delta; if(newQ<=0) cart.splice(idx,1); else cart[idx].quantity=newQ; saveCart(); } }
+  function removeFromCart(id) { cart = cart.filter(i=>i.id!==id); saveCart(); }
   
   function getFiltered() {
     let results = [...shoesDatabase];
@@ -517,14 +519,14 @@
       const selectedPay = document.querySelector(".pay-option.selected")?.dataset.method || "card";
       const total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
       showToast(`✅ Order placed! ${selectedPay === 'card' ? 'Card' : 'PayPal'} payment of $${total}. Thank you!`);
-      cart = []; saveCart(); renderProducts(); checkoutModal.classList.remove("active");
+      cart = []; saveCart(); checkoutModal.classList.remove("active");
       document.getElementById("fullName").value = ""; document.getElementById("email").value = ""; document.getElementById("address").value = ""; document.getElementById("city").value = ""; document.getElementById("zip").value = "";
     });
     document.getElementById("officialStoreLink")?.addEventListener("click", (e) => { e.preventDefault(); window.open("https://www.nike.com/", "_blank"); });
   }
   function showToast(msg) { let t=document.createElement("div"); t.innerText=msg; t.style.cssText="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#e63946;padding:8px 20px;border-radius:60px;z-index:9999;font-size:0.8rem;"; document.body.appendChild(t); setTimeout(()=>t.remove(),2000); }
   
-  // Navigation: Home -> index.html, Contact -> scroll to contact section
+  // Navigation
   const homeBtn = document.getElementById("homeBtn");
   const contactBtn = document.getElementById("contactBtn");
   const shopBtn = document.getElementById("shopBtn");
