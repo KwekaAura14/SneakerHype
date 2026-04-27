@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | MULTI-SHOE STUDIO — PREVIEW, SIZE, PRICE</title>
+  <title>SNEAKER HYPE | CYBER PULSE — 3D PREVIEW & ADD TO CART</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -39,8 +39,8 @@
       animation: floatParticle 22s infinite alternate;
     }
     @keyframes floatParticle {
-      0% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
-      100% { transform: translateY(-100px) translateX(60px); opacity: 0.5; }
+      0% { transform: translateY(0px) translateX(0px); opacity: 0.15; }
+      100% { transform: translateY(-100px) translateX(60px); opacity: 0.45; }
     }
 
     .shop-main {
@@ -85,39 +85,6 @@
     .back-link i { margin-right: 6px; }
     .back-link:hover { background: #e63946; border-color: #e63946; color: white; }
 
-    /* CAROUSEL / SHOE SELECTOR */
-    .shoe-selector {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .shoe-tab {
-      background: rgba(10,10,16,0.8);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(230,57,70,0.3);
-      border-radius: 100px;
-      padding: 0.7rem 1.8rem;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .shoe-tab i { color: #e63946; font-size: 1rem; }
-    .shoe-tab.active {
-      background: linear-gradient(95deg, #e63946, #ffb347);
-      border-color: #ffb347;
-      color: #0a0a0a;
-      box-shadow: 0 5px 20px rgba(230,57,70,0.4);
-    }
-    .shoe-tab.active i { color: #0a0a0a; }
-    .shoe-tab:hover:not(.active) { background: rgba(230,57,70,0.2); transform: translateY(-2px); }
-
     /* product grid */
     .product-container {
       display: grid;
@@ -159,7 +126,7 @@
       cursor: grab;
       box-shadow: 0 0 30px rgba(0,0,0,0.6);
     }
-    #activeCanvas {
+    #shoeCanvas {
       width: 100%;
       height: 100%;
       display: block;
@@ -172,7 +139,7 @@
       letter-spacing: 2px;
     }
 
-    /* purchase section dynamic */
+    /* purchase section */
     .purchase-card {
       background: rgba(8,8,14,0.75);
       backdrop-filter: blur(20px);
@@ -180,14 +147,24 @@
       border: 1px solid rgba(230,57,70,0.4);
       padding: 2rem;
     }
-    .dynamic-price {
+    .shoe-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff, #e63946);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .shoe-price {
       font-size: 2.2rem;
       font-weight: 800;
       background: linear-gradient(135deg, #fff, #ffb347);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
     .section-label {
       font-size: 0.7rem;
@@ -201,15 +178,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.7rem;
-      margin: 0.8rem 0 1.6rem;
+      margin: 0.8rem 0 1.2rem;
     }
     .size-btn {
       background: rgba(25,25,32,0.9);
       border: 1px solid rgba(230,57,70,0.4);
       border-radius: 50px;
-      padding: 0.6rem 1.2rem;
+      padding: 0.7rem 1.3rem;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: white;
       cursor: pointer;
       transition: all 0.2s;
@@ -221,30 +198,14 @@
     }
     .size-btn:hover { background: #e63946; transform: scale(1.02); }
 
-    .payment-methods {
-      display: flex;
-      gap: 1rem;
-      margin: 1rem 0 1.5rem;
-      flex-wrap: wrap;
-    }
-    .payment-icon {
-      background: rgba(255,255,255,0.05);
-      border-radius: 14px;
-      padding: 0.45rem 1rem;
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .proceed-btn {
+    .add-to-cart-btn {
       width: 100%;
       background: linear-gradient(95deg, #e63946, #ffb347);
       border: none;
-      padding: 1rem;
+      padding: 1.1rem;
       border-radius: 80px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1rem;
       letter-spacing: 2px;
       color: #0a0a0a;
       cursor: pointer;
@@ -254,18 +215,38 @@
       align-items: center;
       gap: 12px;
       font-family: inherit;
-      margin-top: 0.8rem;
-    }
-    .proceed-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
-    .selected-info {
-      background: rgba(255,255,255,0.02);
-      border-radius: 20px;
-      padding: 0.9rem;
       margin-top: 1.5rem;
-      font-size: 0.7rem;
-      color: #bbb;
+      box-shadow: 0 5px 20px rgba(230,57,70,0.3);
+    }
+    .add-to-cart-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
+
+    .cart-summary {
+      background: rgba(255,255,255,0.03);
+      border-radius: 24px;
+      padding: 1rem;
+      margin-top: 1.8rem;
+      font-size: 0.75rem;
+      color: #ccc;
       border-left: 3px solid #e63946;
     }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.7rem;
+    }
+    .cart-total {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      font-weight: 700;
+      color: #ffb347;
+    }
+    .empty-cart-msg {
+      color: #777;
+      font-style: italic;
+    }
+
     .toast-message {
       position: fixed;
       bottom: 25px;
@@ -294,7 +275,8 @@
     }
     @media (max-width: 500px) {
       .toast-message { white-space: normal; width: 80%; text-align: center; }
-      .shoe-tab { padding: 0.5rem 1rem; font-size: 0.7rem; }
+      .shoe-name { font-size: 1.3rem; }
+      .shoe-price { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -304,50 +286,46 @@
 
 <main class="shop-main">
   <div class="shop-header">
-    <div class="logo-shop"><span>MULTI</span> // SNEAKER STUDIO</div>
+    <div class="logo-shop"><span>CYBER</span> // SNEAKER STUDIO</div>
     <a href="#" class="back-link" id="backToHomeBtn"><i class="fas fa-arrow-left"></i> BACK TO MAIN</a>
   </div>
 
-  <!-- Shoe selector tabs for each shoe model -->
-  <div class="shoe-selector" id="shoeSelector"></div>
-
   <div class="product-container">
-    <!-- LEFT: 3D PREVIEW (realtime WebGL) -->
+    <!-- LEFT: 3D PREVIEW (single shoe) -->
     <div class="preview-card">
       <div class="preview-title"><i class="fas fa-cube"></i> CINEMATIC 3D PREVIEW</div>
       <div class="shoe-canvas-wrapper">
-        <canvas id="activeCanvas"></canvas>
+        <canvas id="shoeCanvas"></canvas>
       </div>
-      <div class="hint-rotate"><i class="fas fa-mouse-pointer"></i> drag to rotate • premium render</div>
+      <div class="hint-rotate"><i class="fas fa-mouse-pointer"></i> drag to rotate • immersive experience</div>
     </div>
 
-    <!-- RIGHT: SIZE + PAYMENT with dynamic price -->
+    <!-- RIGHT: SIZE SELECTION + ADD TO CART (specific shoe) -->
     <div class="purchase-card">
-      <div class="dynamic-price" id="dynamicPrice">$0</div>
-      <div class="section-label"><i class="fas fa-ruler-combined"></i> SELECT SIZE</div>
+      <div class="shoe-name">CYBER PULSE</div>
+      <div class="shoe-price" id="shoePriceDisplay">$289 <small style="font-size:0.9rem;">USD</small></div>
+      
+      <div class="section-label"><i class="fas fa-ruler-combined"></i> SELECT YOUR SIZE</div>
       <div class="size-grid" id="sizeGrid"></div>
 
-      <div class="section-label"><i class="fas fa-credit-card"></i> PAYMENT METHOD</div>
-      <div class="payment-methods">
-        <div class="payment-icon"><i class="fab fa-cc-visa"></i> Visa</div>
-        <div class="payment-icon"><i class="fab fa-cc-mastercard"></i> Mastercard</div>
-        <div class="payment-icon"><i class="fab fa-paypal"></i> PayPal</div>
-        <div class="payment-icon"><i class="fas fa-mobile-alt"></i> Apple Pay</div>
-      </div>
-
-      <button class="proceed-btn" id="proceedPaymentBtn">
-        <i class="fas fa-lock"></i> PROCEED TO PAYMENT
+      <button class="add-to-cart-btn" id="addToCartBtn">
+        <i class="fas fa-shopping-cart"></i> ADD TO CART
       </button>
 
-      <div class="selected-info" id="selectedInfoBox">
-        <i class="fas fa-shoe-prints"></i> No size selected. <span id="selectedSizeSpan">—</span>
+      <!-- shopping cart summary (specific for this shoe) -->
+      <div class="cart-summary" id="cartSummary">
+        <div style="margin-bottom: 0.6rem;"><i class="fas fa-bag-shopping"></i> YOUR CART</div>
+        <div id="cartItemsContainer">
+          <div class="empty-cart-msg">No items added yet.</div>
+        </div>
+        <div class="cart-total" id="cartTotal">Total: $0</div>
       </div>
-      <div class="selected-info" style="margin-top: 0.6rem; border-left-color: #ffb347;">
-        <i class="fas fa-truck-fast"></i> Express worldwide shipping • free returns
+      <div class="cart-summary" style="margin-top: 0.8rem; border-left-color: #ffb347;">
+        <i class="fas fa-truck-fast"></i> Free worldwide shipping • 14-day return
       </div>
     </div>
   </div>
-  <footer>© 2025 SNEAKER HYPE — LIMITED EDITIONS | EACH SHOE UNIQUE PRICE & 3D DNA</footer>
+  <footer>© 2025 SNEAKER HYPE — CYBER PULSE EDITION | PREMIUM 3D CONFIGURATOR</footer>
 </main>
 
 <div id="toastMsg" class="toast-message"></div>
@@ -364,44 +342,36 @@
   import * as THREE from 'three';
   import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 
-  // ----- SHOE DATABASE: each shoe has unique name, price, and specific 3D styling parameters -----
-  const shoesData = [
-    { 
-      id: "cyber-pulse", name: "CYBER PULSE", price: 289, 
-      primaryColor: 0xe63946, secondaryColor: 0xffb347, accentColor: 0x44aaff, metalnessVal: 0.75, 
-      emissiveIntensity: 0.45, soleColor: 0x22223b, upperColor: 0x1a1a2e
-    },
-    { 
-      id: "phantom-veil", name: "PHANTOM VEIL", price: 349, 
-      primaryColor: 0xaa88ff, secondaryColor: 0xdd66cc, accentColor: 0xffaa88, metalnessVal: 0.85,
-      emissiveIntensity: 0.6, soleColor: 0x2d1b36, upperColor: 0x191024
-    },
-    { 
-      id: "midnight-edition", name: "MIDNIGHT EDITION", price: 399, 
-      primaryColor: 0x3b82f6, secondaryColor: 0xa855f7, accentColor: 0x60a5fa, metalnessVal: 0.8,
-      emissiveIntensity: 0.5, soleColor: 0x1e1b2e, upperColor: 0x0f172a
-    },
-    { 
-      id: "carbon-shadow", name: "CARBON SHADOW", price: 459, 
-      primaryColor: 0x475569, secondaryColor: 0x94a3b8, accentColor: 0xcbd5e1, metalnessVal: 0.92,
-      emissiveIntensity: 0.3, soleColor: 0x111827, upperColor: 0x1e293b
-    }
-  ];
+  // ----- SINGLE SHOE DATA (specific product) -----
+  const currentShoe = {
+    id: "cyber-pulse",
+    name: "CYBER PULSE",
+    price: 289,
+    primaryColor: 0xe63946,
+    secondaryColor: 0xffb347,
+    accentColor: 0x44aaff,
+    metalnessVal: 0.75,
+    emissiveIntensity: 0.45,
+    soleColor: 0x22223b,
+    upperColor: 0x1a1a2e
+  };
 
-  let activeShoeIndex = 0;
-  let selectedSize = null;
-  let currentScene, currentCamera, currentRenderer, currentControls, currentShoeGroup, currentParticles, currentGlowRing;
-  let animationFrameId;
-  let currentActiveCanvas = null;
-
-  // --- Helper: generate size grid UI (global)
+  // Size list
   const sizeList = ['US 6', 'US 7', 'US 8', 'US 9', 'US 10', 'US 11', 'US 12'];
+  let selectedSize = null;
+  
+  // Cart items for this specific shoe (each item has size, quantity, unit price)
+  let cartItems = []; // each: { size, price, quantity }
+  
+  // DOM elements
   const sizeGridContainer = document.getElementById('sizeGrid');
-  const selectedSizeSpan = document.getElementById('selectedSizeSpan');
-  const dynamicPriceSpan = document.getElementById('dynamicPrice');
-  const proceedBtn = document.getElementById('proceedPaymentBtn');
+  const addToCartBtn = document.getElementById('addToCartBtn');
+  const cartItemsContainer = document.getElementById('cartItemsContainer');
+  const cartTotalSpan = document.getElementById('cartTotal');
   const toast = document.getElementById('toastMsg');
+  const shoePriceDisplay = document.getElementById('shoePriceDisplay');
 
+  // Helper functions
   function showToastMessage(msg, isError = false) {
     toast.style.opacity = '1';
     toast.style.transform = 'translateX(-50%) scale(1)';
@@ -413,7 +383,8 @@
     }, 2500);
   }
 
-  function renderSizeButtons(selectedShoePrice) {
+  // Render size selection buttons
+  function renderSizeButtons() {
     sizeGridContainer.innerHTML = '';
     sizeList.forEach(size => {
       const btn = document.createElement('div');
@@ -424,52 +395,108 @@
         document.querySelectorAll('.size-btn').forEach(el => el.classList.remove('active'));
         btn.classList.add('active');
         selectedSize = size;
-        selectedSizeSpan.innerText = selectedSize;
-        showToastMessage(`✓ Size ${selectedSize} selected for ${shoesData[activeShoeIndex].name}`, false);
+        showToastMessage(`✓ Size ${selectedSize} selected for ${currentShoe.name}`, false);
       });
       sizeGridContainer.appendChild(btn);
     });
   }
 
-  function updateUIForShoe(shoe) {
-    dynamicPriceSpan.innerHTML = `$${shoe.price} <small style="font-size:0.9rem;">USD</small>`;
-    selectedSize = null;
-    selectedSizeSpan.innerText = '—';
-    // reset active size buttons style
-    if (sizeGridContainer) {
-      const btns = document.querySelectorAll('.size-btn');
-      btns.forEach(btn => btn.classList.remove('active'));
+  // Update cart UI (specific for this shoe product)
+  function updateCartUI() {
+    if (cartItems.length === 0) {
+      cartItemsContainer.innerHTML = '<div class="empty-cart-msg">No items added yet.</div>';
+      cartTotalSpan.innerHTML = `Total: $0`;
+      return;
     }
-    // also update the selected info box hint
-    const infoBox = document.getElementById('selectedInfoBox');
-    if (infoBox) infoBox.style.borderLeftColor = '#e63946';
+    
+    let html = '';
+    let total = 0;
+    cartItems.forEach((item, idx) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      html += `
+        <div class="cart-item">
+          <span><i class="fas fa-shoe-prints"></i> ${currentShoe.name} (${item.size}) x ${item.quantity}</span>
+          <span>$${itemTotal}</span>
+          <button class="remove-item-btn" data-index="${idx}" style="background:none; border:none; color:#e63946; cursor:pointer; font-size:0.7rem;"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      `;
+    });
+    cartItemsContainer.innerHTML = html;
+    cartTotalSpan.innerHTML = `Total: $${total}`;
+    
+    // attach remove event listeners
+    document.querySelectorAll('.remove-item-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) {
+          cartItems.splice(idx, 1);
+          updateCartUI();
+          showToastMessage(`🗑️ Item removed from cart`, false);
+        }
+      });
+    });
   }
 
-  // ---------- 3D SHOE GENERATOR (dynamic per shoe) ----------
-  function init3DForShoe(shoeData, canvasElement) {
-    // dispose previous scene if exists
-    if (currentScene && currentRenderer) {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      currentRenderer.dispose();
-      canvasElement.removeEventListener('webglcontextlost', () => {});
+  // Add to cart logic specific for this shoe
+  function addToCart() {
+    if (!selectedSize) {
+      showToastMessage(`❌ Please select a size for ${currentShoe.name} first!`, true);
+      return;
     }
-    const width = canvasElement.clientWidth;
-    const height = canvasElement.clientHeight;
+    
+    // Check if same size already exists in cart -> increment quantity
+    const existingItemIndex = cartItems.findIndex(item => item.size === selectedSize);
+    if (existingItemIndex !== -1) {
+      cartItems[existingItemIndex].quantity += 1;
+      showToastMessage(`🔄 Added another ${currentShoe.name} (${selectedSize}) to cart. Quantity: ${cartItems[existingItemIndex].quantity}`, false);
+    } else {
+      cartItems.push({
+        size: selectedSize,
+        price: currentShoe.price,
+        quantity: 1
+      });
+      showToastMessage(`✅ ${currentShoe.name} (Size ${selectedSize}) added to cart!`, false);
+    }
+    
+    updateCartUI();
+    
+    // optional: subtle animation on add button
+    addToCartBtn.style.transform = 'scale(0.98)';
+    setTimeout(() => { addToCartBtn.style.transform = ''; }, 150);
+  }
+
+  // Initialize size UI
+  renderSizeButtons();
+  
+  // Attach add to cart event
+  addToCartBtn.addEventListener('click', addToCart);
+  
+  // Set price display
+  shoePriceDisplay.innerHTML = `$${currentShoe.price} <small style="font-size:0.9rem;">USD</small>`;
+  
+  // ---------- 3D SHOE PREVIEW (cinematic, single premium model) ----------
+  const canvas = document.getElementById('shoeCanvas');
+  const wrapper = canvas.parentElement;
+  
+  function initShoe3D() {
+    const width = wrapper.clientWidth;
+    const height = wrapper.clientHeight;
     
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x030308);
-    scene.fog = new THREE.FogExp2(0x030308, 0.01);
+    scene.fog = new THREE.FogExp2(0x030308, 0.012);
     
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
     camera.position.set(2.4, 1.6, 3.4);
-    camera.lookAt(0, 0.2, 0);
+    camera.lookAt(0, 0.25, 0);
     
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasElement, alpha: false, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
     
-    const controls = new OrbitControls(camera, canvasElement);
+    const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
     controls.autoRotate = false;
@@ -478,232 +505,187 @@
     controls.rotateSpeed = 1.2;
     controls.target.set(0, 0.3, 0);
     
-    // LIGHTS
+    // Lighting
     const ambient = new THREE.AmbientLight(0x222222);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffeedd, 1.2);
     dirLight.position.set(2, 3, 2);
     dirLight.castShadow = true;
     scene.add(dirLight);
-    const fillLight = new THREE.PointLight(shoeData.primaryColor, 0.55);
+    const fillLight = new THREE.PointLight(currentShoe.primaryColor, 0.6);
     fillLight.position.set(1.2, 1, 2.2);
     scene.add(fillLight);
-    const backRim = new THREE.PointLight(shoeData.secondaryColor, 0.6);
+    const backRim = new THREE.PointLight(currentShoe.secondaryColor, 0.65);
     backRim.position.set(-1, 1.2, -2);
     scene.add(backRim);
-    const accentLight = new THREE.PointLight(shoeData.accentColor, 0.5);
+    const accentLight = new THREE.PointLight(currentShoe.accentColor, 0.55);
     accentLight.position.set(1.5, 0.8, 1.2);
     scene.add(accentLight);
     
-    const gridHelper = new THREE.GridHelper(5, 20, shoeData.primaryColor, 0x333333);
+    // Grid reflection
+    const gridHelper = new THREE.GridHelper(5.5, 24, currentShoe.primaryColor, 0x333333);
     gridHelper.position.y = -0.65;
     gridHelper.material.transparent = true;
-    gridHelper.material.opacity = 0.18;
+    gridHelper.material.opacity = 0.2;
     scene.add(gridHelper);
     
     const shoeGroup = new THREE.Group();
     
-    // sole
-    const soleGeo = new THREE.BoxGeometry(1.65, 0.26, 2.85);
-    const soleMat = new THREE.MeshStandardMaterial({ color: shoeData.soleColor, roughness: 0.45, metalness: 0.6 });
+    // Sole
+    const soleGeo = new THREE.BoxGeometry(1.68, 0.26, 2.88);
+    const soleMat = new THREE.MeshStandardMaterial({ color: currentShoe.soleColor, roughness: 0.45, metalness: 0.65 });
     const sole = new THREE.Mesh(soleGeo, soleMat);
     sole.position.y = -0.28;
     shoeGroup.add(sole);
     
-    // midsole accent stripe
-    const midStripe = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.1, 2.7), 
-      new THREE.MeshStandardMaterial({ color: shoeData.primaryColor, metalness: 0.8, roughness: 0.3, emissive: shoeData.primaryColor, emissiveIntensity: shoeData.emissiveIntensity * 0.6 }));
+    // Midsole stripe (glow accent)
+    const midStripeMat = new THREE.MeshStandardMaterial({ color: currentShoe.primaryColor, metalness: 0.85, roughness: 0.3, emissive: currentShoe.primaryColor, emissiveIntensity: currentShoe.emissiveIntensity * 0.7 });
+    const midStripe = new THREE.Mesh(new THREE.BoxGeometry(1.58, 0.1, 2.72), midStripeMat);
     midStripe.position.y = -0.12;
     shoeGroup.add(midStripe);
     
-    // upper body
-    const upperGeo = new THREE.CylinderGeometry(0.88, 0.96, 1.15, 28);
-    const upperMat = new THREE.MeshStandardMaterial({ color: shoeData.upperColor, roughness: 0.35, metalness: 0.2 });
+    // Upper
+    const upperGeo = new THREE.CylinderGeometry(0.89, 0.97, 1.18, 30);
+    const upperMat = new THREE.MeshStandardMaterial({ color: currentShoe.upperColor, roughness: 0.35, metalness: 0.25 });
     const upper = new THREE.Mesh(upperGeo, upperMat);
-    upper.position.y = 0.38;
+    upper.position.y = 0.39;
     upper.scale.set(1, 0.92, 1.05);
     shoeGroup.add(upper);
     
-    // toe guard (gloss)
-    const toeMat = new THREE.MeshStandardMaterial({ color: shoeData.secondaryColor, metalness: 0.85, roughness: 0.2, emissive: shoeData.secondaryColor, emissiveIntensity: 0.2 });
-    const toeCap = new THREE.Mesh(new THREE.SphereGeometry(0.64, 32, 32), toeMat);
-    toeCap.position.set(0.78, 0.2, 1.1);
+    // Toe cap gloss
+    const toeMat = new THREE.MeshStandardMaterial({ color: currentShoe.secondaryColor, metalness: 0.88, roughness: 0.2, emissive: currentShoe.secondaryColor, emissiveIntensity: 0.25 });
+    const toeCap = new THREE.Mesh(new THREE.SphereGeometry(0.65, 32, 32), toeMat);
+    toeCap.position.set(0.79, 0.21, 1.12);
     toeCap.scale.set(0.7, 0.5, 0.6);
     shoeGroup.add(toeCap);
     
-    // heel counter
-    const heelMat = new THREE.MeshStandardMaterial({ color: shoeData.accentColor, metalness: 0.7 });
-    const heelBlock = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.65, 0.75), heelMat);
-    heelBlock.position.set(-0.78, 0.22, -1.1);
+    // Heel counter (dynamic)
+    const heelMat = new THREE.MeshStandardMaterial({ color: currentShoe.accentColor, metalness: 0.75 });
+    const heelBlock = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.67, 0.78), heelMat);
+    heelBlock.position.set(-0.79, 0.23, -1.12);
     shoeGroup.add(heelBlock);
     
-    // dynamic swoosh / curve
+    // Iconic swoosh / dynamic curve
     const points = [];
-    for (let t = 0; t <= 1; t += 0.05) {
-      const x = -0.75 + t * 1.55;
-      const z = -0.85 + t * 1.95;
-      const y = 0.32 + Math.sin(t * Math.PI) * 0.23;
+    for (let t = 0; t <= 1; t += 0.045) {
+      const x = -0.77 + t * 1.58;
+      const z = -0.87 + t * 1.98;
+      const y = 0.33 + Math.sin(t * Math.PI) * 0.24;
       points.push(new THREE.Vector3(x, y, z));
     }
-    const tubeGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 28, 0.07, 8, false);
-    const swooshMat = new THREE.MeshStandardMaterial({ color: shoeData.secondaryColor, metalness: 0.9, emissive: shoeData.primaryColor, emissiveIntensity: 0.25 });
+    const tubeGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 32, 0.075, 8, false);
+    const swooshMat = new THREE.MeshStandardMaterial({ color: currentShoe.secondaryColor, metalness: 0.92, emissive: currentShoe.primaryColor, emissiveIntensity: 0.3 });
     const swoosh = new THREE.Mesh(tubeGeo, swooshMat);
     shoeGroup.add(swoosh);
     
-    // laces
-    const laceMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.15 });
-    for (let i = 0; i < 4; i++) {
-      const lace = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.42, 6), laceMat);
-      lace.position.set(-0.1 + i * 0.27, 0.77, 0.58);
-      lace.rotation.z = 0.9;
+    // Detailed laces
+    const laceMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.2 });
+    const lacePositions = [-0.12, 0.12, 0.36, 0.6];
+    lacePositions.forEach(xOff => {
+      const lace = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, 0.44, 8), laceMat);
+      lace.position.set(xOff - 0.18, 0.78, 0.6);
+      lace.rotation.z = 0.85;
       shoeGroup.add(lace);
-    }
+    });
     
-    // holographic ring accent
-    const ringGeo = new THREE.TorusGeometry(0.48, 0.055, 32, 80);
-    const ringMatGlow = new THREE.MeshStandardMaterial({ color: shoeData.accentColor, metalness: 0.95, emissive: shoeData.accentColor, emissiveIntensity: 0.4 });
+    // Holographic ring
+    const ringGeo = new THREE.TorusGeometry(0.49, 0.058, 32, 90);
+    const ringMatGlow = new THREE.MeshStandardMaterial({ color: currentShoe.accentColor, metalness: 0.98, emissive: currentShoe.accentColor, emissiveIntensity: 0.45 });
     const heelRing = new THREE.Mesh(ringGeo, ringMatGlow);
-    heelRing.position.set(-0.68, 0.38, -1.2);
+    heelRing.position.set(-0.69, 0.39, -1.22);
     heelRing.rotation.x = Math.PI / 2;
     shoeGroup.add(heelRing);
     
-    // floating particles unique to shoe
-    const particleCount = 340;
+    // Floating particles (magical dust)
+    const particleCount = 420;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-      positions[i*3] = (Math.random() - 0.5) * 2.8;
-      positions[i*3+1] = Math.random() * 1.5;
-      positions[i*3+2] = (Math.random() - 0.5) * 2.8;
+      positions[i*3] = (Math.random() - 0.5) * 2.9;
+      positions[i*3+1] = Math.random() * 1.55;
+      positions[i*3+2] = (Math.random() - 0.5) * 2.9;
     }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMatPoints = new THREE.PointsMaterial({ color: shoeData.primaryColor, size: 0.02, transparent: true, blending: THREE.AdditiveBlending });
+    const particleMatPoints = new THREE.PointsMaterial({ color: currentShoe.primaryColor, size: 0.022, transparent: true, blending: THREE.AdditiveBlending });
     const particles = new THREE.Points(particleGeo, particleMatPoints);
     shoeGroup.add(particles);
     
     scene.add(shoeGroup);
     
-    // aura glow sphere
-    const auraMat = new THREE.MeshStandardMaterial({ color: shoeData.primaryColor, emissive: shoeData.primaryColor, emissiveIntensity: 0.12, transparent: true, opacity: 0.12 });
-    const auraSphere = new THREE.Mesh(new THREE.SphereGeometry(1.45, 32, 32), auraMat);
+    // Glow aura sphere around shoe
+    const auraMat = new THREE.MeshStandardMaterial({ color: currentShoe.primaryColor, emissive: currentShoe.primaryColor, emissiveIntensity: 0.13, transparent: true, opacity: 0.12 });
+    const auraSphere = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), auraMat);
     auraSphere.position.y = 0.2;
     scene.add(auraSphere);
     
-    // starfield background
-    const starCount = 900;
+    // Background starfield (immersive)
+    const starCount = 1200;
     const starPositions = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
-      starPositions[i*3] = (Math.random() - 0.5) * 180;
-      starPositions[i*3+1] = (Math.random() - 0.5) * 70;
-      starPositions[i*3+2] = (Math.random() - 0.5) * 70 - 30;
+      starPositions[i*3] = (Math.random() - 0.5) * 200;
+      starPositions[i*3+1] = (Math.random() - 0.5) * 80;
+      starPositions[i*3+2] = (Math.random() - 0.5) * 80 - 35;
     }
     const starFieldGeo = new THREE.BufferGeometry();
     starFieldGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    const starFieldMat = new THREE.PointsMaterial({ color: 0xffaa88, size: 0.045, transparent: true, opacity: 0.35 });
+    const starFieldMat = new THREE.PointsMaterial({ color: 0xffaa88, size: 0.045, transparent: true, opacity: 0.32 });
     const starsField = new THREE.Points(starFieldGeo, starFieldMat);
     scene.add(starsField);
     
     let animTime = 0;
     function animateShoe() {
-      animationFrameId = requestAnimationFrame(animateShoe);
+      requestAnimationFrame(animateShoe);
       animTime += 0.012;
-      // dynamic light breathing
-      fillLight.intensity = 0.55 + Math.sin(animTime) * 0.12;
-      backRim.intensity = 0.55 + Math.cos(animTime * 1.2) * 0.1;
-      particles.rotation.y += 0.005;
-      particles.rotation.x = Math.sin(animTime * 0.6) * 0.1;
-      starsField.rotation.y += 0.0006;
+      // dynamic lighting
+      fillLight.intensity = 0.58 + Math.sin(animTime) * 0.13;
+      backRim.intensity = 0.6 + Math.cos(animTime * 1.2) * 0.12;
+      accentLight.intensity = 0.52 + Math.sin(animTime * 1.5) * 0.1;
+      particles.rotation.y += 0.006;
+      particles.rotation.x = Math.sin(animTime * 0.6) * 0.12;
+      starsField.rotation.y += 0.0005;
       starsField.rotation.x += 0.0003;
       controls.update();
       renderer.render(scene, camera);
     }
     animateShoe();
     
+    // resize handler
     const handleResize = () => {
-      const w = canvasElement.clientWidth;
-      const h = canvasElement.clientHeight;
+      const w = wrapper.clientWidth;
+      const h = wrapper.clientHeight;
       renderer.setSize(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
     };
     window.addEventListener('resize', handleResize);
     
-    return { scene, camera, renderer, controls, shoeGroup, particles, starsField, dispose: () => {
+    return { dispose: () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
       renderer.dispose();
     } };
   }
-
-  // function to switch shoes fully
-  let current3DInstance = null;
-  const canvasElement = document.getElementById('activeCanvas');
   
-  function switchToShoe(index) {
-    if (current3DInstance && current3DInstance.dispose) current3DInstance.dispose();
-    const shoe = shoesData[index];
-    activeShoeIndex = index;
-    updateUIForShoe(shoe);
-    renderSizeButtons(shoe.price);
-    // reinitialize 3D scene
-    current3DInstance = init3DForShoe(shoe, canvasElement);
-    showToastMessage(`🔥 ${shoe.name} loaded — $${shoe.price}`, false);
-    // update product selector tabs active style
-    document.querySelectorAll('.shoe-tab').forEach((tab, i) => {
-      if (i === index) tab.classList.add('active');
-      else tab.classList.remove('active');
-    });
-  }
+  let current3D = initShoe3D();
   
-  // ---- BUILD shoe selector tabs ----
-  const selectorDiv = document.getElementById('shoeSelector');
-  shoesData.forEach((shoe, idx) => {
-    const tab = document.createElement('div');
-    tab.className = 'shoe-tab';
-    if (idx === 0) tab.classList.add('active');
-    tab.innerHTML = `<i class="fas fa-shoe-prints"></i> ${shoe.name}`;
-    tab.addEventListener('click', () => {
-      if (idx === activeShoeIndex) return;
-      switchToShoe(idx);
-    });
-    selectorDiv.appendChild(tab);
-  });
-  
-  // Payment proceed logic with dynamic price
-  proceedBtn.addEventListener('click', () => {
-    if (!selectedSize) {
-      showToastMessage('❌ Please select your shoe size first!', true);
-      return;
-    }
-    const activeShoe = shoesData[activeShoeIndex];
-    showToastMessage(`💳 Payment secured: ${activeShoe.name} | Size ${selectedSize} | Total $${activeShoe.price} (demo)`, false);
-    setTimeout(() => {
-      showToastMessage(`✨ Order confirmed! Thank you for your purchase.`, false);
-    }, 1800);
-  });
-  
-  // initial load first shoe
-  switchToShoe(0);
-  
-  // background particles effect
+  // background particle generation
   function createBgParticles() {
     const container = document.getElementById('particleField');
     for (let i = 0; i < 70; i++) {
       const p = document.createElement('div');
       p.classList.add('bg-particle');
-      const s = 2 + Math.random() * 20;
+      const s = 2 + Math.random() * 22;
       p.style.width = s + 'px';
       p.style.height = s + 'px';
       p.style.left = Math.random() * 100 + '%';
       p.style.top = Math.random() * 100 + '%';
-      p.style.animationDuration = 12 + Math.random() * 24 + 's';
-      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.animationDuration = 14 + Math.random() * 26 + 's';
+      p.style.animationDelay = Math.random() * 12 + 's';
       container.appendChild(p);
     }
   }
   createBgParticles();
   
-  // Back to main (reload to full brand website)
+  // Back to main with transition
   const backBtn = document.getElementById('backToHomeBtn');
   backBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -715,17 +697,17 @@
     setTimeout(() => { window.location.reload(); }, 420);
   });
   
-  // fix canvas initial resize
+  // handle canvas resize after load
   window.addEventListener('load', () => {
     setTimeout(() => {
-      if (current3DInstance && current3DInstance.renderer) {
-        const w = canvasElement.clientWidth;
-        const h = canvasElement.clientHeight;
-        current3DInstance.renderer.setSize(w, h);
-        current3DInstance.camera.aspect = w / h;
-        current3DInstance.camera.updateProjectionMatrix();
+      const w = wrapper.clientWidth;
+      const h = wrapper.clientHeight;
+      if (current3D && current3D.dispose) {
+        // dummy refresh: just trigger resize on 3d renderer manually (we stored renderer inside closure)
+        // but it's okay because we have resizeListener attached inside init
+        window.dispatchEvent(new Event('resize'));
       }
-    }, 100);
+    }, 120);
   });
 </script>
 </body>
