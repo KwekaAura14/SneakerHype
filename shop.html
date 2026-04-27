@@ -94,134 +94,59 @@
     .official-link:hover { color: white; text-shadow: 0 0 4px #ffb347; }
     .no-results { grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 2rem; }
     
-    /* Contact Section */
-    .contact-section {
-      background: rgba(5,5,5,0.7);
-      backdrop-filter: blur(12px);
-      padding: 4rem 2rem;
-      position: relative;
-      z-index: 10;
-      border-top: 1px solid rgba(230,57,70,0.2);
-      display: none;
-      scroll-margin-top: 100px;
+    /* Cart Modal */
+    .cart-modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); backdrop-filter: blur(16px);
+      z-index: 3000; visibility: hidden; opacity: 0; transition: 0.25s;
+      display: flex; align-items: center; justify-content: center;
     }
-    .contact-section.visible {
-      display: block;
-    }
-    .contact-container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .contact-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .contact-header h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff, #e63946);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .contact-header p {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
-    }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-    .contact-card {
-      background: rgba(15,15,20,0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(230,57,70,0.2);
-      border-radius: 1.5rem;
+    .cart-modal-overlay.active { visibility: visible; opacity: 1; }
+    .cart-modal-container {
+      background: #0a0a10;
+      border: 1px solid rgba(230,57,70,0.4);
+      border-radius: 2rem;
+      max-width: 500px;
+      width: 90%;
       padding: 2rem;
       text-align: center;
-      transition: 0.3s;
+      transform: scale(0.9);
+      transition: transform 0.3s;
     }
-    .contact-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(230,57,70,0.5);
-    }
-    .contact-icon {
-      width: 70px;
-      height: 70px;
-      background: rgba(230,57,70,0.15);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.2rem;
-      font-size: 1.8rem;
-      color: #e63946;
-      transition: 0.3s;
-    }
-    .contact-card:hover .contact-icon {
-      background: #e63946;
-      color: white;
-    }
-    .contact-card h3 {
-      font-size: 1.1rem;
-      letter-spacing: 2px;
-      margin-bottom: 0.8rem;
-    }
-    .contact-info {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.85rem;
-      line-height: 1.6;
-    }
-    .contact-info a {
-      color: #ffb347;
-      text-decoration: none;
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-    .social-link {
-      width: 45px;
-      height: 45px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.2rem;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-    .social-link:hover {
-      background: #e63946;
-      transform: translateY(-3px);
-    }
+    .cart-modal-overlay.active .cart-modal-container { transform: scale(1); }
+    .cart-modal-container h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #e63946; }
+    .cart-items-summary { max-height: 300px; overflow-y: auto; margin: 1rem 0; text-align: left; }
+    .cart-summary-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .cart-total-summary { font-size: 1.2rem; font-weight: 800; margin: 1rem 0; padding-top: 0.5rem; border-top: 1px solid rgba(230,57,70,0.3); }
+    .modal-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+    .btn-proceed { background: linear-gradient(135deg, #e63946, #ffb347); border: none; padding: 0.8rem 1.5rem; border-radius: 60px; font-weight: 700; cursor: pointer; color: white; transition: 0.2s; }
+    .btn-proceed:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(230,57,70,0.5); }
+    .btn-cancel { background: rgba(255,255,255,0.1); border: none; padding: 0.8rem 1.5rem; border-radius: 60px; font-weight: 700; cursor: pointer; color: white; transition: 0.2s; }
+    .btn-cancel:hover { background: rgba(255,255,255,0.2); }
+    .empty-cart-msg { color: rgba(255,255,255,0.5); padding: 1rem; }
     
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(16px); z-index: 3000; visibility: hidden; opacity: 0; transition: 0.25s; }
-    .modal-overlay.active { visibility: visible; opacity: 1; }
-    .checkout-panel { position: fixed; top: 0; right: -600px; width: 100%; max-width: 540px; height: 100%; background: #0a0a10; border-left: 2px solid #e63946; z-index: 3001; transition: right 0.4s cubic-bezier(0.2,0.9,0.4,1.2); display: flex; flex-direction: column; overflow-y: auto; }
-    .modal-overlay.active .checkout-panel { right: 0; }
-    .panel-header { padding: 1.2rem; border-bottom: 1px solid rgba(230,57,70,0.3); display: flex; justify-content: space-between; }
-    .close-panel { background: none; border: none; font-size: 1.5rem; color: white; cursor: pointer; }
-    .cart-items { padding: 1rem; max-height: 32vh; overflow-y: auto; }
-    .cart-item { display: flex; gap: 1rem; background: rgba(255,255,255,0.04); margin-bottom: 0.7rem; padding: 0.7rem; border-radius: 1rem; }
-    .cart-qty { display: flex; gap: 6px; margin-top: 6px; }
-    .cart-qty button { background: rgba(230,57,70,0.3); border: none; width: 24px; border-radius: 30px; cursor: pointer; color: white; }
-    .shipping-form { padding: 1rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.05); }
-    .form-group { margin-bottom: 0.8rem; }
-    .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(230,57,70,0.4); padding: 0.6rem 0.8rem; border-radius: 1rem; color: white; }
-    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-    .payment-methods { display: flex; gap: 0.8rem; margin: 1rem 0; flex-wrap: wrap; }
-    .pay-option { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 40px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; gap: 6px; }
-    .pay-option.selected { background: linear-gradient(135deg, #e63946, #ffb347); }
-    .total-area { padding: 1rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.1); }
-    .place-order { width: 100%; background: linear-gradient(135deg, #e63946, #ffb347); border: none; padding: 0.9rem; border-radius: 60px; font-weight: 800; cursor: pointer; color: white; margin-top: 0.5rem; }
-    .footer-link { color: #ffb347; text-decoration: none; font-size: 0.7rem; display: block; text-align: center; margin-top: 0.8rem; }
+    .contact-section {
+      background: rgba(5,5,5,0.7); backdrop-filter: blur(12px); padding: 4rem 2rem;
+      position: relative; z-index: 10; border-top: 1px solid rgba(230,57,70,0.2);
+      display: none; scroll-margin-top: 100px;
+    }
+    .contact-section.visible { display: block; }
+    .contact-container { max-width: 1200px; margin: 0 auto; }
+    .contact-header { text-align: center; margin-bottom: 3rem; }
+    .contact-header h2 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, #fff, #e63946); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .contact-header p { color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 0.5rem; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .contact-card { background: rgba(15,15,20,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(230,57,70,0.2); border-radius: 1.5rem; padding: 2rem; text-align: center; transition: 0.3s; }
+    .contact-card:hover { transform: translateY(-5px); border-color: rgba(230,57,70,0.5); }
+    .contact-icon { width: 70px; height: 70px; background: rgba(230,57,70,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.8rem; color: #e63946; transition: 0.3s; }
+    .contact-card:hover .contact-icon { background: #e63946; color: white; }
+    .contact-card h3 { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 0.8rem; }
+    .contact-info { color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.6; }
+    .contact-info a { color: #ffb347; text-decoration: none; }
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; }
+    .social-link { width: 45px; height: 45px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
+    .social-link:hover { background: #e63946; transform: translateY(-3px); }
+    
     .main-footer { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #555; background: #050505; position: relative; z-index: 10; }
     @media (max-width: 768px) { .nav-premium { padding: 1rem 1.5rem; } .nav-links-premium { display: none; } .logo-text { font-size: 1.8rem; } .filter-group { justify-content: flex-start; } }
   </style>
@@ -259,58 +184,30 @@
   <div class="product-grid" id="productGrid"></div>
 </section>
 
-<!-- Contact Section -->
 <section id="contactSection" class="contact-section">
   <div class="contact-container">
-    <div class="contact-header">
-      <h2>CONNECT <span>WITH US</span></h2>
-      <p>WE'RE HERE 24/7 TO ANSWER YOUR QUESTIONS</p>
-    </div>
+    <div class="contact-header"><h2>CONNECT <span>WITH US</span></h2><p>WE'RE HERE 24/7 TO ANSWER YOUR QUESTIONS</p></div>
     <div class="contact-grid">
-      <div class="contact-card">
-        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
-        <h3>PHONE</h3>
-        <div class="contact-info"><p>+1 (888) 426-7325</p><p>+44 20 7946 0138</p><p style="font-size:0.7rem; margin-top:8px;">Mon-Fri 9AM-6PM EST</p></div>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-        <h3>EMAIL</h3>
-        <div class="contact-info"><p><a href="mailto:studio@cinematic4d.com">studio@cinematic4d.com</a></p><p><a href="mailto:support@sneakerhype.com">support@sneakerhype.com</a></p></div>
-      </div>
-      <div class="contact-card">
-        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-        <h3>STUDIO</h3>
-        <div class="contact-info"><p>Cinematic 4D Studio</p><p>47 Mercer Street</p><p>New York, NY 10013</p></div>
-      </div>
+      <div class="contact-card"><div class="contact-icon"><i class="fas fa-phone-alt"></i></div><h3>PHONE</h3><div class="contact-info"><p>+1 (888) 426-7325</p><p>+44 20 7946 0138</p></div></div>
+      <div class="contact-card"><div class="contact-icon"><i class="fas fa-envelope"></i></div><h3>EMAIL</h3><div class="contact-info"><p><a href="mailto:studio@cinematic4d.com">studio@cinematic4d.com</a></p><p><a href="mailto:support@sneakerhype.com">support@sneakerhype.com</a></p></div></div>
+      <div class="contact-card"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><h3>STUDIO</h3><div class="contact-info"><p>Cinematic 4D Studio</p><p>47 Mercer Street, NYC</p></div></div>
     </div>
-    <div class="social-links">
-      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-      <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-      <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-    </div>
+    <div class="social-links"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-twitter"></i></a><a href="#" class="social-link"><i class="fab fa-discord"></i></a><a href="#" class="social-link"><i class="fab fa-tiktok"></i></a></div>
   </div>
 </section>
 
 <footer class="main-footer"><p>© 2025 CINEMA 4D + REDSHIFT | UNSEEN STUDIO — HIGH QUALITY VFX RENDERING</p></footer>
 
-<div id="checkoutModal" class="modal-overlay">
-  <div class="checkout-panel">
-    <div class="panel-header"><h3>🎬 YOUR CART</h3><button class="close-panel" id="closeCheckoutBtn">✕</button></div>
-    <div class="cart-items" id="cartItemsList"></div>
-    <div class="shipping-form">
-      <h4 style="margin-bottom:0.8rem;">📦 Shipping Details (Required)</h4>
-      <div class="form-group"><input type="text" id="fullName" placeholder="Full Name *"></div>
-      <div class="form-group"><input type="email" id="email" placeholder="Email Address *"></div>
-      <div class="form-group"><input type="text" id="address" placeholder="Street Address *"></div>
-      <div class="row-2"><input type="text" id="city" placeholder="City *"><input type="text" id="zip" placeholder="ZIP Code *"></div>
-      <div class="form-group"><select id="country"><option>United States</option><option>Canada</option><option>UK</option><option>Germany</option><option>France</option><option>Japan</option><option>Australia</option></select></div>
-      <div class="payment-methods" id="paymentMethods">
-        <div class="pay-option selected" data-method="card"><i class="fab fa-cc-visa"></i> Credit Card</div>
-        <div class="pay-option" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div>
-      </div>
+<!-- Cart Modal -->
+<div id="cartModal" class="cart-modal-overlay">
+  <div class="cart-modal-container">
+    <h3><i class="fas fa-shopping-bag"></i> Your Cart</h3>
+    <div id="cartItemsSummary" class="cart-items-summary"></div>
+    <div id="cartTotalSummary" class="cart-total-summary"></div>
+    <div class="modal-buttons">
+      <button id="proceedToPaymentBtn" class="btn-proceed"><i class="fas fa-credit-card"></i> Proceed to Payment</button>
+      <button id="cancelCartBtn" class="btn-cancel"><i class="fas fa-times"></i> Continue Shopping</button>
     </div>
-    <div class="total-area"><div style="display:flex; justify-content:space-between; font-weight:800;"><span>TOTAL</span><span id="cartTotal">$0</span></div><button class="place-order" id="placeOrderBtn">✅ PLACE ORDER (Secure)</button><a href="#" id="officialStoreLink" class="footer-link"><i class="fas fa-store"></i> Official Brand Store →</a></div>
   </div>
 </div>
 
@@ -386,7 +283,7 @@
 </script>
 
 <script>
-  // ========== SNEAKER DATABASE (NO ADD BUTTON - PURE REDIRECT) ==========
+  // ========== SNEAKER DATABASE ==========
   const shoesDatabase = [
     { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", icon: "fa-basketball-ball", official: "https://www.nike.com/lebron-21" },
     { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", icon: "fa-basketball", official: "https://www.nike.com/kobe-6" },
@@ -423,34 +320,74 @@
   const filterGroup = document.getElementById("filterGroup");
   const cartCountBadge = document.getElementById("cartCountBadge");
   const cartIconBtn = document.getElementById("cartIconBtn");
-  const checkoutModal = document.getElementById("checkoutModal");
-  const closeCheckoutBtn = document.getElementById("closeCheckoutBtn");
-  const cartItemsList = document.getElementById("cartItemsList");
-  const cartTotalSpan = document.getElementById("cartTotal");
-  const placeOrderBtn = document.getElementById("placeOrderBtn");
+  const cartModal = document.getElementById("cartModal");
+  const cartItemsSummary = document.getElementById("cartItemsSummary");
+  const cartTotalSummary = document.getElementById("cartTotalSummary");
+  const proceedToPaymentBtn = document.getElementById("proceedToPaymentBtn");
+  const cancelCartBtn = document.getElementById("cancelCartBtn");
   
-  // Redirect to preview page
+  // Redirect to shoe preview page
   function redirectToPreview(shoeId, shoeName) {
     window.location.href = `shoePreviwe.html?id=${shoeId}&name=${encodeURIComponent(shoeName)}`;
   }
   
-  // Cart functions (no add button on cards, but cart still works via modal)
-  function saveCart() { localStorage.setItem("sneaker_cart", JSON.stringify(cart)); updateCartUI(); }
-  function updateCartUI() { const totalQty = cart.reduce((s,i)=>s+i.quantity,0); cartCountBadge.innerText = totalQty; renderCartModal(); }
-  function renderCartModal() {
-    if(!cartItemsList) return;
-    if(cart.length===0) { cartItemsList.innerHTML = "<div style='text-align:center;padding:2rem;'>Your cart is empty</div>"; cartTotalSpan.innerText="$0"; return; }
-    let html = "", total = 0;
-    cart.forEach(item => { total += item.price * item.quantity;
-      html += `<div class="cart-item"><div style="font-size:1.8rem;"><i class="fas ${item.icon}"></i></div><div style="flex:1"><b>${escapeHtml(item.name)}</b><div>$${item.price}</div><div class="cart-qty"><button class="qty-dec" data-id="${item.id}">-</button><span>${item.quantity}</span><button class="qty-inc" data-id="${item.id}">+</button><button class="cart-remove" data-id="${item.id}" style="background:none;">🗑️</button></div></div></div>`;
-    });
-    cartItemsList.innerHTML = html; cartTotalSpan.innerText = "$"+total;
-    document.querySelectorAll(".qty-dec").forEach(b=>b.addEventListener("click",()=>updateQty(parseInt(b.dataset.id),-1)));
-    document.querySelectorAll(".qty-inc").forEach(b=>b.addEventListener("click",()=>updateQty(parseInt(b.dataset.id),1)));
-    document.querySelectorAll(".cart-remove").forEach(b=>b.addEventListener("click",()=>removeFromCart(parseInt(b.dataset.id))));
+  // Cart functions
+  function saveCart() { localStorage.setItem("sneaker_cart", JSON.stringify(cart)); updateCartBadge(); }
+  function updateCartBadge() { const totalQty = cart.reduce((s,i)=>s+i.quantity,0); cartCountBadge.innerText = totalQty; }
+  
+  function showCartModal() {
+    if(cart.length === 0) {
+      cartItemsSummary.innerHTML = '<div class="empty-cart-msg"><i class="fas fa-box-open"></i> Your cart is empty. Tap shoes to add them!</div>';
+      cartTotalSummary.innerHTML = '';
+    } else {
+      let itemsHtml = '';
+      let total = 0;
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        itemsHtml += `<div class="cart-summary-item"><span><strong>${escapeHtml(item.name)}</strong> x ${item.quantity}</span><span>$${itemTotal}</span></div>`;
+      });
+      cartItemsSummary.innerHTML = itemsHtml;
+      cartTotalSummary.innerHTML = `<strong>Total: $${total}</strong>`;
+    }
+    cartModal.classList.add('active');
   }
-  function updateQty(id, delta) { let idx = cart.findIndex(i=>i.id===id); if(idx!==-1) { let newQ = cart[idx].quantity+delta; if(newQ<=0) cart.splice(idx,1); else cart[idx].quantity=newQ; saveCart(); } }
-  function removeFromCart(id) { cart = cart.filter(i=>i.id!==id); saveCart(); }
+  
+  function closeCartModal() { cartModal.classList.remove('active'); }
+  
+  function proceedToPayment() {
+    if(cart.length === 0) {
+      alert("Your cart is empty. Please add items before proceeding.");
+      closeCartModal();
+      return;
+    }
+    // Save cart to localStorage before redirecting
+    localStorage.setItem("sneaker_cart", JSON.stringify(cart));
+    window.location.href = "Payment.html";
+  }
+  
+  // Add to cart from preview page (called when user adds from preview)
+  window.addToCartFromPreview = function(shoe) {
+    const existing = cart.find(item => item.id === shoe.id);
+    if(existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        id: shoe.id,
+        name: shoe.name,
+        price: shoe.price,
+        quantity: 1,
+        icon: shoe.icon,
+        official: shoe.official
+      });
+    }
+    saveCart();
+    updateCartBadge();
+    return true;
+  };
+  
+  // Get cart for preview page
+  window.getCart = function() { return cart; };
   
   function getFiltered() {
     let results = [...shoesDatabase];
@@ -475,8 +412,10 @@
       </div>`;
     });
     productGrid.innerHTML = html;
+    // Add click listeners to each product card
     document.querySelectorAll(".product-card").forEach(card => {
       card.addEventListener("click", (e) => {
+        // If clicking on official link, don't redirect
         if(e.target.classList.contains("official-link") || e.target.closest(".official-link")) return;
         const shoeId = card.dataset.shoeId;
         const shoeName = card.dataset.shoeName;
@@ -502,30 +441,6 @@
     searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderProducts(); });
   }
   
-  function initCheckout() {
-    cartIconBtn.addEventListener("click", () => { renderCartModal(); checkoutModal.classList.add("active"); });
-    closeCheckoutBtn.addEventListener("click", () => checkoutModal.classList.remove("active"));
-    checkoutModal.addEventListener("click", (e) => { if(e.target === checkoutModal) checkoutModal.classList.remove("active"); });
-    document.getElementById("paymentMethods")?.addEventListener("click", (e) => { let div = e.target.closest(".pay-option"); if(div) { document.querySelectorAll(".pay-option").forEach(p=>p.classList.remove("selected")); div.classList.add("selected"); } });
-    placeOrderBtn.addEventListener("click", () => {
-      if(cart.length===0) { showToast("Your cart is empty!"); return; }
-      const fullName = document.getElementById("fullName").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const address = document.getElementById("address").value.trim();
-      const city = document.getElementById("city").value.trim();
-      const zip = document.getElementById("zip").value.trim();
-      if(!fullName || !email || !address || !city || !zip) { showToast("❌ Please fill in all shipping details"); return; }
-      if(!email.includes("@")) { showToast("Invalid email address"); return; }
-      const selectedPay = document.querySelector(".pay-option.selected")?.dataset.method || "card";
-      const total = cart.reduce((s,i)=>s+i.price*i.quantity,0);
-      showToast(`✅ Order placed! ${selectedPay === 'card' ? 'Card' : 'PayPal'} payment of $${total}. Thank you!`);
-      cart = []; saveCart(); checkoutModal.classList.remove("active");
-      document.getElementById("fullName").value = ""; document.getElementById("email").value = ""; document.getElementById("address").value = ""; document.getElementById("city").value = ""; document.getElementById("zip").value = "";
-    });
-    document.getElementById("officialStoreLink")?.addEventListener("click", (e) => { e.preventDefault(); window.open("https://www.nike.com/", "_blank"); });
-  }
-  function showToast(msg) { let t=document.createElement("div"); t.innerText=msg; t.style.cssText="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#e63946;padding:8px 20px;border-radius:60px;z-index:9999;font-size:0.8rem;"; document.body.appendChild(t); setTimeout(()=>t.remove(),2000); }
-  
   // Navigation
   const homeBtn = document.getElementById("homeBtn");
   const contactBtn = document.getElementById("contactBtn");
@@ -533,16 +448,19 @@
   const contactSection = document.getElementById("contactSection");
   
   homeBtn.addEventListener("click", () => { window.location.href = "index.html"; });
-  contactBtn.addEventListener("click", () => {
-    contactSection.classList.add("visible");
-    contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  contactBtn.addEventListener("click", () => { contactSection.classList.add("visible"); contactSection.scrollIntoView({ behavior: "smooth", block: "start" }); });
   shopBtn.addEventListener("click", () => { document.getElementById("shopSection").scrollIntoView({ behavior: "smooth" }); });
   document.getElementById("scrollIndicator").addEventListener("click", () => { document.getElementById("shopSection").scrollIntoView({ behavior: "smooth" }); });
+  cartIconBtn.addEventListener("click", showCartModal);
+  proceedToPaymentBtn.addEventListener("click", proceedToPayment);
+  cancelCartBtn.addEventListener("click", closeCartModal);
+  cartModal.addEventListener("click", (e) => { if(e.target === cartModal) closeCartModal(); });
   
+  // Load saved cart
   const savedCart = localStorage.getItem("sneaker_cart");
   if(savedCart) cart = JSON.parse(savedCart);
-  initFilters(); renderProducts(); initCheckout(); updateCartUI();
+  updateCartBadge();
+  initFilters(); renderProducts();
   window.addEventListener("scroll", () => { const nav = document.getElementById("nav"); if(window.scrollY > 50) nav.classList.add("scrolled"); else nav.classList.remove("scrolled"); });
   
   // Music
