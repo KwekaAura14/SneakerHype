@@ -3,17 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | PREVIEW — 3D & SIZE SELECTION</title>
+  <title>SNEAKER HYPE | PRODUCT PREVIEW — ADD TO CART & CONTINUE SHOPPING</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: #050508;
       font-family: 'Inter', sans-serif;
       color: #ffffff;
       overflow-x: hidden;
     }
+
+    /* cinematic particle background */
     .bg-particle-field {
       position: fixed;
       top: 0;
@@ -26,22 +33,25 @@
     }
     .bg-particle {
       position: absolute;
-      background: radial-gradient(circle, rgba(230,57,70,0.2), rgba(255,180,71,0.05));
+      background: radial-gradient(circle, rgba(230,57,70,0.25), rgba(255,180,71,0.08));
       border-radius: 50%;
+      pointer-events: none;
       animation: floatParticle 22s infinite alternate;
     }
     @keyframes floatParticle {
       0% { transform: translateY(0px) translateX(0px); opacity: 0.15; }
-      100% { transform: translateY(-100px) translateX(60px); opacity: 0.4; }
+      100% { transform: translateY(-100px) translateX(60px); opacity: 0.45; }
     }
-    .preview-main {
+
+    .product-main {
       position: relative;
       z-index: 10;
       max-width: 1400px;
       margin: 0 auto;
       padding: 1.5rem 2rem 4rem;
     }
-    .preview-header {
+
+    .product-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
@@ -61,6 +71,7 @@
       background-clip: text;
       color: transparent;
     }
+    .logo-shop span { font-weight: 800; color: #e63946; background: none; }
     .back-link {
       color: rgba(255,255,255,0.7);
       text-decoration: none;
@@ -69,10 +80,12 @@
       border: 1px solid rgba(230,57,70,0.5);
       padding: 0.45rem 1.2rem;
       border-radius: 60px;
-      cursor: pointer;
       transition: 0.2s;
+      cursor: pointer;
     }
+    .back-link i { margin-right: 6px; }
     .back-link:hover { background: #e63946; border-color: #e63946; color: white; }
+
     .product-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -81,14 +94,16 @@
     }
     @media (max-width: 900px) {
       .product-container { grid-template-columns: 1fr; gap: 2rem; }
-      .preview-main { padding: 1.2rem; }
+      .product-main { padding: 1.2rem; }
     }
+
     .preview-card {
       background: rgba(12,12,18,0.6);
       backdrop-filter: blur(16px);
       border-radius: 48px;
       border: 1px solid rgba(230,57,70,0.3);
       padding: 1.5rem;
+      transition: 0.3s;
     }
     .preview-title {
       font-size: 0.75rem;
@@ -108,8 +123,13 @@
       position: relative;
       overflow: hidden;
       cursor: grab;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
     }
-    #shoeCanvas { width: 100%; height: 100%; display: block; }
+    #shoeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
     .hint-rotate {
       text-align: center;
       margin-top: 1rem;
@@ -117,6 +137,7 @@
       color: rgba(255,255,255,0.4);
       letter-spacing: 2px;
     }
+
     .purchase-card {
       background: rgba(8,8,14,0.75);
       backdrop-filter: blur(20px);
@@ -124,10 +145,39 @@
       border: 1px solid rgba(230,57,70,0.4);
       padding: 2rem;
     }
-    .shoe-name { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #ffffff, #e63946); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.5rem; }
-    .shoe-price { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, #fff, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1.5rem; }
-    .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: #e63946; margin: 1rem 0 0.6rem; font-weight: 600; }
-    .size-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0.8rem 0 1.2rem; }
+    .shoe-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff, #e63946);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .shoe-price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1.5rem;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #e63946;
+      margin: 1rem 0 0.6rem;
+      font-weight: 600;
+    }
+    .size-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin: 0.8rem 0 1.2rem;
+    }
     .size-btn {
       background: rgba(25,25,32,0.9);
       border: 1px solid rgba(230,57,70,0.4);
@@ -139,8 +189,13 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .size-btn.active { background: #e63946; border-color: #ffb347; box-shadow: 0 0 12px rgba(230,57,70,0.6); }
+    .size-btn.active {
+      background: #e63946;
+      border-color: #ffb347;
+      box-shadow: 0 0 12px rgba(230,57,70,0.6);
+    }
     .size-btn:hover { background: #e63946; transform: scale(1.02); }
+
     .add-to-cart-btn {
       width: 100%;
       background: linear-gradient(95deg, #e63946, #ffb347);
@@ -152,12 +207,17 @@
       letter-spacing: 2px;
       color: #0a0a0a;
       cursor: pointer;
+      transition: 0.2s;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 12px;
+      font-family: inherit;
       margin-top: 1.5rem;
+      box-shadow: 0 5px 20px rgba(230,57,70,0.3);
     }
+    .add-to-cart-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
+
     .toast-message {
       position: fixed;
       bottom: 25px;
@@ -168,49 +228,86 @@
       border: 1px solid #e63946;
       padding: 0.8rem 2rem;
       border-radius: 60px;
+      font-weight: 500;
       z-index: 2000;
       opacity: 0;
       transition: 0.2s;
       pointer-events: none;
       white-space: nowrap;
+      font-size: 0.8rem;
     }
-    footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #444; margin-top: 2rem; }
-    @media (max-width: 500px) { .shoe-name { font-size: 1.3rem; } .shoe-price { font-size: 1.6rem; } .toast-message { white-space: normal; width: 80%; text-align: center; } }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      font-size: 0.6rem;
+      color: #444;
+      margin-top: 2rem;
+    }
+    @media (max-width: 500px) {
+      .toast-message { white-space: normal; width: 80%; text-align: center; }
+      .shoe-name { font-size: 1.3rem; }
+      .shoe-price { font-size: 1.6rem; }
+    }
+
+    /* loading overlay for transition */
+    .page-transition {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      z-index: 10000;
+      transform: translateY(100%);
+      pointer-events: none;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .page-transition.active {
+      transform: translateY(0%);
+      pointer-events: all;
+    }
   </style>
 </head>
 <body>
 
+<div class="page-transition" id="pageTransition"></div>
 <div class="bg-particle-field" id="particleField"></div>
 
-<main class="preview-main">
-  <div class="preview-header">
-    <div class="logo-shop"><span>PREVIEW</span> // STUDIO MODE</div>
-    <div class="back-link" id="backToShopBtn"><i class="fas fa-arrow-left"></i> BACK TO SHOP</div>
+<main class="product-main">
+  <div class="product-header">
+    <div class="logo-shop"><span>PREVIEW</span> // STUDIO EDITION</div>
+    <div class="back-link" id="continueShoppingBtn"><i class="fas fa-arrow-left"></i> CONTINUE SHOPPING</div>
   </div>
 
   <div class="product-container">
+    <!-- LEFT: 3D PREVIEW -->
     <div class="preview-card">
       <div class="preview-title"><i class="fas fa-cube"></i> CINEMATIC 3D PREVIEW</div>
       <div class="shoe-canvas-wrapper">
         <canvas id="shoeCanvas"></canvas>
       </div>
-      <div class="hint-rotate"><i class="fas fa-mouse-pointer"></i> drag to rotate • immersive</div>
+      <div class="hint-rotate"><i class="fas fa-mouse-pointer"></i> drag to rotate • immersive experience</div>
     </div>
 
+    <!-- RIGHT: SIZE + ADD TO CART -->
     <div class="purchase-card">
       <div class="shoe-name" id="shoeNameDisplay">CYBER PULSE</div>
-      <div class="shoe-price" id="shoePriceDisplay">$289</div>
-      <div class="section-label"><i class="fas fa-ruler-combined"></i> SELECT SIZE</div>
+      <div class="shoe-price" id="shoePriceDisplay">$289 <small>USD</small></div>
+      
+      <div class="section-label"><i class="fas fa-ruler-combined"></i> SELECT YOUR SIZE</div>
       <div class="size-grid" id="sizeGrid"></div>
+
       <button class="add-to-cart-btn" id="addToCartBtn">
-        <i class="fas fa-shopping-cart"></i> ADD TO CART & GO BACK
+        <i class="fas fa-shopping-cart"></i> ADD TO CART & CONTINUE
       </button>
+      
       <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.02); border-radius: 20px; padding: 0.8rem; border-left: 3px solid #ffb347;">
-        <i class="fas fa-truck-fast"></i> Free shipping • Add to cart and continue shopping
+        <i class="fas fa-truck-fast"></i> Free shipping • Add to cart and keep shopping
       </div>
     </div>
   </div>
-  <footer>© 2025 SNEAKER HYPE — EXACT PREVIEW FOR EACH SHOE</footer>
+  <footer>© 2025 SNEAKER HYPE — CLICK ON ANY SHOE FROM SHOP TO PREVIEW | CART SYNC</footer>
 </main>
 
 <div id="toastMsg" class="toast-message"></div>
@@ -227,39 +324,97 @@
   import * as THREE from 'three';
   import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 
-  const SHOES_DB = {
-    "cyber-pulse": { id: "cyber-pulse", name: "CYBER PULSE", price: 289, primaryColor: 0xe63946, secondaryColor: 0xffb347, accentColor: 0x44aaff, soleColor: 0x22223b, upperColor: 0x1a1a2e, emissiveIntensity: 0.45 },
-    "phantom-veil": { id: "phantom-veil", name: "PHANTOM VEIL", price: 349, primaryColor: 0xaa88ff, secondaryColor: 0xdd66cc, accentColor: 0xffaa88, soleColor: 0x2d1b36, upperColor: 0x191024, emissiveIntensity: 0.6 },
-    "midnight-edition": { id: "midnight-edition", name: "MIDNIGHT EDITION", price: 399, primaryColor: 0x3b82f6, secondaryColor: 0xa855f7, accentColor: 0x60a5fa, soleColor: 0x1e1b2e, upperColor: 0x0f172a, emissiveIntensity: 0.5 },
-    "carbon-shadow": { id: "carbon-shadow", name: "CARBON SHADOW", price: 459, primaryColor: 0x475569, secondaryColor: 0x94a3b8, accentColor: 0xcbd5e1, soleColor: 0x111827, upperColor: 0x1e293b, emissiveIntensity: 0.3 }
+  // ---------- SHOE DATABASE ----------
+  const SHOES_COLLECTION = {
+    "cyber-pulse": {
+      id: "cyber-pulse",
+      name: "CYBER PULSE",
+      price: 289,
+      primaryColor: 0xe63946,
+      secondaryColor: 0xffb347,
+      accentColor: 0x44aaff,
+      metalnessVal: 0.75,
+      emissiveIntensity: 0.45,
+      soleColor: 0x22223b,
+      upperColor: 0x1a1a2e
+    },
+    "phantom-veil": {
+      id: "phantom-veil",
+      name: "PHANTOM VEIL",
+      price: 349,
+      primaryColor: 0xaa88ff,
+      secondaryColor: 0xdd66cc,
+      accentColor: 0xffaa88,
+      metalnessVal: 0.85,
+      emissiveIntensity: 0.6,
+      soleColor: 0x2d1b36,
+      upperColor: 0x191024
+    },
+    "midnight-edition": {
+      id: "midnight-edition",
+      name: "MIDNIGHT EDITION",
+      price: 399,
+      primaryColor: 0x3b82f6,
+      secondaryColor: 0xa855f7,
+      accentColor: 0x60a5fa,
+      metalnessVal: 0.8,
+      emissiveIntensity: 0.5,
+      soleColor: 0x1e1b2e,
+      upperColor: 0x0f172a
+    },
+    "carbon-shadow": {
+      id: "carbon-shadow",
+      name: "CARBON SHADOW",
+      price: 459,
+      primaryColor: 0x475569,
+      secondaryColor: 0x94a3b8,
+      accentColor: 0xcbd5e1,
+      metalnessVal: 0.92,
+      emissiveIntensity: 0.3,
+      soleColor: 0x111827,
+      upperColor: 0x1e293b
+    }
   };
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const shoeId = urlParams.get('shoe');
-  let currentShoe = SHOES_DB[shoeId] || SHOES_DB["cyber-pulse"];
-  
+  // Get shoe from URL parameter ?shoe=id
+  function getShoeFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const shoeId = params.get('shoe');
+    if (shoeId && SHOES_COLLECTION[shoeId]) {
+      return SHOES_COLLECTION[shoeId];
+    }
+    // default fallback
+    return SHOES_COLLECTION["cyber-pulse"];
+  }
+
+  let currentShoe = getShoeFromURL();
   let selectedSize = null;
   const sizeList = ['US 6', 'US 7', 'US 8', 'US 9', 'US 10', 'US 11', 'US 12'];
-  
-  const sizeGrid = document.getElementById('sizeGrid');
-  const shoeNameSpan = document.getElementById('shoeNameDisplay');
-  const shoePriceSpan = document.getElementById('shoePriceDisplay');
-  const toast = document.getElementById('toastMsg');
-  const backBtn = document.getElementById('backToShopBtn');
+
+  // DOM elements
+  const sizeGridContainer = document.getElementById('sizeGrid');
   const addToCartBtn = document.getElementById('addToCartBtn');
-  
-  function showToast(msg, isError = false) {
+  const shoeNameDisplay = document.getElementById('shoeNameDisplay');
+  const shoePriceDisplay = document.getElementById('shoePriceDisplay');
+  const toast = document.getElementById('toastMsg');
+  const continueBtn = document.getElementById('continueShoppingBtn');
+  const transitionDiv = document.getElementById('pageTransition');
+
+  // Helper: toast message
+  function showToastMessage(msg, isError = false) {
     toast.style.opacity = '1';
     toast.style.transform = 'translateX(-50%) scale(1)';
     toast.innerText = msg;
+    toast.style.background = isError ? '#2a0a0ecc' : '#121218cc';
     setTimeout(() => {
       toast.style.opacity = '0';
       toast.style.transform = 'translateX(-50%) scale(0.9)';
-    }, 2200);
+    }, 2500);
   }
-  
+
+  // Render size buttons
   function renderSizeButtons() {
-    sizeGrid.innerHTML = '';
+    sizeGridContainer.innerHTML = '';
     sizeList.forEach(size => {
       const btn = document.createElement('div');
       btn.classList.add('size-btn');
@@ -269,134 +424,320 @@
         document.querySelectorAll('.size-btn').forEach(el => el.classList.remove('active'));
         btn.classList.add('active');
         selectedSize = size;
-        showToast(`✓ Size ${selectedSize} selected`);
+        showToastMessage(`✓ Size ${selectedSize} selected for ${currentShoe.name}`, false);
       });
-      sizeGrid.appendChild(btn);
+      sizeGridContainer.appendChild(btn);
     });
   }
-  
-  // CART functions (sync with localStorage)
+
+  // ----- CART MANAGEMENT (localStorage) -----
   function getCart() {
     const stored = localStorage.getItem('sneaker_cart');
-    return stored ? JSON.parse(stored) : [];
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch(e) { return []; }
+    }
+    return [];
   }
-  function saveCart(cart) { localStorage.setItem('sneaker_cart', JSON.stringify(cart)); }
-  
-  function addToCartAndGoBack() {
+
+  function saveCart(cart) {
+    localStorage.setItem('sneaker_cart', JSON.stringify(cart));
+  }
+
+  function addToCartStorage(shoe, size, quantity = 1) {
+    let cart = getCart();
+    // check if same shoe id + size exists
+    const existingIndex = cart.findIndex(item => item.id === shoe.id && item.size === size);
+    if (existingIndex !== -1) {
+      cart[existingIndex].quantity += quantity;
+    } else {
+      cart.push({
+        id: shoe.id,
+        name: shoe.name,
+        price: shoe.price,
+        size: size,
+        quantity: quantity,
+        imageColor: shoe.primaryColor
+      });
+    }
+    saveCart(cart);
+    return cart;
+  }
+
+  // Add to cart action: save to localStorage, then redirect back to shop.html
+  function handleAddToCartAndContinue() {
     if (!selectedSize) {
-      showToast(`❌ Please select a size for ${currentShoe.name}`, true);
+      showToastMessage(`❌ Please select a size for ${currentShoe.name} first!`, true);
       return;
     }
-    let cart = getCart();
-    const existingIndex = cart.findIndex(item => item.id === currentShoe.id && item.size === selectedSize);
-    if (existingIndex !== -1) cart[existingIndex].quantity += 1;
-    else cart.push({ id: currentShoe.id, name: currentShoe.name, price: currentShoe.price, size: selectedSize, quantity: 1 });
-    saveCart(cart);
-    showToast(`✅ ${currentShoe.name} (${selectedSize}) added to cart! Redirecting...`);
-    setTimeout(() => { window.location.href = 'shop.html'; }, 600);
+    
+    // Add to cart
+    addToCartStorage(currentShoe, selectedSize, 1);
+    showToastMessage(`✅ ${currentShoe.name} (Size ${selectedSize}) added to cart! Redirecting to shop...`, false);
+    
+    // Play transition effect
+    transitionDiv.classList.add('active');
+    
+    // After short delay, redirect to shop.html (which will show updated cart)
+    setTimeout(() => {
+      window.location.href = 'shop.html';
+    }, 500);
   }
-  
-  // 3D SHOE RENDER (full detail)
+
+  // Update UI for current shoe
+  function updateUIShoe() {
+    shoeNameDisplay.innerText = currentShoe.name;
+    shoePriceDisplay.innerHTML = `$${currentShoe.price} <small style="font-size:0.9rem;">USD</small>`;
+    selectedSize = null;
+    renderSizeButtons(); // reset size selection
+  }
+
+  // ---------- 3D SHOE PREVIEW (dynamic per shoe) ----------
   const canvas = document.getElementById('shoeCanvas');
   const wrapper = canvas.parentElement;
   let current3D = null;
-  
-  function initFull3D(shoe) {
-    if (current3D && current3D.dispose) current3D.dispose();
-    const width = wrapper.clientWidth, height = wrapper.clientHeight;
+
+  function initShoe3D(shoeData) {
+    // dispose previous renderer/scene if exists
+    if (current3D && current3D.dispose) {
+      current3D.dispose();
+    }
+    
+    const width = wrapper.clientWidth;
+    const height = wrapper.clientHeight;
+    
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x030308);
     scene.fog = new THREE.FogExp2(0x030308, 0.012);
+    
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
     camera.position.set(2.4, 1.6, 3.4);
     camera.lookAt(0, 0.25, 0);
+    
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
-    const controls = new OrbitControls(camera, canvas);
-    controls.enableDamping = true; controls.dampingFactor = 0.06; controls.target.set(0, 0.3, 0);
+    renderer.shadowMap.enabled = true;
     
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.autoRotate = false;
+    controls.enableZoom = true;
+    controls.zoomSpeed = 1.0;
+    controls.rotateSpeed = 1.2;
+    controls.target.set(0, 0.3, 0);
+    
+    // Lighting
     const ambient = new THREE.AmbientLight(0x222222);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffeedd, 1.2);
     dirLight.position.set(2, 3, 2);
+    dirLight.castShadow = true;
     scene.add(dirLight);
-    const fillLight = new THREE.PointLight(shoe.primaryColor, 0.6);
+    const fillLight = new THREE.PointLight(shoeData.primaryColor, 0.6);
     fillLight.position.set(1.2, 1, 2.2);
     scene.add(fillLight);
-    const backRim = new THREE.PointLight(shoe.secondaryColor, 0.65);
+    const backRim = new THREE.PointLight(shoeData.secondaryColor, 0.65);
     backRim.position.set(-1, 1.2, -2);
     scene.add(backRim);
-    const accentLight = new THREE.PointLight(shoe.accentColor, 0.55);
+    const accentLight = new THREE.PointLight(shoeData.accentColor, 0.55);
     accentLight.position.set(1.5, 0.8, 1.2);
     scene.add(accentLight);
     
-    const gridHelper = new THREE.GridHelper(5.5, 24, shoe.primaryColor, 0x333333);
-    gridHelper.position.y = -0.65; gridHelper.material.transparent = true; gridHelper.material.opacity = 0.2;
+    const gridHelper = new THREE.GridHelper(5.5, 24, shoeData.primaryColor, 0x333333);
+    gridHelper.position.y = -0.65;
+    gridHelper.material.transparent = true;
+    gridHelper.material.opacity = 0.2;
     scene.add(gridHelper);
     
     const shoeGroup = new THREE.Group();
-    const sole = new THREE.Mesh(new THREE.BoxGeometry(1.68, 0.26, 2.88), new THREE.MeshStandardMaterial({ color: shoe.soleColor, roughness: 0.45, metalness: 0.65 }));
-    sole.position.y = -0.28; shoeGroup.add(sole);
-    const midStripe = new THREE.Mesh(new THREE.BoxGeometry(1.58, 0.1, 2.72), new THREE.MeshStandardMaterial({ color: shoe.primaryColor, metalness: 0.85, emissive: shoe.primaryColor, emissiveIntensity: shoe.emissiveIntensity * 0.7 }));
-    midStripe.position.y = -0.12; shoeGroup.add(midStripe);
-    const upper = new THREE.Mesh(new THREE.CylinderGeometry(0.89, 0.97, 1.18, 30), new THREE.MeshStandardMaterial({ color: shoe.upperColor, roughness: 0.35 }));
-    upper.position.y = 0.39; upper.scale.set(1, 0.92, 1.05); shoeGroup.add(upper);
-    const toeCap = new THREE.Mesh(new THREE.SphereGeometry(0.65, 32, 32), new THREE.MeshStandardMaterial({ color: shoe.secondaryColor, metalness: 0.88, emissive: shoe.secondaryColor, emissiveIntensity: 0.25 }));
-    toeCap.position.set(0.79, 0.21, 1.12); toeCap.scale.set(0.7, 0.5, 0.6); shoeGroup.add(toeCap);
-    const heelBlock = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.67, 0.78), new THREE.MeshStandardMaterial({ color: shoe.accentColor, metalness: 0.75 }));
-    heelBlock.position.set(-0.79, 0.23, -1.12); shoeGroup.add(heelBlock);
     
-    const points = []; for (let t = 0; t <= 1; t += 0.045) points.push(new THREE.Vector3(-0.77 + t*1.58, 0.33 + Math.sin(t*Math.PI)*0.24, -0.87 + t*1.98));
-    const swoosh = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 32, 0.075, 8, false), new THREE.MeshStandardMaterial({ color: shoe.secondaryColor, metalness: 0.92, emissive: shoe.primaryColor, emissiveIntensity: 0.3 }));
+    // Sole
+    const soleGeo = new THREE.BoxGeometry(1.68, 0.26, 2.88);
+    const soleMat = new THREE.MeshStandardMaterial({ color: shoeData.soleColor, roughness: 0.45, metalness: 0.65 });
+    const sole = new THREE.Mesh(soleGeo, soleMat);
+    sole.position.y = -0.28;
+    shoeGroup.add(sole);
+    
+    // Midsole stripe
+    const midStripeMat = new THREE.MeshStandardMaterial({ color: shoeData.primaryColor, metalness: 0.85, roughness: 0.3, emissive: shoeData.primaryColor, emissiveIntensity: shoeData.emissiveIntensity * 0.7 });
+    const midStripe = new THREE.Mesh(new THREE.BoxGeometry(1.58, 0.1, 2.72), midStripeMat);
+    midStripe.position.y = -0.12;
+    shoeGroup.add(midStripe);
+    
+    // Upper
+    const upperGeo = new THREE.CylinderGeometry(0.89, 0.97, 1.18, 30);
+    const upperMat = new THREE.MeshStandardMaterial({ color: shoeData.upperColor, roughness: 0.35, metalness: 0.25 });
+    const upper = new THREE.Mesh(upperGeo, upperMat);
+    upper.position.y = 0.39;
+    upper.scale.set(1, 0.92, 1.05);
+    shoeGroup.add(upper);
+    
+    // Toe cap gloss
+    const toeMat = new THREE.MeshStandardMaterial({ color: shoeData.secondaryColor, metalness: 0.88, roughness: 0.2, emissive: shoeData.secondaryColor, emissiveIntensity: 0.25 });
+    const toeCap = new THREE.Mesh(new THREE.SphereGeometry(0.65, 32, 32), toeMat);
+    toeCap.position.set(0.79, 0.21, 1.12);
+    toeCap.scale.set(0.7, 0.5, 0.6);
+    shoeGroup.add(toeCap);
+    
+    // Heel counter
+    const heelMat = new THREE.MeshStandardMaterial({ color: shoeData.accentColor, metalness: 0.75 });
+    const heelBlock = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.67, 0.78), heelMat);
+    heelBlock.position.set(-0.79, 0.23, -1.12);
+    shoeGroup.add(heelBlock);
+    
+    // Swoosh curve
+    const points = [];
+    for (let t = 0; t <= 1; t += 0.045) {
+      const x = -0.77 + t * 1.58;
+      const z = -0.87 + t * 1.98;
+      const y = 0.33 + Math.sin(t * Math.PI) * 0.24;
+      points.push(new THREE.Vector3(x, y, z));
+    }
+    const tubeGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 32, 0.075, 8, false);
+    const swooshMat = new THREE.MeshStandardMaterial({ color: shoeData.secondaryColor, metalness: 0.92, emissive: shoeData.primaryColor, emissiveIntensity: 0.3 });
+    const swoosh = new THREE.Mesh(tubeGeo, swooshMat);
     shoeGroup.add(swoosh);
     
+    // Laces
     const laceMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.2 });
-    [-0.12, 0.12, 0.36, 0.6].forEach(xOff => { const lace = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, 0.44, 8), laceMat); lace.position.set(xOff - 0.18, 0.78, 0.6); lace.rotation.z = 0.85; shoeGroup.add(lace); });
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.49, 0.058, 32, 90), new THREE.MeshStandardMaterial({ color: shoe.accentColor, metalness: 0.98, emissive: shoe.accentColor, emissiveIntensity: 0.45 }));
-    ring.position.set(-0.69, 0.39, -1.22); ring.rotation.x = Math.PI/2; shoeGroup.add(ring);
+    const lacePositions = [-0.12, 0.12, 0.36, 0.6];
+    lacePositions.forEach(xOff => {
+      const lace = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, 0.44, 8), laceMat);
+      lace.position.set(xOff - 0.18, 0.78, 0.6);
+      lace.rotation.z = 0.85;
+      shoeGroup.add(lace);
+    });
     
-    const particleCount = 420; const positions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) { positions[i*3] = (Math.random() - 0.5) * 2.9; positions[i*3+1] = Math.random() * 1.55; positions[i*3+2] = (Math.random() - 0.5) * 2.9; }
-    const particleGeo = new THREE.BufferGeometry(); particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: shoe.primaryColor, size: 0.022, blending: THREE.AdditiveBlending }));
+    // Ring accent
+    const ringGeo = new THREE.TorusGeometry(0.49, 0.058, 32, 90);
+    const ringMatGlow = new THREE.MeshStandardMaterial({ color: shoeData.accentColor, metalness: 0.98, emissive: shoeData.accentColor, emissiveIntensity: 0.45 });
+    const heelRing = new THREE.Mesh(ringGeo, ringMatGlow);
+    heelRing.position.set(-0.69, 0.39, -1.22);
+    heelRing.rotation.x = Math.PI / 2;
+    shoeGroup.add(heelRing);
+    
+    // Floating particles
+    const particleCount = 420;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i*3] = (Math.random() - 0.5) * 2.9;
+      positions[i*3+1] = Math.random() * 1.55;
+      positions[i*3+2] = (Math.random() - 0.5) * 2.9;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMatPoints = new THREE.PointsMaterial({ color: shoeData.primaryColor, size: 0.022, transparent: true, blending: THREE.AdditiveBlending });
+    const particles = new THREE.Points(particleGeo, particleMatPoints);
     shoeGroup.add(particles);
+    
     scene.add(shoeGroup);
     
-    const aura = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshStandardMaterial({ color: shoe.primaryColor, emissive: shoe.primaryColor, emissiveIntensity: 0.13, transparent: true, opacity: 0.12 }));
-    aura.position.y = 0.2; scene.add(aura);
+    // Aura sphere
+    const auraMat = new THREE.MeshStandardMaterial({ color: shoeData.primaryColor, emissive: shoeData.primaryColor, emissiveIntensity: 0.13, transparent: true, opacity: 0.12 });
+    const auraSphere = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), auraMat);
+    auraSphere.position.y = 0.2;
+    scene.add(auraSphere);
     
-    const starCount = 1200; const starPos = new Float32Array(starCount * 3);
-    for (let i = 0; i < starCount; i++) { starPos[i*3] = (Math.random() - 0.5) * 200; starPos[i*3+1] = (Math.random() - 0.5) * 80; starPos[i*3+2] = (Math.random() - 0.5) * 80 - 35; }
-    const starFieldGeo = new THREE.BufferGeometry(); starFieldGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-    const stars = new THREE.Points(starFieldGeo, new THREE.PointsMaterial({ color: 0xffaa88, size: 0.045, transparent: true, opacity: 0.32 }));
-    scene.add(stars);
+    // Starfield
+    const starCount = 1200;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i*3] = (Math.random() - 0.5) * 200;
+      starPositions[i*3+1] = (Math.random() - 0.5) * 80;
+      starPositions[i*3+2] = (Math.random() - 0.5) * 80 - 35;
+    }
+    const starFieldGeo = new THREE.BufferGeometry();
+    starFieldGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starFieldMat = new THREE.PointsMaterial({ color: 0xffaa88, size: 0.045, transparent: true, opacity: 0.32 });
+    const starsField = new THREE.Points(starFieldGeo, starFieldMat);
+    scene.add(starsField);
     
-    let animTime = 0, animFrame;
-    function animate() { animFrame = requestAnimationFrame(animate); animTime += 0.012; fillLight.intensity = 0.58 + Math.sin(animTime)*0.13; backRim.intensity = 0.6 + Math.cos(animTime*1.2)*0.12; particles.rotation.y += 0.006; stars.rotation.y += 0.0005; controls.update(); renderer.render(scene, camera); }
-    animate();
-    const handleResize = () => { const w = wrapper.clientWidth, h = wrapper.clientHeight; renderer.setSize(w, h); camera.aspect = w/h; camera.updateProjectionMatrix(); };
+    let animTime = 0;
+    let animFrame;
+    function animateShoe() {
+      animFrame = requestAnimationFrame(animateShoe);
+      animTime += 0.012;
+      fillLight.intensity = 0.58 + Math.sin(animTime) * 0.13;
+      backRim.intensity = 0.6 + Math.cos(animTime * 1.2) * 0.12;
+      accentLight.intensity = 0.52 + Math.sin(animTime * 1.5) * 0.1;
+      particles.rotation.y += 0.006;
+      particles.rotation.x = Math.sin(animTime * 0.6) * 0.12;
+      starsField.rotation.y += 0.0005;
+      starsField.rotation.x += 0.0003;
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animateShoe();
+    
+    const handleResize = () => {
+      const w = wrapper.clientWidth;
+      const h = wrapper.clientHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    };
     window.addEventListener('resize', handleResize);
-    return { dispose: () => { window.removeEventListener('resize', handleResize); cancelAnimationFrame(animFrame); renderer.dispose(); } };
+    
+    return {
+      dispose: () => {
+        window.removeEventListener('resize', handleResize);
+        cancelAnimationFrame(animFrame);
+        renderer.dispose();
+      }
+    };
   }
-  
-  // load shoe data
-  shoeNameSpan.innerText = currentShoe.name;
-  shoePriceSpan.innerHTML = `$${currentShoe.price} <small>USD</small>`;
-  renderSizeButtons();
-  current3D = initFull3D(currentShoe);
-  
-  addToCartBtn.addEventListener('click', addToCartAndGoBack);
-  backBtn.addEventListener('click', () => { window.location.href = 'shop.html'; });
+
+  // load shoe and refresh 3D
+  function loadShoe(shoeData) {
+    currentShoe = shoeData;
+    updateUIShoe();
+    if (current3D) current3D.dispose();
+    current3D = initShoe3D(currentShoe);
+  }
+
+  // ---- initial load ----
+  loadShoe(currentShoe);
   
   // background particles
   function createBgParticles() {
     const container = document.getElementById('particleField');
-    for (let i = 0; i < 60; i++) { const p = document.createElement('div'); p.classList.add('bg-particle'); const s = 2 + Math.random() * 18; p.style.width = s + 'px'; p.style.height = s + 'px'; p.style.left = Math.random() * 100 + '%'; p.style.top = Math.random() * 100 + '%'; p.style.animationDuration = 12 + Math.random() * 24 + 's'; container.appendChild(p); }
+    for (let i = 0; i < 70; i++) {
+      const p = document.createElement('div');
+      p.classList.add('bg-particle');
+      const s = 2 + Math.random() * 22;
+      p.style.width = s + 'px';
+      p.style.height = s + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDuration = 14 + Math.random() * 26 + 's';
+      p.style.animationDelay = Math.random() * 12 + 's';
+      container.appendChild(p);
+    }
   }
   createBgParticles();
   
-  window.addEventListener('resize', () => { if (current3D) current3D.dispose(); current3D = initFull3D(currentShoe); });
+  // Event: add to cart + redirect to shop.html
+  addToCartBtn.addEventListener('click', handleAddToCartAndContinue);
+  
+  // Continue shopping button: go back to shop.html
+  continueBtn.addEventListener('click', () => {
+    transitionDiv.classList.add('active');
+    setTimeout(() => {
+      window.location.href = 'shop.html';
+    }, 400);
+  });
+  
+  // ensure canvas resize after full load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (current3D && current3D.dispose) {
+        window.dispatchEvent(new Event('resize'));
+      }
+    }, 100);
+  });
 </script>
 </body>
 </html>
