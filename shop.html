@@ -118,8 +118,10 @@
             filter: blur(8px);
         }
         .product-card:hover { transform: translateY(-8px) scale(1.01); border-color: rgba(230,57,70,0.7); box-shadow: 0 25px 40px -15px rgba(230,57,70,0.3); }
+        
+        /* UNIFIED IMAGE STYLES - REMOVES BACKGROUNDS AND MAKES THEM CONSISTENT */
         .product-img {
-            background: linear-gradient(145deg, #0c0c14, #12121c);
+            background: #0a0a10;
             text-align: center;
             padding: 1.5rem;
             position: relative;
@@ -132,10 +134,22 @@
             max-width: 100%;
             max-height: 160px;
             object-fit: contain;
+            /* Removes any background from the image itself */
+            background: transparent;
+            /* Smooth transition for hover effect */
+            transition: transform 0.3s ease, filter 0.3s ease;
             filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
-            transition: 0.3s;
         }
-        .product-card:hover .product-img img { transform: scale(1.03); filter: drop-shadow(0 12px 20px rgba(230,57,70,0.3)); }
+        /* Makes all images have the same base appearance */
+        .product-img img {
+            mix-blend-mode: normal;
+        }
+        /* Hover effect - consistent for all shoes */
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 12px 20px rgba(230,57,70,0.3));
+        }
+        
         .badge {
             position: absolute;
             top: 12px;
@@ -145,6 +159,7 @@
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
             font-weight: 700;
+            z-index: 2;
         }
         .product-info { padding: 1rem 1rem 1.2rem; }
         .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; }
@@ -307,7 +322,6 @@
 
 <script>
     // ========== SNEAKER DATABASE - GITHUB IMAGES READY ==========
-    // All images are referenced from the /images folder in your GitHub repository
     const shoesDatabase = [
         { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", image: "images/lebronxxi.png", official: "https://www.nike.com/lebron-21" },
         { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", image: "images/kobe.webp", official: "https://www.nike.com/kobe-6" },
@@ -337,7 +351,6 @@
         return text.split('').map((char, index) => char === ' ' ? ' ' : `<span style="--i: ${index}">${char}</span>`).join('');
     }
     
-    // Redirect to shoe preview page
     function redirectToPreview(shoeId, shoeName) {
         window.location.href = `shoePreviwe.html?id=${shoeId}&name=${encodeURIComponent(shoeName)}`;
     }
@@ -390,7 +403,6 @@
         window.location.href = "Payment.html";
     }
     
-    // Add to cart function (called from preview page)
     window.addToCartFromPreview = function(shoe) {
         const existing = cart.find(item => item.id === shoe.id);
         if(existing) existing.quantity++;
@@ -428,7 +440,6 @@
         });
         productGrid.innerHTML = html;
         
-        // Add click redirect to preview page
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', (e) => {
                 if(e.target.classList.contains('official-link') || e.target.closest('.official-link')) return;
@@ -438,7 +449,6 @@
             });
         });
         
-        // GSAP reveal animation
         gsap.utils.toArray(".product-card").forEach((card, i) => {
             gsap.fromTo(card,
                 { opacity: 0, y: 60, filter: "blur(8px)" },
@@ -456,7 +466,6 @@
         searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderProducts(); });
     }
     
-    // Hero parallax animation
     gsap.to(".hero", { scale: 0.95, opacity: 0.7, scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 } });
     
     const homeBtn = document.getElementById("homeBtn");
