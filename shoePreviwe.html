@@ -293,9 +293,10 @@ button:hover {
 
 <script>
 // ============================================================
-// COMPLETE SHOE DATABASE - each shoe has unique ID, name, brand, price, image
+// COMPLETE SHOE DATABASE - each shoe has unique ID, name, brand, price, image, description
 // The preview shows ONLY the shoe whose ID matches the URL parameter
 // Example: preview.html?id=1 shows LeBron XXI
+// When "Add to Cart" is clicked, it saves to localStorage for shop.html to read
 // ============================================================
 const shoesDatabase = [
   { 
@@ -420,12 +421,12 @@ function renderSizeButtons() {
 }
 
 // Load the SPECIFIC shoe from URL parameter "id"
-// This is the key function - shows ONLY the shoe that was clicked from shop.html
+// This shows ONLY the shoe that was clicked from shop.html
 function loadShoeFromURL() {
   const params = new URLSearchParams(window.location.search);
   const shoeId = parseInt(params.get('id'));
   
-  console.log("Loading shoe with ID:", shoeId);
+  console.log("Loading specific shoe with ID:", shoeId);
   
   if (isNaN(shoeId)) {
     // If no ID provided, default to first shoe but show warning
@@ -456,20 +457,17 @@ function loadShoeFromURL() {
   renderSizeButtons();
 }
 
-// Cart functionality (localStorage)
+// ============================================
+// CART SYSTEM - Saves to localStorage for shop.html to read
+// This ensures when you click "Add to Cart" on this preview page,
+// the item is added to the cart that shop.html will display
+// ============================================
 let cart = JSON.parse(localStorage.getItem('sneaker_cart')) || [];
 
 function saveCart() {
   localStorage.setItem('sneaker_cart', JSON.stringify(cart));
-  // Update cart count display if there's a cart icon (optional)
-  updateCartCountDisplay();
-}
-
-function updateCartCountDisplay() {
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  // If there's a cart count element on this page, update it
-  const cartCountEl = document.getElementById('cartCount');
-  if (cartCountEl) cartCountEl.innerText = totalItems;
+  // Dispatch a custom event so shop.html can listen for real-time updates
+  window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
 }
 
 function addToCart() {
@@ -520,7 +518,6 @@ function setup3DTiltEffect() {
   const wrapper = document.getElementById('imageWrapper');
   if (!img || !wrapper) return;
   
-  let mouseX = 0, mouseY = 0;
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
   
@@ -530,8 +527,8 @@ function setup3DTiltEffect() {
     const height = rect.height;
     
     // Calculate mouse position relative to the image center (-1 to 1 range)
-    mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
-    mouseY = ((e.clientY - rect.top) / height) * 2 - 1;
+    const mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
+    const mouseY = ((e.clientY - rect.top) / height) * 2 - 1;
     
     // Limit rotation amount (max 15 degrees)
     targetX = mouseY * -12;
@@ -581,8 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const addBtn = document.getElementById('addToCartBtn');
   if (addBtn) addBtn.addEventListener('click', addToCart);
-  
-  updateCartCountDisplay();
 });
 
 // Listen for browser back/forward navigation to keep shoe ID in sync
