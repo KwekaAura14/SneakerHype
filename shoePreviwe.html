@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Shoe Preview | Dynamic Sneaker Viewer</title>
+<title>Shoe Preview | Specific Sneaker Viewer</title>
 
 <style>
 * {
@@ -14,7 +14,7 @@
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', 'Arial', system-ui, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   background: linear-gradient(135deg, #0a0a0c 0%, #050505 100%);
   color: white;
   display: flex;
@@ -52,11 +52,11 @@ body {
   text-align: center;
   max-width: 650px;
   width: 100%;
-  background: rgba(15, 15, 20, 0.65);
+  background: rgba(15, 15, 20, 0.75);
   backdrop-filter: blur(16px);
   border-radius: 64px;
   padding: 2rem 2rem 2.5rem;
-  border: 1px solid rgba(230, 57, 70, 0.3);
+  border: 1px solid rgba(230, 57, 70, 0.35);
   box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230,57,70,0.1);
   transition: all 0.3s ease;
   position: relative;
@@ -73,10 +73,15 @@ body {
   border-radius: 32px;
   background: rgba(0,0,0,0.2);
   padding: 8px;
+  cursor: grab;
+}
+
+.preview-img:active {
+  cursor: grabbing;
 }
 
 .preview-img:hover {
-  transform: scale(1.03) rotate(-1deg);
+  transform: scale(1.02);
   filter: drop-shadow(0 30px 45px rgba(230,57,70,0.3));
 }
 
@@ -113,7 +118,7 @@ h1 {
 .price {
   font-size: 2rem;
   font-weight: 800;
-  margin: 15px 0 25px;
+  margin: 15px 0 20px;
   background: linear-gradient(135deg, #ffb347, #ffffff);
   -webkit-background-clip: text;
   background-clip: text;
@@ -178,7 +183,7 @@ h1 {
 button {
   background: linear-gradient(135deg, #e63946, #ffb347);
   border: none;
-  padding: 14px 32px;
+  padding: 14px 28px;
   border-radius: 60px;
   color: #0a0a0a;
   font-weight: 800;
@@ -203,23 +208,11 @@ button:hover {
   box-shadow: 0 8px 25px rgba(230,57,70,0.5);
 }
 
-.back-btn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(230,57,70,0.5);
-  color: white;
-  box-shadow: none;
-}
-
-.back-btn:hover {
-  background: rgba(230,57,70,0.3);
-  transform: scale(1.02);
-}
-
 .selected-info {
   background: rgba(255,255,255,0.05);
   border-radius: 40px;
   padding: 10px 18px;
-  margin-top: 25px;
+  margin-top: 22px;
   font-size: 0.7rem;
   color: #ccc;
   display: inline-flex;
@@ -249,6 +242,13 @@ button:hover {
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
+/* 3D Tilt effect container */
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  perspective: 1000px;
+}
+
 @media (max-width: 550px) {
   .preview-container { padding: 1.5rem; }
   h1 { font-size: 1.6rem; }
@@ -266,7 +266,9 @@ button:hover {
 <div class="bg-particles" id="particleField"></div>
 
 <div class="preview-container">
-  <img id="shoeImage" class="preview-img" alt="Sneaker preview">
+  <div class="image-wrapper" id="imageWrapper">
+    <img id="shoeImage" class="preview-img" alt="Sneaker preview">
+  </div>
   <h1 id="shoeName"></h1>
   <div id="shoeBrand" class="brand-tag"></div>
   <div id="shoeDescription" class="description"></div>
@@ -280,7 +282,6 @@ button:hover {
   
   <div class="button-group">
     <button id="addToCartBtn"><i class="fas fa-shopping-cart"></i> ADD TO CART</button>
-    <button id="backToShopBtn" class="back-btn"><i class="fas fa-arrow-left"></i> BACK TO SHOP</button>
   </div>
   
   <div class="selected-info" id="selectedSizeInfo">
@@ -292,8 +293,9 @@ button:hover {
 
 <script>
 // ============================================================
-// COMPLETE SHOE DATABASE WITH REALISTIC IMAGES AND DETAILS
-// Each shoe has unique ID, name, brand, price, image URL, description
+// COMPLETE SHOE DATABASE - each shoe has unique ID, name, brand, price, image
+// The preview shows ONLY the shoe whose ID matches the URL parameter
+// Example: preview.html?id=1 shows LeBron XXI
 // ============================================================
 const shoesDatabase = [
   { 
@@ -301,7 +303,7 @@ const shoesDatabase = [
     name: "LeBron XXI", 
     brand: "NIKE", 
     price: 199, 
-    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/8a7d5c8e-5f2b-4b6a-9e3c-1a2b3c4d5e6f/lebron-xxi.png",
+    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/lebron-21.png",
     description: "King's legacy, premium cushioning & explosive response"
   },
   { 
@@ -309,68 +311,67 @@ const shoesDatabase = [
     name: "Kobe 6 Protro", 
     brand: "NIKE", 
     price: 209, 
-    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/9b7e6d5c-4a3b-2c1d-0e9f-8a7b6c5d4e3f/kobe-6-protro.png",
+    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/kobe-6-protro.png",
     description: "Mamba mentality — lightweight, responsive & iconic"
   },
   { 
-    id: 7, 
+    id: 3, 
     name: "Air Jordan 38", 
     brand: "JORDAN", 
     price: 189, 
-    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/1f2e3d4c-5b6a-7c8d-9e0f-1a2b3c4d5e6f/air-jordan-38.png",
+    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/air-jordan-38.png",
     description: "Timeless elegance meets modern performance"
   },
   { 
-    id: 12, 
+    id: 4, 
     name: "Harden Vol 8", 
     brand: "ADIDAS", 
     price: 159, 
-    image: "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/c2a8f6b4d3c2a1b0c9d8e7f6a5b4c3d2/harden-vol-8.png",
+    image: "https://assets.adidas.com/images/harden-vol-8.png",
     description: "Signature stepback style with boost comfort"
   },
   { 
-    id: 17, 
+    id: 5, 
     name: "Curry 11", 
     brand: "UNDER ARMOUR", 
     price: 169, 
-    image: "https://underarmour.scene7.com/is/image/Underarmour/curry-11-flow-splash?fmt=png-alpha",
+    image: "https://underarmour.scene7.com/is/image/Underarmour/curry-11.png",
     description: "Chef's precision — grip, agility & unmatched flow"
   },
   { 
-    id: 20, 
+    id: 6, 
     name: "MB.03", 
     brand: "PUMA", 
     price: 139, 
-    image: "https://images.puma.com/image/upload/f_auto,q_auto/b_rgb:f5f5f5/w_1000/poison/433959/mb-03.png",
+    image: "https://images.puma.com/image/upload/f_auto,q_auto/mb03.png",
     description: "LaMelo Ball's signature — bold & explosive"
   },
   { 
-    id: 23, 
+    id: 7, 
     name: "Kawhi 4", 
     brand: "NEW BALANCE", 
     price: 179, 
-    image: "https://nb.scene7.com/is/image/NB/kawhi4-basketball-shoe?$NB_PDP_MAIN$&fmt=png-alpha",
+    image: "https://nb.scene7.com/is/image/NB/kawhi-4.png",
     description: "Claw grip, two-way dominance, premium stability"
   },
-  // additional fresh sneakers for broader variety
   { 
-    id: 35, 
+    id: 8, 
     name: "Ja Morant 2", 
     brand: "NIKE", 
     price: 149, 
-    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/5e6f7g8h-9i0j-1k2l-3m4n-5o6p7q8r9s0t/ja-morant-2.png",
+    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/ja-morant-2.png",
     description: "Lightning fast, high-flying energy"
   },
   { 
-    id: 42, 
+    id: 9, 
     name: "Dame 9", 
     brand: "ADIDAS", 
     price: 145, 
-    image: "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s/dame-9.png",
+    image: "https://assets.adidas.com/images/dame-9.png",
     description: "Dame Time — clutch performance & comfort"
   },
   { 
-    id: 56, 
+    id: 10, 
     name: "Kyrie Infinity", 
     brand: "NIKE", 
     price: 159, 
@@ -418,37 +419,41 @@ function renderSizeButtons() {
   });
 }
 
-// Load shoe from URL parameter (id)
+// Load the SPECIFIC shoe from URL parameter "id"
+// This is the key function - shows ONLY the shoe that was clicked from shop.html
 function loadShoeFromURL() {
   const params = new URLSearchParams(window.location.search);
   const shoeId = parseInt(params.get('id'));
   
+  console.log("Loading shoe with ID:", shoeId);
+  
   if (isNaN(shoeId)) {
-    // fallback to first shoe if no valid id
+    // If no ID provided, default to first shoe but show warning
     currentShoe = shoesDatabase[0];
-    showToastMessage("Showing featured sneaker", false);
+    showToastMessage("No shoe specified, showing featured sneaker", false);
   } else {
     const found = shoesDatabase.find(s => s.id === shoeId);
     if (found) {
       currentShoe = found;
+      showToastMessage(`✓ Loaded: ${currentShoe.name}`, false);
     } else {
       currentShoe = shoesDatabase[0];
       showToastMessage("Shoe not found, showing default", true);
     }
   }
   
-  // Update DOM with shoe details
+  // Update DOM with the specific shoe's details
   document.getElementById('shoeImage').src = currentShoe.image;
   document.getElementById('shoeName').innerText = currentShoe.name;
   document.getElementById('shoeBrand').innerHTML = `<i class="fas fa-tag"></i> ${currentShoe.brand}`;
   document.getElementById('shoeDescription').innerText = currentShoe.description;
   document.getElementById('shoePrice').innerHTML = `$${currentShoe.price} <span style="font-size:0.8rem; opacity:0.6;">USD</span>`;
   
-  // Reset size selection
+  // Reset size selection for the new shoe
   selectedSize = null;
   const infoSpan = document.getElementById('selectedSizeInfo');
   if (infoSpan) infoSpan.innerHTML = `<i class="fas fa-shoe-prints"></i> No size selected`;
-  renderSizeButtons(); // refresh size buttons with active reset
+  renderSizeButtons();
 }
 
 // Cart functionality (localStorage)
@@ -456,6 +461,15 @@ let cart = JSON.parse(localStorage.getItem('sneaker_cart')) || [];
 
 function saveCart() {
   localStorage.setItem('sneaker_cart', JSON.stringify(cart));
+  // Update cart count display if there's a cart icon (optional)
+  updateCartCountDisplay();
+}
+
+function updateCartCountDisplay() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  // If there's a cart count element on this page, update it
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.innerText = totalItems;
 }
 
 function addToCart() {
@@ -500,112 +514,43 @@ function addToCart() {
   }, 1200);
 }
 
-// Navigate back to shop page, but we'll create a dynamic shop experience
-// If the user wants to go back to multi-shoe gallery, we can either reload to a main page
-// or create a function to display a simple shop selection overlay.
-// For simplicity: redirect to a "shop.html" but since we want inline we can show a built-in shop?
-// Better: create an embedded selector that allows changing shoe directly without leaving the page.
-// Because the requirement says "preview of the shoe and lets you select the size then proceed to payment"
-// and also shoe selection based on ID. But let's also provide a "back to shop" that shows a mini selector.
-// Enhanced: Add a floating shoe selector for better UX.
-
-// Show inline shoe selector (optional but user friendly)
-function buildInlineShopSelector() {
-  // create a floating pill or dropdown? Instead we add a "Change Shoe" button that opens a modal-like selection
-  const container = document.querySelector('.preview-container');
-  const existingSelector = document.getElementById('inlineShoeSelector');
-  if (existingSelector) existingSelector.remove();
+// 3D TILT EFFECT for the shoe image - interactive rotation
+function setup3DTiltEffect() {
+  const img = document.getElementById('shoeImage');
+  const wrapper = document.getElementById('imageWrapper');
+  if (!img || !wrapper) return;
   
-  const selectorDiv = document.createElement('div');
-  selectorDiv.id = 'inlineShoeSelector';
-  selectorDiv.style.cssText = 'margin-top: 15px; text-align: center;';
-  selectorDiv.innerHTML = `
-    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 8px 0;">
-      <span style="font-size:0.65rem; letter-spacing:2px; opacity:0.7;"><i class="fas fa-exchange-alt"></i> QUICK SWITCH:</span>
-      <select id="quickShoeSelect" style="background:#1e1e2a; border:1px solid #e63946; color:white; padding:8px 16px; border-radius:60px; font-size:0.75rem;">
-        ${shoesDatabase.map(shoe => `<option value="${shoe.id}" ${currentShoe && currentShoe.id === shoe.id ? 'selected' : ''}>${shoe.name} ($${shoe.price})</option>`).join('')}
-      </select>
-      <button id="applyQuickShoe" style="background:#e63946; border:none; padding:6px 18px; border-radius:60px; font-size:0.7rem; color:white;">GO</button>
-    </div>
-  `;
-  container.appendChild(selectorDiv);
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
   
-  document.getElementById('applyQuickShoe').addEventListener('click', () => {
-    const selectEl = document.getElementById('quickShoeSelect');
-    const newId = parseInt(selectEl.value);
-    const newShoe = shoesDatabase.find(s => s.id === newId);
-    if (newShoe) {
-      // update URL param without reloading for smoothness
-      const url = new URL(window.location);
-      url.searchParams.set('id', newId);
-      window.history.pushState({}, '', url);
-      currentShoe = newShoe;
-      // refresh UI with new shoe data
-      document.getElementById('shoeImage').src = currentShoe.image;
-      document.getElementById('shoeName').innerText = currentShoe.name;
-      document.getElementById('shoeBrand').innerHTML = `<i class="fas fa-tag"></i> ${currentShoe.brand}`;
-      document.getElementById('shoeDescription').innerText = currentShoe.description;
-      document.getElementById('shoePrice').innerHTML = `$${currentShoe.price} <span style="font-size:0.8rem; opacity:0.6;">USD</span>`;
-      // reset size selection
-      selectedSize = null;
-      const infoSpan = document.getElementById('selectedSizeInfo');
-      if (infoSpan) infoSpan.innerHTML = `<i class="fas fa-shoe-prints"></i> No size selected`;
-      renderSizeButtons();
-      showToastMessage(`Switched to ${currentShoe.name}`, false);
-    }
-  });
-}
-
-// Payment / proceed to checkout (enhanced)
-function proceedToPayment() {
-  if (!selectedSize) {
-    showToastMessage('❌ Please select a size before proceeding to payment', true);
-    return;
-  }
-  
-  if (!currentShoe) return;
-  
-  // Simulate payment flow
-  showToastMessage(`💳 Processing secure payment for ${currentShoe.name} (${selectedSize}) — Total $${currentShoe.price}`, false);
-  setTimeout(() => {
-    // Create a fake order summary and add to cart? Or just simulate success
-    // For better UX: add to cart then simulate checkout
-    // Check if already in cart with same size to avoid duplicate?
-    const existingInCart = cart.find(item => item.id === currentShoe.id && item.size === selectedSize);
-    if (!existingInCart) {
-      cart.push({
-        id: currentShoe.id,
-        name: currentShoe.name,
-        brand: currentShoe.brand,
-        price: currentShoe.price,
-        size: selectedSize,
-        image: currentShoe.image,
-        quantity: 1
-      });
-      saveCart();
-    }
-    showToastMessage(`✨ Payment demo complete! Order placed for ${currentShoe.name}. Check cart 🛍️`, false);
+  wrapper.addEventListener('mousemove', (e) => {
+    const rect = wrapper.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
     
-    // Optional: redirect to cart page? but we'll just show success
-    const btn = document.getElementById('addToCartBtn');
-    if (btn) btn.style.transform = 'scale(0.98)';
-    setTimeout(() => { if(btn) btn.style.transform = ''; }, 200);
-  }, 1500);
-}
-
-// Modify Add to Cart button to also have payment option? We'll add a separate payment button
-function enhanceWithPaymentButton() {
-  const buttonGroup = document.querySelector('.button-group');
-  if (!buttonGroup) return;
-  // Check if payment button already exists
-  if (document.getElementById('paymentNowBtn')) return;
-  const payBtn = document.createElement('button');
-  payBtn.id = 'paymentNowBtn';
-  payBtn.innerHTML = '<i class="fas fa-credit-card"></i> PROCEED TO PAYMENT';
-  payBtn.style.background = 'linear-gradient(135deg, #ffb347, #e63946)';
-  payBtn.style.marginTop = '0';
-  payBtn.addEventListener('click', proceedToPayment);
-  buttonGroup.appendChild(payBtn);
+    // Calculate mouse position relative to the image center (-1 to 1 range)
+    mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
+    mouseY = ((e.clientY - rect.top) / height) * 2 - 1;
+    
+    // Limit rotation amount (max 15 degrees)
+    targetX = mouseY * -12;
+    targetY = mouseX * 12;
+  });
+  
+  wrapper.addEventListener('mouseleave', () => {
+    targetX = 0;
+    targetY = 0;
+  });
+  
+  // Smooth animation loop for tilt
+  function animateTilt() {
+    currentX += (targetX - currentX) * 0.1;
+    currentY += (targetY - currentY) * 0.1;
+    img.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg) scale(1.02)`;
+    requestAnimationFrame(animateTilt);
+  }
+  animateTilt();
 }
 
 // Background particles generator
@@ -626,77 +571,38 @@ function generateBackgroundParticles() {
   }
 }
 
-// Back to shop: redirect to a main shop listing (or we can create a simple gallery)
-// For complete flow, we reload to a main shop page that lists all shoes
-// Since we are in a single file, we can also create a dynamic 'shop view' but for simplicity redirect to a new page that we can generate?
-// However to fulfill "shoe website preview + size + payment", this page handles all. Back to Shop will go to a simple shop selector.
-function backToShop() {
-  // create a modal / redirect to a shoe list ? but smooth: show all shoes as popup? use clean approach: go to /shop-list
-  // We'll generate a mini overlay with all shoes for selection.
-  const existingOverlay = document.getElementById('shopOverlay');
-  if (existingOverlay) {
-    existingOverlay.remove();
-    return;
-  }
-  
-  const overlay = document.createElement('div');
-  overlay.id = 'shopOverlay';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:1000;display:flex;align-items:center;justify-content:center;';
-  const cardContainer = document.createElement('div');
-  cardContainer.style.cssText = 'background:#0f0f14;border-radius:48px;padding:2rem;max-width:90%;width:600px;max-height:80vh;overflow-y:auto;border:1px solid #e63946;';
-  cardContainer.innerHTML = `<h3 style="text-align:center; margin-bottom:1rem;"><i class="fas fa-store"></i> ALL SNEAKERS</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;">`;
-  shoesDatabase.forEach(shoe => {
-    cardContainer.innerHTML += `
-      <div style="background:#1a1a24;border-radius:24px;padding:0.8rem;text-align:center;cursor:pointer;transition:0.2s;border:1px solid rgba(230,57,70,0.3);" class="overlay-shoe-item" data-id="${shoe.id}">
-        <img src="${shoe.image}" style="width:100%;height:100px;object-fit:contain;border-radius:16px;" alt="${shoe.name}">
-        <div style="font-weight:bold;margin-top:8px;font-size:0.8rem;">${shoe.name}</div>
-        <div style="font-size:0.7rem;color:#e63946;">$${shoe.price}</div>
-      </div>
-    `;
-  });
-  cardContainer.innerHTML += `<button id="closeOverlayBtn" style="background:#e63946; margin-top:1.5rem; width:100%; padding:10px; border-radius:60px;">CLOSE</button>`;
-  overlay.appendChild(cardContainer);
-  document.body.appendChild(overlay);
-  
-  document.querySelectorAll('.overlay-shoe-item').forEach(el => {
-    el.addEventListener('click', (e) => {
-      const shoeId = parseInt(el.getAttribute('data-id'));
-      const newShoe = shoesDatabase.find(s => s.id === shoeId);
-      if (newShoe) {
-        const url = new URL(window.location);
-        url.searchParams.set('id', shoeId);
-        window.history.pushState({}, '', url);
-        currentShoe = newShoe;
-        document.getElementById('shoeImage').src = currentShoe.image;
-        document.getElementById('shoeName').innerText = currentShoe.name;
-        document.getElementById('shoeBrand').innerHTML = `<i class="fas fa-tag"></i> ${currentShoe.brand}`;
-        document.getElementById('shoeDescription').innerText = currentShoe.description;
-        document.getElementById('shoePrice').innerHTML = `$${currentShoe.price} <span style="font-size:0.8rem; opacity:0.6;">USD</span>`;
-        selectedSize = null;
-        const infoSpan = document.getElementById('selectedSizeInfo');
-        if (infoSpan) infoSpan.innerHTML = `<i class="fas fa-shoe-prints"></i> No size selected`;
-        renderSizeButtons();
-        showToastMessage(`Now viewing: ${currentShoe.name}`, false);
-        overlay.remove();
-      }
-    });
-  });
-  document.getElementById('closeOverlayBtn').addEventListener('click', () => overlay.remove());
-}
-
 // Initialize everything
 document.addEventListener('DOMContentLoaded', () => {
+  // Load the specific shoe from URL parameter (the one clicked from shop.html)
   loadShoeFromURL();
   renderSizeButtons();
   generateBackgroundParticles();
-  buildInlineShopSelector();   // Adds quick selector dropdown
-  enhanceWithPaymentButton();   // Adds separate payment button
+  setup3DTiltEffect();
   
   const addBtn = document.getElementById('addToCartBtn');
   if (addBtn) addBtn.addEventListener('click', addToCart);
   
-  const backBtn = document.getElementById('backToShopBtn');
-  if (backBtn) backBtn.addEventListener('click', backToShop);
+  updateCartCountDisplay();
+});
+
+// Listen for browser back/forward navigation to keep shoe ID in sync
+window.addEventListener('popstate', () => {
+  const params = new URLSearchParams(window.location.search);
+  const shoeId = parseInt(params.get('id'));
+  const foundShoe = shoesDatabase.find(s => s.id === shoeId);
+  if (foundShoe && foundShoe.id !== currentShoe?.id) {
+    currentShoe = foundShoe;
+    document.getElementById('shoeImage').src = currentShoe.image;
+    document.getElementById('shoeName').innerText = currentShoe.name;
+    document.getElementById('shoeBrand').innerHTML = `<i class="fas fa-tag"></i> ${currentShoe.brand}`;
+    document.getElementById('shoeDescription').innerText = currentShoe.description;
+    document.getElementById('shoePrice').innerHTML = `$${currentShoe.price} <span style="font-size:0.8rem; opacity:0.6;">USD</span>`;
+    selectedSize = null;
+    const infoSpan = document.getElementById('selectedSizeInfo');
+    if (infoSpan) infoSpan.innerHTML = `<i class="fas fa-shoe-prints"></i> No size selected`;
+    renderSizeButtons();
+    showToastMessage(`Loaded: ${currentShoe.name}`, false);
+  }
 });
 </script>
 </body>
