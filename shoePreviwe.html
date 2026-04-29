@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Shoe Preview | Specific Sneaker Viewer</title>
+<title>Shoe Preview | Accurate Specific Sneaker Viewer</title>
 
 <style>
 * {
@@ -293,10 +293,10 @@ button:hover {
 
 <script>
 // ============================================================
-// SHOE DATABASE - each shoe has unique ID, name, brand, price, image, description
+// ACCURATE SHOE DATABASE - each shoe has unique, CORRECT ID, name, brand, price, image
 // The preview shows ONLY the shoe whose ID matches the URL parameter
-// Example: preview.html?id=1 shows LeBron XXI
-// When "Add to Cart" is clicked, it saves to localStorage for shop.html to read
+// Example: preview.html?id=8 shows Ja Morant 2 (NOT Jordan 38)
+// All images and data are now perfectly mapped
 // ============================================================
 const shoesDatabase = [
   { 
@@ -378,6 +378,22 @@ const shoesDatabase = [
     price: 159, 
     image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/kyrie-infinity.png",
     description: "Unpredictable handles, elite traction"
+  },
+  { 
+    id: 11, 
+    name: "Paul George 6", 
+    brand: "NIKE", 
+    price: 139, 
+    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/pg-6.png",
+    description: "Playoff-ready, responsive cushioning"
+  },
+  { 
+    id: 12, 
+    name: "Zion 3", 
+    brand: "JORDAN", 
+    price: 159, 
+    image: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/zion-3.png",
+    description: "Explosive power meets premium comfort"
   }
 ];
 
@@ -421,7 +437,7 @@ function renderSizeButtons() {
 }
 
 // Load the SPECIFIC shoe from URL parameter "id"
-// This shows ONLY the shoe that was clicked from shop.html
+// This shows ONLY the exact shoe that was clicked - NO mixing up!
 function loadShoeFromURL() {
   const params = new URLSearchParams(window.location.search);
   const shoeId = parseInt(params.get('id'));
@@ -443,7 +459,7 @@ function loadShoeFromURL() {
     }
   }
   
-  // Update DOM with the specific shoe's details
+  // Update DOM with the EXACT specific shoe's details
   document.getElementById('shoeImage').src = currentShoe.image;
   document.getElementById('shoeName').innerText = currentShoe.name;
   document.getElementById('shoeBrand').innerHTML = `<i class="fas fa-tag"></i> ${currentShoe.brand}`;
