@@ -51,7 +51,7 @@
         .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; cursor: pointer; transition: 0.3s; }
         .nav-links-premium a:hover { opacity: 0.6; color: #e63946; }
         
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 5; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justice-content: center; position: relative; z-index: 5; }
         .hero-content { text-align: center; }
         .logo-icon { font-size: 3.5rem; color: #e63946; margin-bottom: 1rem; animation: pulse 2.5s ease-in-out infinite; }
         @keyframes pulse { 0%,100% { transform: scale(1); text-shadow: 0 0 10px rgba(230,57,70,0.5); } 50% { transform: scale(1.08); text-shadow: 0 0 40px rgba(230,57,70,0.9); } }
@@ -63,15 +63,15 @@
         .scroll-line { width: 1.5px; height: 45px; background: linear-gradient(180deg, #e63946, transparent); animation: scrollAnim 2s ease infinite; }
         @keyframes scrollAnim { 0%,100% { transform: scaleY(1); opacity: 0.4; } 50% { transform: scaleY(1.6); opacity: 1; } }
         
-        .shop-section { background: rgba(5,5,5,0.7); backdrop-filter: blur(12px); padding: 5rem 2rem 6rem; position: relative; z-index: 10; border-top: 1px solid rgba(230,57,70,0.2); }
+        .shop-section { background: rgba(5,5,5,0.6); padding: 5rem 2rem 6rem; position: relative; z-index: 10; border-top: 1px solid rgba(230,57,70,0.2); }
         .shop-header { max-width: 1400px; margin: 0 auto 2rem auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
         .shop-header h2 { font-size: 1.6rem; background: linear-gradient(135deg, #fff, #e63946); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .cart-icon { background: rgba(230,57,70,0.2); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.3s; border: 1px solid rgba(230,57,70,0.4); }
+        .cart-icon { background: rgba(230,57,70,0.2); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.3s; border: 1px solid rgba(230,57,70,0.4); backdrop-filter: blur(8px); }
         .cart-icon:hover { background: #e63946; transform: scale(1.05); }
         .cart-count { position: absolute; top: -5px; right: -5px; background: #ffb347; color: #050505; font-weight: 800; font-size: 0.7rem; padding: 0 6px; border-radius: 30px; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
         
         .search-filter-bar { max-width: 1400px; margin: 0 auto 2rem auto; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; }
-        .search-box { background: rgba(255,255,255,0.05); border-radius: 60px; padding: 0.5rem 1.5rem; display: flex; align-items: center; gap: 10px; flex: 2; min-width: 200px; border: 1px solid rgba(230,57,70,0.4); }
+        .search-box { background: rgba(255,255,255,0.05); border-radius: 60px; padding: 0.5rem 1.5rem; display: flex; align-items: center; gap: 10px; flex: 2; min-width: 200px; border: 1px solid rgba(230,57,70,0.4); backdrop-filter: blur(8px); }
         .search-box i { color: #e63946; }
         .search-box input { background: transparent; border: none; padding: 0.7rem 0; width: 100%; color: white; outline: none; font-size: 0.9rem; }
         .filter-group { display: flex; gap: 10px; flex-wrap: wrap; max-height: 80px; overflow-y: auto; padding: 4px; flex: 3; justify-content: flex-end; }
@@ -87,6 +87,7 @@
             color: #ddd;
             display: inline-flex;
             gap: 2px;
+            backdrop-filter: blur(4px);
         }
         .filter-chip span { display: inline-block; transition: 0.3s; }
         .filter-chip:hover span {
@@ -105,10 +106,9 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
         }
+        
+        /* ========== BLURRED GLASS CARD BACKGROUND THAT MATCHES THE SHOE ========== */
         .product-card {
-            background: rgba(12,12,18,0.9);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(230,57,70,0.25);
             border-radius: 1.8rem;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.2,0.9,0.4,1.1);
@@ -116,11 +116,35 @@
             opacity: 0;
             transform: translateY(50px);
             filter: blur(8px);
+            position: relative;
         }
-        .product-card:hover { transform: translateY(-8px) scale(1.01); border-color: rgba(230,57,70,0.7); box-shadow: 0 25px 40px -15px rgba(230,57,70,0.3); }
+        
+        /* Glass background that will be dynamically colored by JS */
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--card-bg, rgba(12,12,18,0.85));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(230,57,70,0.25);
+            border-radius: 1.8rem;
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+        
+        .product-card:hover::before {
+            border-color: rgba(230,57,70,0.7);
+            background: var(--card-bg-hover, rgba(12,12,18,0.95));
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.01);
+        }
         
         .product-img {
-            background: transparent;
             text-align: center;
             padding: 1.5rem;
             position: relative;
@@ -128,18 +152,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1;
         }
+        
+        /* Shoe image with transparent background and glow */
         .product-img img {
-            max-width: 100%;
+            max-width: 85%;
             max-height: 160px;
             object-fit: contain;
             background: transparent;
             transition: transform 0.3s ease, filter 0.3s ease;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
         }
+        
         .product-card:hover .product-img img {
             transform: scale(1.05);
-            filter: drop-shadow(0 12px 20px rgba(230,57,70,0.3));
+            filter: drop-shadow(0 12px 25px rgba(230,57,70,0.4));
         }
         
         .badge {
@@ -151,14 +179,21 @@
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
             font-weight: 700;
+            z-index: 3;
+            backdrop-filter: blur(4px);
+        }
+        
+        .product-info {
+            padding: 1rem 1rem 1.2rem;
+            position: relative;
             z-index: 2;
         }
-        .product-info { padding: 1rem 1rem 1.2rem; }
+        
         .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; }
         .product-name { font-weight: 800; font-size: 1rem; margin: 0.4rem 0; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin: 0.7rem 0 0.5rem; }
         .price { font-weight: 800; font-size: 1.2rem; }
-        .official-link { display: inline-block; margin-top: 6px; font-size: 0.65rem; color: #ffb347; text-decoration: none; transition: 0.2s; }
+        .official-link { display: inline-block; margin-top: 6px; font-size: 0.65rem; color: #ffb347; text-decoration: none; transition: 0.2s; z-index: 2; position: relative; }
         .official-link:hover { color: white; text-shadow: 0 0 4px #ffb347; }
         .no-results { grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 2rem; }
         
@@ -170,7 +205,8 @@
         }
         .cart-modal-overlay.active { visibility: visible; opacity: 1; }
         .cart-modal-container {
-            background: #0a0a10;
+            background: rgba(10,10,16,0.95);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(230,57,70,0.4);
             border-radius: 2rem;
             max-width: 500px;
@@ -315,26 +351,26 @@
 <script>
     // ========== SNEAKER DATABASE WITH YOUR EXACT FILENAMES ==========
     const shoesDatabase = [
-        { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", image: "images/lebronxxi (1).png", official: "https://www.nike.com/lebron-21" },
-        { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", image: "images/kobe.png", official: "https://www.nike.com/kobe-6" },
-        { id: 3, name: "Ja Morant 2", brand: "Nike", price: 129, badge: "RISING", image: "images/ja 2.png", official: "https://www.nike.com/ja-morant-2" },
-        { id: 4, name: "Paul George 6", brand: "Nike", price: 149, badge: "PLAYOFF", image: "images/pg 6.png", official: "https://www.nike.com/pg-6" },
-        { id: 5, name: "Kyrie Low 5", brand: "Nike", price: 119, badge: "QUICK", image: "images/ky l.png", official: "https://www.nike.com/kyrie-low" },
-        { id: 6, name: "Giannis Freak 5", brand: "Nike", price: 149, badge: "FREAK", image: "images/freak 5.png", official: "https://www.nike.com/freak-5" },
-        { id: 7, name: "Air Jordan 38", brand: "Jordan", price: 189, badge: "ICON", image: "images/j7.png", official: "https://www.nike.com/jordan-38" },
-        { id: 8, name: "Zion 3", brand: "Jordan", price: 159, badge: "POWER", image: "images/download (4).png", official: "https://www.nike.com/zion-3" },
-        { id: 9, name: "Jordan Luka 2", brand: "Jordan", price: 139, badge: "LUKA", image: "images/luka2.png", official: "https://www.nike.com/luka-2" },
-        { id: 10, name: "Jordan Tatum 2", brand: "Jordan", price: 149, badge: "TATUM", image: "images/tate 2.png", official: "https://www.nike.com/tatum-2" },
-        { id: 11, name: "Harden Vol 8", brand: "Adidas", price: 159, badge: "ELITE", image: "images/harden8.png", official: "https://www.adidas.com/harden-vol-8" },
-        { id: 12, name: "Dame 9", brand: "Adidas", price: 129, badge: "SIGNATURE", image: "images/dame 9.png", official: "https://www.adidas.com/dame-9" },
-        { id: 13, name: "Trae Young 3", brand: "Adidas", price: 139, badge: "ICE", image: "images/young.png", official: "https://www.adidas.com/trae-young-3" },
-        { id: 14, name: "Don Issue 5", brand: "Adidas", price: 119, badge: "DON", image: "images/don.png", official: "https://www.adidas.com/don-issue-5" },
-        { id: 15, name: "Curry 11", brand: "Under Armour", price: 169, badge: "SPLASH", image: "images/curry1.png", official: "https://www.underarmour.com/curry-11" },
-        { id: 16, name: "Curry 12", brand: "Under Armour", price: 179, badge: "NEW", image: "images/curry12.png", official: "https://www.underarmour.com/curry-12" },
-        { id: 17, name: "MB.03", brand: "Puma", price: 139, badge: "FUTURE", image: "images/mbo3.png", official: "https://us.puma.com/mb-03" },
-        { id: 18, name: "Clyde All-Pro", brand: "Puma", price: 129, badge: "RETRO", image: "images/k 4.png", official: "https://us.puma.com/clyde-all-pro" },
-        { id: 19, name: "Kawhi 4", brand: "New Balance", price: 179, badge: "CLAW", image: "images/download (5).png", official: "https://www.newbalance.com/kawhi-4" },
-        { id: 20, name: "Two WXY v4", brand: "New Balance", price: 149, badge: "TWO-WAY", image: "images/download (6).png", official: "https://www.newbalance.com/two-wxy" }
+        { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", image: "images/lebronxxi (1).png", official: "https://www.nike.com/lebron-21", cardColor: "#e63946", cardColorHover: "#ffb347" },
+        { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", image: "images/kobe.png", official: "https://www.nike.com/kobe-6", cardColor: "#552288", cardColorHover: "#7733aa" },
+        { id: 3, name: "Ja Morant 2", brand: "Nike", price: 129, badge: "RISING", image: "images/ja 2.png", official: "https://www.nike.com/ja-morant-2", cardColor: "#1a5c7a", cardColorHover: "#2a7ca0" },
+        { id: 4, name: "Paul George 6", brand: "Nike", price: 149, badge: "PLAYOFF", image: "images/pg 6.png", official: "https://www.nike.com/pg-6", cardColor: "#2d6a4f", cardColorHover: "#40916c" },
+        { id: 5, name: "Kyrie Low 5", brand: "Nike", price: 119, badge: "QUICK", image: "images/ky l.png", official: "https://www.nike.com/kyrie-low", cardColor: "#d4a373", cardColorHover: "#e9c46a" },
+        { id: 6, name: "Giannis Freak 5", brand: "Nike", price: 149, badge: "FREAK", image: "images/freak 5.png", official: "https://www.nike.com/freak-5", cardColor: "#6c584c", cardColorHover: "#8b5e3c" },
+        { id: 7, name: "Air Jordan 38", brand: "Jordan", price: 189, badge: "ICON", image: "images/j7.png", official: "https://www.nike.com/jordan-38", cardColor: "#b22234", cardColorHover: "#dc143c" },
+        { id: 8, name: "Zion 3", brand: "Jordan", price: 159, badge: "POWER", image: "images/download (4).png", official: "https://www.nike.com/zion-3", cardColor: "#3b2f2f", cardColorHover: "#5c4a4a" },
+        { id: 9, name: "Jordan Luka 2", brand: "Jordan", price: 139, badge: "LUKA", image: "images/luka2.png", official: "https://www.nike.com/luka-2", cardColor: "#0d47a1", cardColorHover: "#1565c0" },
+        { id: 10, name: "Jordan Tatum 2", brand: "Jordan", price: 149, badge: "TATUM", image: "images/tate 2.png", official: "https://www.nike.com/tatum-2", cardColor: "#e65100", cardColorHover: "#f57c00" },
+        { id: 11, name: "Harden Vol 8", brand: "Adidas", price: 159, badge: "ELITE", image: "images/harden8.png", official: "https://www.adidas.com/harden-vol-8", cardColor: "#1b1b1b", cardColorHover: "#333333" },
+        { id: 12, name: "Dame 9", brand: "Adidas", price: 129, badge: "SIGNATURE", image: "images/dame 9.png", official: "https://www.adidas.com/dame-9", cardColor: "#2b2d42", cardColorHover: "#3d405b" },
+        { id: 13, name: "Trae Young 3", brand: "Adidas", price: 139, badge: "ICE", image: "images/young.png", official: "https://www.adidas.com/trae-young-3", cardColor: "#8ecae6", cardColorHover: "#219ebc" },
+        { id: 14, name: "Don Issue 5", brand: "Adidas", price: 119, badge: "DON", image: "images/don.png", official: "https://www.adidas.com/don-issue-5", cardColor: "#a52a2a", cardColorHover: "#b84040" },
+        { id: 15, name: "Curry 11", brand: "Under Armour", price: 169, badge: "SPLASH", image: "images/curry1.png", official: "https://www.underarmour.com/curry-11", cardColor: "#0a9396", cardColorHover: "#0bada8" },
+        { id: 16, name: "Curry 12", brand: "Under Armour", price: 179, badge: "NEW", image: "images/curry12.png", official: "https://www.underarmour.com/curry-12", cardColor: "#94d2bd", cardColorHover: "#b9e2d1" },
+        { id: 17, name: "MB.03", brand: "Puma", price: 139, badge: "FUTURE", image: "images/mbo3.png", official: "https://us.puma.com/mb-03", cardColor: "#005f73", cardColorHover: "#0a9396" },
+        { id: 18, name: "Clyde All-Pro", brand: "Puma", price: 129, badge: "RETRO", image: "images/k 4.png", official: "https://us.puma.com/clyde-all-pro", cardColor: "#774e2e", cardColorHover: "#9c6b42" },
+        { id: 19, name: "Kawhi 4", brand: "New Balance", price: 179, badge: "CLAW", image: "images/download (5).png", official: "https://www.newbalance.com/kawhi-4", cardColor: "#1a2a3a", cardColorHover: "#2a4a6a" },
+        { id: 20, name: "Two WXY v4", brand: "New Balance", price: 149, badge: "TWO-WAY", image: "images/download (6).png", official: "https://www.newbalance.com/two-wxy", cardColor: "#385b7a", cardColorHover: "#4a7a9e" }
     ];
     
     const FALLBACK_IMAGE = "https://placehold.co/400x300/1a1a2a/e63946?text=Image+Not+Found";
@@ -405,49 +441,8 @@
     
     window.getCart = function() { return cart; };
     
-    // ========== SMART BACKGROUND REMOVAL FUNCTION ==========
-    function removeWhiteBackground(imgElement, originalSrc) {
-        return new Promise((resolve) => {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const tempImg = new Image();
-            tempImg.crossOrigin = 'Anonymous';
-            
-            tempImg.onload = function() {
-                canvas.width = tempImg.width;
-                canvas.height = tempImg.height;
-                ctx.drawImage(tempImg, 0, 0);
-                
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-                
-                for (let i = 0; i < data.length; i += 4) {
-                    const r = data[i];
-                    const g = data[i + 1];
-                    const b = data[i + 2];
-                    
-                    // Make white/light pixels transparent
-                    if (r > 240 && g > 240 && b > 240) {
-                        data[i + 3] = 0;
-                    } else if (r > 220 && g > 220 && b > 220 && Math.abs(r - g) < 30 && Math.abs(g - b) < 30) {
-                        data[i + 3] = Math.floor(data[i + 3] * 0.15);
-                    } else if (r > 200 && g > 200 && b > 200 && Math.abs(r - g) < 50) {
-                        data[i + 3] = Math.floor(data[i + 3] * 0.4);
-                    } else {
-                        data[i + 3] = 255;
-                    }
-                }
-                
-                ctx.putImageData(imageData, 0, 0);
-                const transparentDataUrl = canvas.toDataURL('image/png');
-                imgElement.src = transparentDataUrl;
-                resolve();
-            };
-            
-            tempImg.onerror = function() { resolve(); };
-            tempImg.src = originalSrc;
-        });
-    }
+    // Extract dominant color from image (synchronous approximation using known shoe colors)
+    // For true dynamic matching, we pre-defined cardColor in database based on shoe primary color
     
     function getFiltered() {
         let results = [...shoesDatabase];
@@ -462,9 +457,9 @@
         
         let html = "";
         filtered.forEach(shoe => {
-            html += `<div class="product-card" data-shoe-id="${shoe.id}" data-shoe-name="${escapeHtml(shoe.name)}">
+            html += `<div class="product-card" data-shoe-id="${shoe.id}" data-shoe-name="${escapeHtml(shoe.name)}" style="--card-bg: radial-gradient(circle at 20% 30%, ${shoe.cardColor}15, rgba(5,5,10,0.9)); --card-bg-hover: radial-gradient(circle at 30% 40%, ${shoe.cardColorHover}25, rgba(5,5,10,0.95));">
                 <div class="product-img">
-                    <img src="${shoe.image}" alt="${escapeHtml(shoe.name)}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGE}';" data-original="${shoe.image}">
+                    <img src="${shoe.image}" alt="${escapeHtml(shoe.name)}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGE}';">
                     ${shoe.badge ? `<div class="badge">${shoe.badge}</div>` : ''}
                 </div>
                 <div class="product-info">
@@ -477,15 +472,6 @@
         });
         
         productGrid.innerHTML = html;
-        
-        // Process each image to remove white background
-        const images = document.querySelectorAll('.product-img img');
-        for (const img of images) {
-            const originalSrc = img.getAttribute('data-original') || img.src;
-            if (originalSrc && !originalSrc.includes('placehold')) {
-                await removeWhiteBackground(img, originalSrc);
-            }
-        }
         
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', (e) => {
