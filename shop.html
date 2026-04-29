@@ -119,64 +119,27 @@
         }
         .product-card:hover { transform: translateY(-8px) scale(1.01); border-color: rgba(230,57,70,0.7); box-shadow: 0 25px 40px -15px rgba(230,57,70,0.3); }
         
-        /* ========== BLUR THE BACKGROUND INSIDE THE SHOE PICTURE ========== */
         .product-img {
-            position: relative;
+            background: transparent;
             text-align: center;
-            padding: 0;
+            padding: 1.5rem;
+            position: relative;
             min-height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            background: #0a0a10;
         }
-        
-        /* Shoe image with smart background blur using backdrop-filter on a pseudo-element */
         .product-img img {
-            position: relative;
-            z-index: 2;
-            max-width: 85%;
+            max-width: 100%;
             max-height: 160px;
             object-fit: contain;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+            background: transparent;
             transition: transform 0.3s ease, filter 0.3s ease;
-            /* This creates a "glow" around the shoe to separate it from background */
-            filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
         }
-        
-        /* Blur the background of the image itself using a canvas-like approach via SVG filter */
-        .product-img {
-            position: relative;
-        }
-        
-        /* Create a blurred version of the image behind it - this blurs the picture's background */
-        .product-img::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: var(--bg-image, none);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: blur(18px) brightness(0.7) saturate(0.8);
-            transform: scale(1.15);
-            z-index: 0;
-            opacity: 0.9;
-            transition: filter 0.3s ease;
-        }
-        
-        .product-card:hover .product-img::after {
-            filter: blur(25px) brightness(0.6) saturate(0.7);
-        }
-        
-        /* Ensure the actual image stays on top */
-        .product-img img {
-            position: relative;
-            z-index: 2;
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 12px 20px rgba(230,57,70,0.3));
         }
         
         .badge {
@@ -188,7 +151,7 @@
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
             font-weight: 700;
-            z-index: 3;
+            z-index: 2;
         }
         .product-info { padding: 1rem 1rem 1.2rem; }
         .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; }
@@ -350,28 +313,28 @@
 </script>
 
 <script>
-    // ========== SNEAKER DATABASE ==========
+    // ========== SNEAKER DATABASE WITH YOUR EXACT FILENAMES ==========
     const shoesDatabase = [
-        { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", image: "images/lebronxxi.png", official: "https://www.nike.com/lebron-21" },
-        { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", image: "images/kobe.webp", official: "https://www.nike.com/kobe-6" },
-        { id: 3, name: "Ja Morant 2", brand: "Nike", price: 129, badge: "RISING", image: "images/ja 2.jpg", official: "https://www.nike.com/ja-morant-2" },
-        { id: 4, name: "Paul George 6", brand: "Nike", price: 149, badge: "PLAYOFF", image: "images/pg 6.jpg", official: "https://www.nike.com/pg-6" },
-        { id: 5, name: "Kyrie Low 5", brand: "Nike", price: 119, badge: "QUICK", image: "images/ky l.jpg", official: "https://www.nike.com/kyrie-low" },
-        { id: 6, name: "Giannis Freak 5", brand: "Nike", price: 149, badge: "FREAK", image: "images/freak 5.jpg", official: "https://www.nike.com/freak-5" },
-        { id: 7, name: "Air Jordan 38", brand: "Jordan", price: 189, badge: "ICON", image: "images/j7.jpg", official: "https://www.nike.com/jordan-38" },
-        { id: 8, name: "Zion 3", brand: "Jordan", price: 159, badge: "POWER", image: "images/download (4).jpg", official: "https://www.nike.com/zion-3" },
-        { id: 9, name: "Jordan Luka 2", brand: "Jordan", price: 139, badge: "LUKA", image: "images/luka2.jpg", official: "https://www.nike.com/luka-2" },
-        { id: 10, name: "Jordan Tatum 2", brand: "Jordan", price: 149, badge: "TATUM", image: "images/tate 2.jpg", official: "https://www.nike.com/tatum-2" },
-        { id: 11, name: "Harden Vol 8", brand: "Adidas", price: 159, badge: "ELITE", image: "images/harden8.jpg", official: "https://www.adidas.com/harden-vol-8" },
-        { id: 12, name: "Dame 9", brand: "Adidas", price: 129, badge: "SIGNATURE", image: "images/dame 9.jpg", official: "https://www.adidas.com/dame-9" },
-        { id: 13, name: "Trae Young 3", brand: "Adidas", price: 139, badge: "ICE", image: "images/young.jpg", official: "https://www.adidas.com/trae-young-3" },
-        { id: 14, name: "Don Issue 5", brand: "Adidas", price: 119, badge: "DON", image: "images/don.jpg", official: "https://www.adidas.com/don-issue-5" },
-        { id: 15, name: "Curry 11", brand: "Under Armour", price: 169, badge: "SPLASH", image: "images/curry1.jpg", official: "https://www.underarmour.com/curry-11" },
-        { id: 16, name: "Curry 12", brand: "Under Armour", price: 179, badge: "NEW", image: "images/curry12.jpg", official: "https://www.underarmour.com/curry-12" },
-        { id: 17, name: "MB.03", brand: "Puma", price: 139, badge: "FUTURE", image: "images/mbo3.jpg", official: "https://us.puma.com/mb-03" },
-        { id: 18, name: "Clyde All-Pro", brand: "Puma", price: 129, badge: "RETRO", image: "images/k 4.jpg", official: "https://us.puma.com/clyde-all-pro" },
-        { id: 19, name: "Kawhi 4", brand: "New Balance", price: 179, badge: "CLAW", image: "images/download (5).jpg", official: "https://www.newbalance.com/kawhi-4" },
-        { id: 20, name: "Two WXY v4", brand: "New Balance", price: 149, badge: "TWO-WAY", image: "images/download (5).jpg", official: "https://www.newbalance.com/two-wxy" }
+        { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", image: "images/lebronxxi (1).png", official: "https://www.nike.com/lebron-21" },
+        { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", image: "images/kobe.png", official: "https://www.nike.com/kobe-6" },
+        { id: 3, name: "Ja Morant 2", brand: "Nike", price: 129, badge: "RISING", image: "images/ja 2.png", official: "https://www.nike.com/ja-morant-2" },
+        { id: 4, name: "Paul George 6", brand: "Nike", price: 149, badge: "PLAYOFF", image: "images/pg 6.png", official: "https://www.nike.com/pg-6" },
+        { id: 5, name: "Kyrie Low 5", brand: "Nike", price: 119, badge: "QUICK", image: "images/ky l.png", official: "https://www.nike.com/kyrie-low" },
+        { id: 6, name: "Giannis Freak 5", brand: "Nike", price: 149, badge: "FREAK", image: "images/freak 5.png", official: "https://www.nike.com/freak-5" },
+        { id: 7, name: "Air Jordan 38", brand: "Jordan", price: 189, badge: "ICON", image: "images/j7.png", official: "https://www.nike.com/jordan-38" },
+        { id: 8, name: "Zion 3", brand: "Jordan", price: 159, badge: "POWER", image: "images/download (4).png", official: "https://www.nike.com/zion-3" },
+        { id: 9, name: "Jordan Luka 2", brand: "Jordan", price: 139, badge: "LUKA", image: "images/luka2.png", official: "https://www.nike.com/luka-2" },
+        { id: 10, name: "Jordan Tatum 2", brand: "Jordan", price: 149, badge: "TATUM", image: "images/tate 2.png", official: "https://www.nike.com/tatum-2" },
+        { id: 11, name: "Harden Vol 8", brand: "Adidas", price: 159, badge: "ELITE", image: "images/harden8.png", official: "https://www.adidas.com/harden-vol-8" },
+        { id: 12, name: "Dame 9", brand: "Adidas", price: 129, badge: "SIGNATURE", image: "images/dame 9.png", official: "https://www.adidas.com/dame-9" },
+        { id: 13, name: "Trae Young 3", brand: "Adidas", price: 139, badge: "ICE", image: "images/young.png", official: "https://www.adidas.com/trae-young-3" },
+        { id: 14, name: "Don Issue 5", brand: "Adidas", price: 119, badge: "DON", image: "images/don.png", official: "https://www.adidas.com/don-issue-5" },
+        { id: 15, name: "Curry 11", brand: "Under Armour", price: 169, badge: "SPLASH", image: "images/curry1.png", official: "https://www.underarmour.com/curry-11" },
+        { id: 16, name: "Curry 12", brand: "Under Armour", price: 179, badge: "NEW", image: "images/curry12.png", official: "https://www.underarmour.com/curry-12" },
+        { id: 17, name: "MB.03", brand: "Puma", price: 139, badge: "FUTURE", image: "images/mbo3.png", official: "https://us.puma.com/mb-03" },
+        { id: 18, name: "Clyde All-Pro", brand: "Puma", price: 129, badge: "RETRO", image: "images/k 4.png", official: "https://us.puma.com/clyde-all-pro" },
+        { id: 19, name: "Kawhi 4", brand: "New Balance", price: 179, badge: "CLAW", image: "images/download (5).png", official: "https://www.newbalance.com/kawhi-4" },
+        { id: 20, name: "Two WXY v4", brand: "New Balance", price: 149, badge: "TWO-WAY", image: "images/download (6).png", official: "https://www.newbalance.com/two-wxy" }
     ];
     
     const FALLBACK_IMAGE = "https://placehold.co/400x300/1a1a2a/e63946?text=Image+Not+Found";
@@ -442,6 +405,50 @@
     
     window.getCart = function() { return cart; };
     
+    // ========== SMART BACKGROUND REMOVAL FUNCTION ==========
+    function removeWhiteBackground(imgElement, originalSrc) {
+        return new Promise((resolve) => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const tempImg = new Image();
+            tempImg.crossOrigin = 'Anonymous';
+            
+            tempImg.onload = function() {
+                canvas.width = tempImg.width;
+                canvas.height = tempImg.height;
+                ctx.drawImage(tempImg, 0, 0);
+                
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    
+                    // Make white/light pixels transparent
+                    if (r > 240 && g > 240 && b > 240) {
+                        data[i + 3] = 0;
+                    } else if (r > 220 && g > 220 && b > 220 && Math.abs(r - g) < 30 && Math.abs(g - b) < 30) {
+                        data[i + 3] = Math.floor(data[i + 3] * 0.15);
+                    } else if (r > 200 && g > 200 && b > 200 && Math.abs(r - g) < 50) {
+                        data[i + 3] = Math.floor(data[i + 3] * 0.4);
+                    } else {
+                        data[i + 3] = 255;
+                    }
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+                const transparentDataUrl = canvas.toDataURL('image/png');
+                imgElement.src = transparentDataUrl;
+                resolve();
+            };
+            
+            tempImg.onerror = function() { resolve(); };
+            tempImg.src = originalSrc;
+        });
+    }
+    
     function getFiltered() {
         let results = [...shoesDatabase];
         if (currentBrand !== "all") results = results.filter(shoe => shoe.brand.toLowerCase() === currentBrand.toLowerCase());
@@ -449,20 +456,15 @@
         return results;
     }
     
-    function setBlurBackground(imgElement, imageUrl) {
-        if (imgElement && imgElement.parentElement) {
-            imgElement.parentElement.style.setProperty('--bg-image', `url(${imageUrl})`);
-        }
-    }
-    
-    function renderProducts() {
+    async function renderProducts() {
         const filtered = getFiltered();
         if(filtered.length === 0) { productGrid.innerHTML = `<div class="no-results">No sneakers found — try a different search or brand</div>`; return; }
+        
         let html = "";
         filtered.forEach(shoe => {
             html += `<div class="product-card" data-shoe-id="${shoe.id}" data-shoe-name="${escapeHtml(shoe.name)}">
                 <div class="product-img">
-                    <img src="${shoe.image}" alt="${escapeHtml(shoe.name)}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGE}';">
+                    <img src="${shoe.image}" alt="${escapeHtml(shoe.name)}" onerror="this.onerror=null; this.src='${FALLBACK_IMAGE}';" data-original="${shoe.image}">
                     ${shoe.badge ? `<div class="badge">${shoe.badge}</div>` : ''}
                 </div>
                 <div class="product-info">
@@ -473,20 +475,17 @@
                 </div>
             </div>`;
         });
+        
         productGrid.innerHTML = html;
         
-        // Set the blurred background for each product image
-        document.querySelectorAll('.product-card').forEach((card, index) => {
-            const img = card.querySelector('.product-img img');
-            const shoe = filtered[index];
-            if (img && shoe) {
-                if (img.complete) {
-                    setBlurBackground(img, shoe.image);
-                } else {
-                    img.addEventListener('load', () => setBlurBackground(img, shoe.image));
-                }
+        // Process each image to remove white background
+        const images = document.querySelectorAll('.product-img img');
+        for (const img of images) {
+            const originalSrc = img.getAttribute('data-original') || img.src;
+            if (originalSrc && !originalSrc.includes('placehold')) {
+                await removeWhiteBackground(img, originalSrc);
             }
-        });
+        }
         
         document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', (e) => {
