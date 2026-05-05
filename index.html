@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | CRT GLITCH TRANSITION — Street Graffiti</title>
+  <title>SNEAKER HYPE | HANDWRITTEN GRAFFITI — CRT GLITCH 140FPS</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Glitch&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,7 +17,6 @@
       overflow-x: hidden;
     }
     
-    /* Loading Screen */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -60,6 +60,7 @@
       color: transparent;
       animation: hyperShine 1.2s ease infinite;
       margin-bottom: 30px;
+      font-family: 'Permanent Marker', cursive;
     }
     
     @keyframes hyperShine {
@@ -71,9 +72,9 @@
     .loading-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.05); overflow: hidden; border-radius: 4px; }
     .loading-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #e63946, #ffb347, #ffffff); transition: width 0.02s linear; box-shadow: 0 0 40px #e63946; }
     .loading-percent { margin-top: 15px; font-size: 0.9rem; letter-spacing: 8px; color: #ffb347; font-family: monospace; }
-    .loading-text { margin-top: 15px; font-size: 0.7rem; letter-spacing: 6px; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+    .loading-text { margin-top: 15px; font-size: 0.7rem; letter-spacing: 6px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-family: monospace; }
     
-    /* CRT TV GLITCH TRANSITION */
+    /* CRT GLITCH TRANSITION - 140FPS */
     .crt-transition {
       position: fixed;
       top: 0;
@@ -98,7 +99,7 @@
       pointer-events: none;
     }
     
-    /* Floating Graffiti Words Background */
+    /* HANDWRITTEN GRAFFITI BACKGROUND */
     .floating-graffiti {
       position: fixed;
       top: 0;
@@ -116,10 +117,11 @@
       text-transform: uppercase;
       white-space: nowrap;
       opacity: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Permanent Marker', 'Rubik Glitch', cursive;
       filter: blur(0.5px);
-      letter-spacing: 4px;
-      text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0px rgba(0,0,0,0.6);
+      transform-origin: center;
     }
     
     .nav-premium {
@@ -162,6 +164,7 @@
       animation: gradientShift 6s ease infinite;
       cursor: pointer;
       transition: all 0.3s;
+      font-family: 'Permanent Marker', cursive;
     }
     .hero-title:hover { transform: scale(1.05); text-shadow: 0 0 40px rgba(230,57,70,0.8); }
     @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
@@ -273,16 +276,14 @@
       <div class="loading-bar"><div class="loading-bar-fill" id="loaderFill"></div></div>
       <div class="loading-percent" id="loaderPercent">0%</div>
     </div>
-    <div class="loading-text" id="loaderMsg">▶ LOADING GRAFFITI WORLD ◀</div>
+    <div class="loading-text" id="loaderMsg">▶ LOADING HANDSTYLE ◀</div>
   </div>
 </div>
 
-<!-- CRT GLITCH TRANSITION -->
 <div id="crtTransition" class="crt-transition">
   <canvas id="crtCanvas" class="crt-canvas"></canvas>
 </div>
 
-<!-- FLOATING GRAFFITI WORDS BACKGROUND -->
 <div class="floating-graffiti" id="floatingGraffiti"></div>
 
 <div class="content">
@@ -391,10 +392,10 @@
   ctx.stroke();
   
   ctx.fillStyle = '#1a0a00';
-  ctx.font = 'bold 88px "Inter"';
+  ctx.font = 'bold 88px "Permanent Marker"';
   ctx.textAlign = "center";
   ctx.fillText("EVOLUTION", centerX, centerY - 60);
-  ctx.font = '68px "Inter"';
+  ctx.font = '68px "Permanent Marker"';
   ctx.fillStyle = '#e63946';
   ctx.fillText("WILSON", centerX, centerY + 85);
   
@@ -405,7 +406,7 @@
   basketball.castShadow = true;
   scene.add(basketball);
   
-  const particleCount = 6000;
+  const particleCount = 8000;
   const particleGeo = new THREE.BufferGeometry();
   const particlePos = new Float32Array(particleCount * 3);
   for(let i = 0; i < particleCount; i++) {
@@ -451,15 +452,16 @@
   }
   animateCinematic();
   
-  // ========== FLOATING GRAFFITI WORDS ==========
+  // ========== HANDWRITTEN GRAFFITI WORDS (Tag Style) ==========
   const graffitiWords = [
     "SNEAKER", "HYPE", "CULTURE", "RARE", "EXCLUSIVE", "LIMITED", 
     "ARCHIVE", "STREET", "STYLE", "LEGEND", "GRAIL", "ICON", 
-    "BOUNCE", "COURT", "GAME", "FLOW", "CREW", "KING", "FRESH", "DOPE"
+    "BOUNCE", "COURT", "GAME", "FLOW", "CREW", "KING", "FRESH", 
+    "DOPE", "CROWN", "WILD", "PURE", "BOSS", "LIT"
   ];
   
   const graffitiColors = [
-    "#ff3366", "#ff6633", "#ffaa33", "#33ff66", "#33ccff", "#ff33cc", "#e63946", "#ffb347", "#ff6b4a"
+    "#ff3366", "#ff6633", "#ffaa33", "#33ff66", "#33ccff", "#ff33cc", "#e63946", "#ffb347", "#ff6b4a", "#ff88cc"
   ];
   
   const floatingContainer = document.getElementById('floatingGraffiti');
@@ -469,12 +471,12 @@
     word.className = 'graffiti-word';
     word.textContent = graffitiWords[Math.floor(Math.random() * graffitiWords.length)];
     
-    const x = Math.random() * 100;
-    const y = Math.random() * 100;
-    const size = 24 + Math.random() * 52;
-    const rotation = (Math.random() - 0.5) * 18;
+    const x = Math.random() * 95;
+    const y = Math.random() * 95;
+    const size = 28 + Math.random() * 55;
+    const rotation = (Math.random() - 0.5) * 25;
     const color = graffitiColors[Math.floor(Math.random() * graffitiColors.length)];
-    const duration = 10 + Math.random() * 18;
+    const duration = 9 + Math.random() * 16;
     const delay = Math.random() * 8;
     
     word.style.left = x + '%';
@@ -483,18 +485,19 @@
     word.style.transform = `rotate(${rotation}deg)`;
     word.style.color = color;
     word.style.fontWeight = '900';
-    word.style.textShadow = `3px 3px 0px rgba(0,0,0,0.6), 0 0 12px ${color}80`;
-    word.style.letterSpacing = '4px';
+    word.style.textShadow = `3px 3px 0px rgba(0,0,0,0.6), 0 0 15px ${color}60`;
+    word.style.letterSpacing = '2px';
     word.style.opacity = '0';
     
     floatingContainer.appendChild(word);
     
     gsap.fromTo(word, 
-      { opacity: 0, y: 20, scale: 0.8 },
+      { opacity: 0, y: 20, scale: 0.7, rotation: rotation - 5 },
       {
-        opacity: 0.25,
+        opacity: 0.3,
         y: -30,
         scale: 1,
+        rotation: rotation + 2,
         duration: duration,
         delay: delay,
         repeat: -1,
@@ -504,11 +507,40 @@
     );
   }
   
-  for(let i = 0; i < 50; i++) {
+  // Create 65 graffiti tags
+  for(let i = 0; i < 65; i++) {
     createGraffitiWord();
   }
   
-  // ========== CRT TV GLITCH TRANSITION ==========
+  // Add spray paint drips effect
+  function createDrip() {
+    const drip = document.createElement('div');
+    drip.style.position = 'absolute';
+    drip.style.width = '3px';
+    drip.style.height = Math.random() * 30 + 15 + 'px';
+    drip.style.backgroundColor = `rgba(255, ${Math.random() * 100 + 50}, ${Math.random() * 50}, 0.3)`;
+    drip.style.left = Math.random() * 100 + '%';
+    drip.style.top = '0';
+    drip.style.filter = 'blur(1px)';
+    drip.style.pointerEvents = 'none';
+    floatingContainer.appendChild(drip);
+    
+    gsap.to(drip, {
+      duration: Math.random() * 4 + 2,
+      y: window.innerHeight,
+      opacity: 0,
+      repeat: -1,
+      delay: Math.random() * 5,
+      ease: "none",
+      onComplete: () => drip.remove()
+    });
+  }
+  
+  for(let i = 0; i < 20; i++) {
+    setTimeout(() => createDrip(), i * 300);
+  }
+  
+  // ========== 140FPS CRT GLITCH TRANSITION ==========
   function startCRTTransition(destinationUrl) {
     const transitionDiv = document.getElementById('crtTransition');
     const crtCanvas = document.getElementById('crtCanvas');
@@ -516,7 +548,7 @@
     
     const ctx = crtCanvas.getContext('2d');
     let glitchIntensity = 0;
-    let glitchTime = 0;
+    let frame = 0;
     let interval;
     
     function resizeCRTCanvas() {
@@ -526,7 +558,7 @@
     resizeCRTCanvas();
     window.addEventListener('resize', resizeCRTCanvas);
     
-    function drawStatic() {
+    function drawCRTStatic() {
       if(!ctx) return;
       const w = crtCanvas.width;
       const h = crtCanvas.height;
@@ -535,51 +567,62 @@
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, w, h);
       
-      // TV static noise
-      for(let i = 0; i < 2000; i++) {
+      // High-intensity noise (140fps feel)
+      for(let i = 0; i < 3000; i++) {
         const x = Math.random() * w;
         const y = Math.random() * h;
-        const size = 1 + Math.random() * 3;
-        const brightness = Math.random() * 100 + 100;
-        ctx.fillStyle = `rgba(${brightness}, ${brightness * 0.7}, ${brightness * 0.5}, ${Math.random() * 0.8})`;
+        const size = 1 + Math.random() * 4;
+        const r = Math.random() * 255;
+        const g = Math.random() * 100;
+        const b = Math.random() * 150;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${Math.random() * 0.9})`;
         ctx.fillRect(x, y, size, size);
       }
       
-      // Glitch lines
-      for(let i = 0; i < 30; i++) {
+      // Glitch color bars (VHS tracking)
+      for(let i = 0; i < 12 + Math.floor(glitchIntensity * 20); i++) {
         const y = Math.random() * h;
-        const height = 3 + Math.random() * 15;
-        ctx.fillStyle = `rgba(255, ${Math.random() * 100}, ${Math.random() * 100}, 0.7)`;
+        const height = 4 + Math.random() * 18;
+        ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 100}, ${Math.random() * 150}, 0.8)`;
         ctx.fillRect(0, y, w, height);
       }
       
-      // Horizontal scanlines
-      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      // RGB split effect
+      if(glitchIntensity > 0.3) {
+        ctx.fillStyle = `rgba(255, 0, 0, ${glitchIntensity * 0.4})`;
+        ctx.fillRect(10, 0, w, h);
+        ctx.fillStyle = `rgba(0, 255, 0, ${glitchIntensity * 0.3})`;
+        ctx.fillRect(-10, 0, w, h);
+        ctx.fillStyle = `rgba(0, 0, 255, ${glitchIntensity * 0.35})`;
+        ctx.fillRect(0, 0, w, h);
+      }
+      
+      // Scanlines
+      ctx.strokeStyle = 'rgba(255,255,255,0.07)';
       ctx.lineWidth = 1;
-      for(let i = 0; i < h; i += 3) {
+      for(let i = 0; i < h; i += 2) {
         ctx.beginPath();
         ctx.moveTo(0, i);
         ctx.lineTo(w, i);
         ctx.stroke();
       }
       
-      // VHS tracking bars
-      if(glitchIntensity > 0.3) {
-        const barCount = Math.floor(glitchIntensity * 10);
-        for(let i = 0; i < barCount; i++) {
+      // VHS tracking horizontal distortion
+      if(glitchIntensity > 0.2) {
+        const sliceWidth = 30 + Math.random() * 100;
+        for(let i = 0; i < 20; i++) {
           const y = Math.random() * h;
-          ctx.fillStyle = `rgba(255, 255, 255, ${glitchIntensity * 0.5})`;
-          ctx.fillRect(0, y, w, 8);
+          ctx.drawImage(crtCanvas, 0, y, w, 10, 10 + Math.random() * 50, y, w - 20, 10);
         }
       }
       
-      glitchTime++;
+      frame++;
     }
     
     // Animate intensity
     gsap.to({val: 0}, {
       val: 1,
-      duration: 0.6,
+      duration: 0.7,
       ease: "power2.inOut",
       onUpdate: function() {
         glitchIntensity = this.targets()[0].val;
@@ -587,9 +630,9 @@
     });
     
     interval = setInterval(() => {
-      drawStatic();
-    }, 16);
-    
+      drawCRTStatic();
+    }, 7); // ~140fps
+  
     setTimeout(() => {
       clearInterval(interval);
       window.location.href = destinationUrl;
@@ -601,7 +644,7 @@
   const percentSpan = document.getElementById('loaderPercent');
   const loaderMsgSpan = document.getElementById('loaderMsg');
   const loadingScreen = document.getElementById('loadingScreen');
-  const msgs = ["▶ LOADING GRAFFITI WORLD ◀", "▶ RENDERING STREET ART ◀", "▶ INTERSECTING LINES ◀", "▶ CRT READY ◀", "▶ ENTER THE HYPE ◀"];
+  const msgs = ["▶ LOADING HANDSTYLE ◀", "▶ SPRAYING TAGS ◀", "▶ INTERSECTING LINES ◀", "▶ CRT GLITCH READY ◀", "▶ ENTER THE STREETS ◀"];
   let mi = 0;
   
   const msgInt = setInterval(() => { if(loadPercent < 100) { mi = (mi+1)%msgs.length; loaderMsgSpan.innerText = msgs[mi]; } }, 400);
