@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SNEAKER HYPE | CINEMATIC 4D • REDSHIFT • WEBGL SHOP</title>
+    <title>SNEAKER HYPE | CINEMATIC BASKETBALL • WEBGL SHOP</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -51,17 +51,90 @@
         .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; cursor: pointer; transition: 0.3s; }
         .nav-links-premium a:hover { opacity: 0.6; color: #e63946; }
         
-        .hero { min-height: 100vh; display: flex; align-items: center; justice-content: center; position: relative; z-index: 5; }
-        .hero-content { text-align: center; }
-        .logo-icon { font-size: 3.5rem; color: #e63946; margin-bottom: 1rem; animation: pulse 2.5s ease-in-out infinite; }
-        @keyframes pulse { 0%,100% { transform: scale(1); text-shadow: 0 0 10px rgba(230,57,70,0.5); } 50% { transform: scale(1.08); text-shadow: 0 0 40px rgba(230,57,70,0.9); } }
-        .logo-text { font-size: 4rem; font-weight: 900; letter-spacing: 0.2em; background: linear-gradient(135deg, #fff, #e63946, #ffb347, #e63946); background-size: 400% 400%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientFlow 6s ease infinite; }
-        @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .logo-sub { font-size: 0.7rem; letter-spacing: 12px; margin-top: 1rem; opacity: 0.7; }
-        .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; z-index: 20; }
-        .scroll-text { font-size: 0.55rem; letter-spacing: 5px; color: rgba(255,255,255,0.5); }
-        .scroll-line { width: 1.5px; height: 45px; background: linear-gradient(180deg, #e63946, transparent); animation: scrollAnim 2s ease infinite; }
-        @keyframes scrollAnim { 0%,100% { transform: scaleY(1); opacity: 0.4; } 50% { transform: scaleY(1.6); opacity: 1; } }
+        /* Centered Hero with Logo */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+        }
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .centered-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .logo-icon {
+            font-size: 5rem;
+            color: #e63946;
+            animation: floatIcon 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(230,57,70,0.6));
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .logo-main-text {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, #fff, #e63946, #ffb347, #e63946);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            animation: gradientFlow 6s ease infinite;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .logo-sub {
+            font-size: 0.8rem;
+            letter-spacing: 10px;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            z-index: 20;
+        }
+        .scroll-text {
+            font-size: 0.55rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+        .scroll-line {
+            width: 1.5px;
+            height: 45px;
+            background: linear-gradient(180deg, #e63946, transparent);
+            animation: scrollAnim 2s ease infinite;
+        }
+        @keyframes scrollAnim {
+            0%,100% { transform: scaleY(1); opacity: 0.4; }
+            50% { transform: scaleY(1.6); opacity: 1; }
+        }
         
         .shop-section { background: rgba(5,5,5,0.6); padding: 5rem 2rem 6rem; position: relative; z-index: 10; border-top: 1px solid rgba(230,57,70,0.2); }
         .shop-header { max-width: 1400px; margin: 0 auto 2rem auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
@@ -107,7 +180,6 @@
             gap: 2rem;
         }
         
-        /* ========== BLURRED GLASS CARD BACKGROUND THAT MATCHES THE SHOE ========== */
         .product-card {
             border-radius: 1.8rem;
             overflow: hidden;
@@ -119,7 +191,6 @@
             position: relative;
         }
         
-        /* Glass background that will be dynamically colored by JS */
         .product-card::before {
             content: '';
             position: absolute;
@@ -140,9 +211,7 @@
             background: var(--card-bg-hover, rgba(12,12,18,0.95));
         }
         
-        .product-card:hover {
-            transform: translateY(-8px) scale(1.01);
-        }
+        .product-card:hover { transform: translateY(-8px) scale(1.01); }
         
         .product-img {
             text-align: center;
@@ -155,7 +224,6 @@
             z-index: 1;
         }
         
-        /* Shoe image with transparent background and glow */
         .product-img img {
             max-width: 85%;
             max-height: 160px;
@@ -183,12 +251,7 @@
             backdrop-filter: blur(4px);
         }
         
-        .product-info {
-            padding: 1rem 1rem 1.2rem;
-            position: relative;
-            z-index: 2;
-        }
-        
+        .product-info { padding: 1rem 1rem 1.2rem; position: relative; z-index: 2; }
         .brand { color: #e63946; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; }
         .product-name { font-weight: 800; font-size: 1rem; margin: 0.4rem 0; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin: 0.7rem 0 0.5rem; }
@@ -236,7 +299,7 @@
         .social-link:hover { background: #e63946; transform: translateY(-3px); }
         
         .main-footer { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #555; background: #050505; position: relative; z-index: 10; }
-        @media (max-width: 768px) { .nav-premium { padding: 1rem 1.5rem; } .nav-links-premium { display: none; } .logo-text { font-size: 1.8rem; } }
+        @media (max-width: 768px) { .nav-premium { padding: 1rem 1.5rem; } .nav-links-premium { display: none; } .logo-main-text { font-size: 1.8rem; letter-spacing: 0.1em; } .logo-icon { font-size: 3rem; } }
     </style>
 </head>
 <body>
@@ -253,11 +316,16 @@
 
 <section class="hero">
     <div class="hero-content">
-        <div class="logo-icon"><i class="fas fa-crown"></i></div>
-        <div class="logo-text">SNEAKER HYPE</div>
-        <div class="logo-sub">REDSHIFT • WEBGL • CINEMATIC 4D</div>
+        <div class="centered-logo">
+            <div class="logo-icon"><i class="fas fa-basketball-ball"></i></div>
+            <div class="logo-main-text">SNEAKER HYPE</div>
+            <div class="logo-sub">THE BASKETBALL VAULT</div>
+        </div>
     </div>
-    <div class="scroll-indicator" id="scrollIndicator"><div class="scroll-text">SHOP NOW</div><div class="scroll-line"></div></div>
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-text">EXPLORE</div>
+        <div class="scroll-line"></div>
+    </div>
 </section>
 
 <section id="shopSection" class="shop-section">
@@ -278,78 +346,160 @@
 
 <div id="cartModal" class="cart-modal-overlay"><div class="cart-modal-container"><h3><i class="fas fa-shopping-bag"></i> Your Cart</h3><div id="cartItemsSummary" class="cart-items-summary"></div><div id="cartTotalSummary" class="cart-total-summary"></div><div class="modal-buttons"><button id="proceedToPaymentBtn" class="btn-proceed">Proceed to Payment</button><button id="cancelCartBtn" class="btn-cancel">Continue Shopping</button></div></div></div>
 
+<!-- WebGL Cinematic Basketball Scene -->
 <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }</script>
 <script type="module">
     import * as THREE from 'three';
+    
     const canvas = document.getElementById('webgl-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 0);
+    
     const scene = new THREE.Scene();
     scene.background = null;
-    scene.fog = new THREE.FogExp2(0x050505, 0.006);
-    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.2, 13);
+    scene.fog = new THREE.FogExp2(0x050505, 0.003);
+    
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 3, 12);
     camera.lookAt(0, 0, 0);
     
-    const ambient = new THREE.AmbientLight(0x111111);
-    scene.add(ambient);
-    const key = new THREE.PointLight(0xe63946, 1.2);
-    key.position.set(3, 4, 5);
-    scene.add(key);
-    const fill = new THREE.PointLight(0xffb347, 0.7);
-    fill.position.set(-2, 2, 6);
-    scene.add(fill);
-    const rim = new THREE.PointLight(0xffffff, 0.5);
-    rim.position.set(0, 3, -5);
-    scene.add(rim);
+    // Cinematic Basketball Court Lighting
+    const ambientLight = new THREE.AmbientLight(0x222222);
+    scene.add(ambientLight);
     
-    const particleCount = 1800;
+    // Key Light - Warm
+    const keyLight = new THREE.PointLight(0xe63946, 1.2);
+    keyLight.position.set(3, 5, 4);
+    scene.add(keyLight);
+    
+    // Fill Light - Cool
+    const fillLight = new THREE.PointLight(0xffb347, 0.6);
+    fillLight.position.set(-2, 3, 5);
+    scene.add(fillLight);
+    
+    // Rim Light
+    const rimLight = new THREE.PointLight(0xffffff, 0.4);
+    rimLight.position.set(0, 2, -6);
+    scene.add(rimLight);
+    
+    // Backlight for dramatic effect
+    const backLight = new THREE.DirectionalLight(0x4466cc, 0.3);
+    backLight.position.set(0, 2, -4);
+    scene.add(backLight);
+    
+    // Main Basketball Model (Torus Knot with basketball texture colors)
+    const knotGeo = new THREE.TorusKnotGeometry(1.1, 0.28, 200, 32, 3, 4);
+    const knotMat = new THREE.MeshStandardMaterial({ 
+        color: 0xe63946, 
+        emissive: 0x441111, 
+        roughness: 0.3, 
+        metalness: 0.7,
+        emissiveIntensity: 0.5
+    });
+    const knot = new THREE.Mesh(knotGeo, knotMat);
+    scene.add(knot);
+    
+    // Floating basketball-like orbs around the knot
+    const orbGroup = new THREE.Group();
+    const orbMat = new THREE.MeshStandardMaterial({ color: 0xff6b35, emissive: 0x331100, emissiveIntensity: 0.4 });
+    const orbPositions = [
+        [1.8, 0.5, 0.8], [-1.5, 0.6, 1.2], [0.5, 1.9, 0.3], [-0.8, -1.6, 1.0],
+        [1.2, -1.2, -0.5], [-1.3, 0.2, -1.5], [0.3, 1.2, -1.8], [1.5, -0.8, -1.0],
+        [-1.8, -0.3, -0.7], [0.8, -1.9, 0.2]
+    ];
+    orbPositions.forEach(pos => {
+        const orb = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), orbMat);
+        orb.position.set(pos[0], pos[1], pos[2]);
+        orbGroup.add(orb);
+    });
+    scene.add(orbGroup);
+    
+    // Arena floor glow (subtle)
+    const floorGlowGeo = new THREE.CircleGeometry(8, 32);
+    const floorGlowMat = new THREE.MeshStandardMaterial({ color: 0x1a0a0a, emissive: 0x330000, emissiveIntensity: 0.2, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
+    const floorGlow = new THREE.Mesh(floorGlowGeo, floorGlowMat);
+    floorGlow.rotation.x = -Math.PI / 2;
+    floorGlow.position.y = -1.5;
+    scene.add(floorGlow);
+    
+    // Floating Particles (dust / energy)
+    const particleCount = 1200;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-        positions[i*3] = (Math.random() - 0.5) * 50;
-        positions[i*3+1] = (Math.random() - 0.5) * 28;
-        positions[i*3+2] = (Math.random() - 0.5) * 40 - 20;
+        positions[i*3] = (Math.random() - 0.5) * 30;
+        positions[i*3+1] = (Math.random() - 0.5) * 12;
+        positions[i*3+2] = (Math.random() - 0.5) * 25 - 8;
     }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMat = new THREE.PointsMaterial({ color: 0xe63946, size: 0.06, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
+    const particleMat = new THREE.PointsMaterial({ color: 0xe63946, size: 0.05, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
     
-    const knotGeo = new THREE.TorusKnotGeometry(1.0, 0.22, 200, 32, 3, 4);
-    const knotMat = new THREE.MeshStandardMaterial({ color: 0xe63946, emissive: 0x441111, roughness: 0.25, metalness: 0.85, emissiveIntensity: 0.6 });
-    const knot = new THREE.Mesh(knotGeo, knotMat);
-    scene.add(knot);
-    const ringGeo = new THREE.TorusGeometry(1.6, 0.04, 128, 300);
-    const ringMat = new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0x552200, metalness: 0.9, roughness: 0.2 });
+    // Outer energy ring
+    const ringGeo = new THREE.TorusGeometry(1.9, 0.05, 128, 300);
+    const ringMat = new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0x552200, metalness: 0.8, roughness: 0.2 });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     scene.add(ring);
     
     let time = 0;
-    function animate() {
-        requestAnimationFrame(animate);
+    
+    function animateWebGL() {
+        requestAnimationFrame(animateWebGL);
         time += 0.008;
-        knot.rotation.x = time * 0.5;
+        
+        // Rotate main knot - basketball spin effect
+        knot.rotation.x = time * 0.4;
         knot.rotation.y = time * 0.7;
         knot.rotation.z = time * 0.3;
-        knot.material.emissiveIntensity = 0.5 + Math.sin(time * 2) * 0.2;
+        knot.material.emissiveIntensity = 0.5 + Math.sin(time * 2) * 0.15;
+        
+        // Ring rotation
         ring.rotation.x = Math.sin(time * 0.4) * 0.2;
-        ring.rotation.y = time * 0.5;
-        particles.rotation.y = time * 0.03;
-        particles.rotation.x = Math.sin(time * 0.1) * 0.05;
-        camera.position.x += (Math.sin(time * 0.2) * 0.06 - camera.position.x) * 0.02;
-        camera.position.y += (Math.sin(time * 0.5) * 0.04 - camera.position.y) * 0.03;
-        camera.lookAt(0, 0, 0);
+        ring.rotation.y = time * 0.6;
+        
+        // Orb group rotation
+        orbGroup.rotation.y = time * 0.2;
+        orbGroup.rotation.x = Math.sin(time * 0.3) * 0.1;
+        
+        // Particle system gentle drift
+        particles.rotation.y = time * 0.02;
+        particles.rotation.x = Math.sin(time * 0.1) * 0.03;
+        
+        // Cinematic camera sway (subtle)
+        camera.position.x += (Math.sin(time * 0.15) * 0.08 - camera.position.x) * 0.02;
+        camera.position.y += (Math.sin(time * 0.4) * 0.05 - camera.position.y) * 0.02;
+        camera.lookAt(0, 0.5, 0);
+        
         renderer.render(scene, camera);
     }
-    animate();
-    window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
+    
+    animateWebGL();
+    
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Scroll interaction - light intensity changes with scroll
+    ScrollTrigger.create({
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+            const prog = self.progress;
+            knot.material.emissiveIntensity = 0.4 + prog * 0.7;
+            particleMat.opacity = 0.3 + prog * 0.4;
+            keyLight.intensity = 1.0 + prog * 0.8;
+        }
+    });
 </script>
 
 <script>
-    // ========== SNEAKER DATABASE WITH YOUR EXACT FILENAMES ==========
+    // ========== SNEAKER DATABASE ==========
     const shoesDatabase = [
         { id: 1, name: "LeBron XXI", brand: "Nike", price: 199, badge: "NEW", image: "images/lebronxxi (1).png", official: "https://www.nike.com/lebron-21", cardColor: "#e63946", cardColorHover: "#ffb347" },
         { id: 2, name: "Kobe 6 Protro", brand: "Nike", price: 209, badge: "LEGEND", image: "images/kobe.png", official: "https://www.nike.com/kobe-6", cardColor: "#552288", cardColorHover: "#7733aa" },
@@ -441,9 +591,6 @@
     
     window.getCart = function() { return cart; };
     
-    // Extract dominant color from image (synchronous approximation using known shoe colors)
-    // For true dynamic matching, we pre-defined cardColor in database based on shoe primary color
-    
     function getFiltered() {
         let results = [...shoesDatabase];
         if (currentBrand !== "all") results = results.filter(shoe => shoe.brand.toLowerCase() === currentBrand.toLowerCase());
@@ -498,8 +645,6 @@
         document.querySelectorAll(".filter-chip").forEach(chip => chip.addEventListener("click", () => { currentBrand = chip.dataset.brand; document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active")); chip.classList.add("active"); renderProducts(); }));
         searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderProducts(); });
     }
-    
-    gsap.to(".hero", { scale: 0.95, opacity: 0.7, scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 } });
     
     const homeBtn = document.getElementById("homeBtn");
     const contactBtn = document.getElementById("contactBtn");
