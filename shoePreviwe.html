@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Shoe Preview | Local Images</title>
+<title>Shoe Preview | Local Images Gallery</title>
 
 <style>
 * {
@@ -294,8 +294,7 @@ button:hover {
 <script>
 // ============================================================
 // SHOE DATABASE - ALL IMAGES FROM LOCAL "images/" FOLDER
-// Make sure your images folder has these files:
-// images/lebron-21.png, images/kobe-6.png, images/jordan-38.png, etc.
+// Using the exact filenames you provided
 // The preview shows ONLY the shoe whose ID matches the URL parameter
 // Example: preview.html?id=1 shows LeBron XXI
 // ============================================================
@@ -305,7 +304,7 @@ const shoesDatabase = [
     name: "LeBron XXI", 
     brand: "NIKE", 
     price: 199, 
-    image: "images/lebron-21.png",
+    image: "images/lebronxxi (1).png",
     description: "King's legacy, premium cushioning & explosive response"
   },
   { 
@@ -313,7 +312,7 @@ const shoesDatabase = [
     name: "Kobe 6 Protro", 
     brand: "NIKE", 
     price: 209, 
-    image: "images/kobe-6.png",
+    image: "images/kobe.png",
     description: "Mamba mentality — lightweight, responsive & iconic"
   },
   { 
@@ -321,7 +320,7 @@ const shoesDatabase = [
     name: "Air Jordan 38", 
     brand: "JORDAN", 
     price: 189, 
-    image: "images/jordan-38.png",
+    image: "images/j7.png",
     description: "Timeless elegance meets modern performance"
   },
   { 
@@ -329,7 +328,7 @@ const shoesDatabase = [
     name: "Harden Vol 8", 
     brand: "ADIDAS", 
     price: 159, 
-    image: "images/harden-vol-8.png",
+    image: "images/harden8.png",
     description: "Signature stepback style with boost comfort"
   },
   { 
@@ -337,64 +336,104 @@ const shoesDatabase = [
     name: "Curry 11", 
     brand: "UNDER ARMOUR", 
     price: 169, 
-    image: "images/curry-11.png",
+    image: "images/curry1.png",
     description: "Chef's precision — grip, agility & unmatched flow"
   },
   { 
     id: 6, 
-    name: "MB.03", 
-    brand: "PUMA", 
-    price: 139, 
-    image: "images/mb-03.png",
-    description: "LaMelo Ball's signature — bold & explosive"
+    name: "Curry 12", 
+    brand: "UNDER ARMOUR", 
+    price: 179, 
+    image: "images/curry12.png",
+    description: "Next-gen flow technology, enhanced stability"
   },
   { 
     id: 7, 
-    name: "Kawhi 4", 
-    brand: "NEW BALANCE", 
-    price: 179, 
-    image: "images/kawhi-4.png",
-    description: "Claw grip, two-way dominance, premium stability"
+    name: "MB.03", 
+    brand: "PUMA", 
+    price: 139, 
+    image: "images/mbo3.png",
+    description: "LaMelo Ball's signature — bold & explosive"
   },
   { 
     id: 8, 
-    name: "Ja Morant 2", 
-    brand: "NIKE", 
-    price: 149, 
-    image: "images/ja-morant-2.png",
-    description: "Lightning fast, high-flying energy"
+    name: "Kawhi 4", 
+    brand: "NEW BALANCE", 
+    price: 179, 
+    image: "images/k 4.png",
+    description: "Claw grip, two-way dominance, premium stability"
   },
   { 
     id: 9, 
-    name: "Dame 9", 
-    brand: "ADIDAS", 
-    price: 145, 
-    image: "images/dame-9.png",
-    description: "Dame Time — clutch performance & comfort"
+    name: "Ja Morant 2", 
+    brand: "NIKE", 
+    price: 149, 
+    image: "images/ja 2.png",
+    description: "Lightning fast, high-flying energy"
   },
   { 
     id: 10, 
-    name: "Kyrie Infinity", 
-    brand: "NIKE", 
-    price: 159, 
-    image: "images/kyrie-infinity.png",
-    description: "Unpredictable handles, elite traction"
+    name: "Dame 9", 
+    brand: "ADIDAS", 
+    price: 145, 
+    image: "images/dame 9.png",
+    description: "Dame Time — clutch performance & comfort"
   },
   { 
     id: 11, 
-    name: "Paul George 6", 
+    name: "Kyrie Low", 
     brand: "NIKE", 
-    price: 139, 
-    image: "images/pg-6.png",
-    description: "Playoff-ready, responsive cushioning"
+    price: 159, 
+    image: "images/ky l.png",
+    description: "Unpredictable handles, elite traction"
   },
   { 
     id: 12, 
-    name: "Zion 3", 
+    name: "Paul George 6", 
+    brand: "NIKE", 
+    price: 139, 
+    image: "images/pg 6.png",
+    description: "Playoff-ready, responsive cushioning"
+  },
+  { 
+    id: 13, 
+    name: "Donovan Mitchell", 
+    brand: "ADIDAS", 
+    price: 149, 
+    image: "images/don.png",
+    description: "Spida's signature — explosive & quick"
+  },
+  { 
+    id: 14, 
+    name: "Giannis Freak 5", 
+    brand: "NIKE", 
+    price: 159, 
+    image: "images/freak 5.png",
+    description: "Greek Freak power, multi-directional traction"
+  },
+  { 
+    id: 15, 
+    name: "Luka 2", 
+    brand: "JORDAN", 
+    price: 169, 
+    image: "images/luka2.png",
+    description: "Stepback mastery, premium cushioning"
+  },
+  { 
+    id: 16, 
+    name: "Tatum 2", 
     brand: "JORDAN", 
     price: 159, 
-    image: "images/zion-3.png",
-    description: "Explosive power meets premium comfort"
+    image: "images/tate 2.png",
+    description: "Smooth scoring, elite responsiveness"
+  },
+  { 
+    id: 17, 
+    name: "Trae Young", 
+    brand: "ADIDAS", 
+    price: 139, 
+    image: "images/young.png",
+    description: "Ice Trae — quick cuts, deep range"
   }
 ];
 
