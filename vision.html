@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>SNEAKER HYPE | VISION BOARD — CINEMATIC 4D • REDSHIFT • COMPACT LAYOUT</title>
+    <title>SNEAKER HYPE | VISION BOARD — PHOTOREALISTIC REDSHIFT BASKETBALL</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -39,7 +40,8 @@
         @keyframes pulseExtreme { 0%,100% { transform: scale(1); text-shadow: 0 0 15px rgba(230,57,70,0.6); } 50% { transform: scale(1.12); text-shadow: 0 0 50px rgba(230,57,70,1); } }
         .vision-title { font-size: 6rem; font-weight: 900; letter-spacing: 0.15em; background: linear-gradient(135deg, #fff, #e63946, #ffb347, #e63946, #fff); background-size: 400% 400%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientFlow 8s ease infinite; margin-bottom: 1rem; }
         @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .vision-sub { font-size: 1rem; letter-spacing: 10px; margin-top: 1rem; opacity: 0.8; font-weight: 300; text-transform: uppercase; }
+        /* Removed .vision-sub — no text under VISION BOARD */
+        
         .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; z-index: 20; }
         .scroll-text { font-size: 0.6rem; letter-spacing: 6px; color: rgba(255,255,255,0.6); }
         .scroll-line { width: 2px; height: 55px; background: linear-gradient(180deg, #e63946, #ffb347, transparent); animation: scrollGlow 2s ease infinite; }
@@ -51,7 +53,6 @@
         .section-header h2 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #fff, #e63946, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; }
         .section-desc { text-align: center; max-width: 750px; margin: 0.8rem auto 0; color: #bbb; font-size: 1rem; font-weight: 300; line-height: 1.6; }
         
-        /* Reduced gap between major sections */
         .goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
         .goal-card { background: rgba(12,12,18,0.9); backdrop-filter: blur(12px); border: 1px solid rgba(230,57,70,0.35); border-radius: 2rem; padding: 2rem; transition: all 0.5s cubic-bezier(0.2,0.9,0.4,1.2); text-align: left; position: relative; overflow: hidden; }
         .goal-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(230,57,70,0.1), transparent); transition: left 0.6s; }
@@ -62,7 +63,6 @@
         .goal-highlight { color: #ffb347; font-weight: 700; font-size: 0.7rem; letter-spacing: 1.5px; margin-bottom: 0.8rem; display: inline-block; border-left: 3px solid #e63946; padding-left: 10px; text-transform: uppercase; }
         .goal-card p { color: #d0d0d0; line-height: 1.5; font-size: 0.9rem; margin-top: 0.6rem; }
         
-        /* Compact spacing between sections */
         .offerings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
         .offer-card { background: rgba(20,20,32,0.85); backdrop-filter: blur(12px); border-radius: 2rem; padding: 2rem; transition: 0.4s cubic-bezier(0.2,0.9,0.4,1.2); border: 1px solid rgba(230,57,70,0.25); text-align: left; }
         .offer-card:hover { background: rgba(30,30,50,0.95); border-color: #ffb347; transform: translateY(-5px); box-shadow: 0 15px 30px -8px rgba(255,180,71,0.3); }
@@ -83,7 +83,6 @@
         .extra-card h4 { font-size: 1.1rem; margin-bottom: 0.4rem; font-weight: 700; }
         .extra-card p { font-size: 0.75rem; color: #aaa; line-height: 1.4; }
         
-        /* Compact timeline row */
         .timeline-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 2rem 0 1.5rem; }
         .timeline-node { background: rgba(230,57,70,0.15); backdrop-filter: blur(8px); padding: 0.7rem 1.2rem; border-radius: 50px; border: 1px solid rgba(230,57,70,0.4); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; }
         .timeline-node span { color: #ffb347; font-weight: 800; margin-right: 6px; }
@@ -106,10 +105,6 @@
         .social-link { width: 45px; height: 45px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
         .social-link:hover { background: #e63946; transform: translateY(-5px) rotate(360deg); box-shadow: 0 0 20px #e63946; }
         .main-footer { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.65rem; color: #666; background: #050505; }
-        
-        /* Reduced spacing between "Great Objectives" and "Offerings" sections */
-        .compact-divider { margin-top: 1rem !important; }
-        .offer-section-header { margin-top: 1.5rem !important; margin-bottom: 2rem !important; }
         
         @media (max-width: 768px) {
             .nav-premium { padding: 1rem 1.5rem; }
@@ -136,7 +131,7 @@
 <audio id="bgMusic" loop preload="auto"><source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8c8c8c8.mp3?filename=upbeat-lofi-112191.mp3" type="audio/mpeg"></audio>
 <div class="cursor-dot"></div><div class="cursor-outline"></div>
 
-<div class="disclaimer-banner"><i class="fas fa-diamond"></i> CONCEPT VISION BOARD — Cinematic fiction + real industry inspiration | COMPACT LAYOUT</div>
+<div class="disclaimer-banner"><i class="fas fa-basketball-ball"></i> PHOTOREALISTIC REDSHIFT BASKETBALL — CINEMATIC VISION BOARD</div>
 
 <nav class="nav-premium" id="nav">
     <div class="logo-premium">SNEAKER <span>HYPE</span></div>
@@ -147,7 +142,7 @@
     <div class="hero-content">
         <div class="logo-icon"><i class="fas fa-crown"></i></div>
         <div class="vision-title">VISION BOARD</div>
-        <div class="vision-sub">CINEMATIC 4D • REDSHIFT • THE EXTRAVAGANT FUTURE</div>
+        <!-- Removed .vision-sub — no text under title -->
         <button class="btn-explore" id="exploreVisionBtn">✦ ENTER THE VISION ✦</button>
     </div>
     <div class="scroll-indicator" id="scrollIndicator"><div class="scroll-text">DESCEND INTO GRANDEUR</div><div class="scroll-line"></div></div>
@@ -155,8 +150,6 @@
 
 <section id="visionMain" class="vision-board">
     <div class="container">
-        
-        <!-- EXPANDED VISION TEXT -->
         <div class="expanded-vision">
             <h3>✦ THE INFINITE VISION ✦</h3>
             <p>At SNEAKER HYPE, we believe that sneakers are not merely footwear — they are the <strong>intersection of athletic excellence, digital artistry, and cultural identity</strong>. Every silhouette tells a story of late-night design sessions, of polymers stretched to their limits, of rubber compounds formulated for the squeak of a game-winning pivot. But in the modern era, the story cannot end at the factory door. It must explode into the digital dimension.</p>
@@ -165,7 +158,6 @@
             <p>Our mission extends beyond transactions. We are building the <strong>first global sneaker metaverse</strong>: a persistent 3D arena where fans gather for live drops, compete in dunk contests, and unlock exclusive digital wearables that grant real-world perks. We are launching a free <strong>4D Sneaker Academy</strong> to teach the next generation of designers how to sculpt in Cinema 4D and light with Redshift. We are pursuing <strong>carbon-negative logistics</strong> because the future of basketball culture must be as clean as a freshly mopped court.</p>
         </div>
         
-        <!-- THE GREAT OBJECTIVES - reduced top margin -->
         <div class="section-header" style="margin-bottom: 1.8rem;">
             <h2>⚡ THE GREAT OBJECTIVES ⚡</h2>
             <div class="section-desc">Our quantifiable, audacious goals — each one a stepping stone toward the infinite vision.</div>
@@ -197,7 +189,6 @@
             </div>
         </div>
 
-        <!-- WHAT WE OFFER — REDUCED SPACING (previously margin-top 6rem, now 2rem) -->
         <div class="section-header offer-section-header" style="margin-top: 2rem; margin-bottom: 1.8rem;">
             <h2>🔥 THE OFFERINGS — BEYOND LUXURY 🔥</h2>
             <div class="section-desc">What we place at your feet. Real products, real services, delivered with cinematic grandeur.</div>
@@ -241,7 +232,6 @@
             </div>
         </div>
 
-        <!-- EXTRA CONTENT -->
         <div class="extra-content-grid">
             <div class="extra-card"><i class="fas fa-calendar-star"></i><h4>2025 ROADMAP</h4><p>Q1: Alpha 4D viewer • Q2: First Collab winner • Q3: Tokyo Hype Lab groundbreaking • Q4: AI Fit beta</p></div>
             <div class="extra-card"><i class="fas fa-hand-fist"></i><h4>ATHLETE COUNCIL</h4><p>8 anonymous NBA All-Stars advising performance metrics. Real feedback from the highest level.</p></div>
@@ -249,7 +239,6 @@
             <div class="extra-card"><i class="fas fa-video"></i><h4>COMING SOON</h4><p>Documentary series: "The Render" — behind the scenes of sneaker CGI. Spring 2026.</p></div>
         </div>
 
-        <!-- COMPACT TIMELINE ROW - reduced gap and margin -->
         <div class="timeline-row">
             <div class="timeline-node"><span>2024</span> CONCEPT FOUNDATION</div>
             <div class="timeline-node"><span>2025</span> 4D VIEWER ALPHA</div>
@@ -259,7 +248,6 @@
             <div class="timeline-node"><span>2030</span> CARBON NEGATIVE</div>
         </div>
 
-        <!-- IDENTITY BLOCK -->
         <div class="identity-block">
             <div class="identity-text">
                 <p><strong>✦ THE SNEAKER HYPE MANIFESTO ✦</strong><br><br>
@@ -299,7 +287,7 @@
     </div>
 </section>
 
-<footer class="main-footer"><p>© 2025 SNEAKER HYPE — CINEMATIC VISION BOARD | TORUS KNOT + PARTICLE FIELD ANIMATION | COMPACT LAYOUT — SPACING OPTIMIZED</p></footer>
+<footer class="main-footer"><p>© 2025 SNEAKER HYPE — PHOTOREALISTIC REDSHIFT BASKETBALL | CINEMATIC VISION BOARD</p></footer>
 
 <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }</script>
 <script type="module">
@@ -313,62 +301,197 @@
     
     const scene = new THREE.Scene();
     scene.background = null;
-    scene.fog = new THREE.FogExp2(0x050505, 0.006);
+    scene.fog = new THREE.FogExp2(0x050505, 0.005);
     
-    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.2, 13);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0.8, 12);
     camera.lookAt(0, 0, 0);
     
-    const ambient = new THREE.AmbientLight(0x111111);
+    // Cinematic lighting
+    const ambient = new THREE.AmbientLight(0x222222);
     scene.add(ambient);
-    const key = new THREE.PointLight(0xe63946, 1.2);
-    key.position.set(3, 4, 5);
-    scene.add(key);
-    const fill = new THREE.PointLight(0xffb347, 0.7);
-    fill.position.set(-2, 2, 6);
-    scene.add(fill);
-    const rim = new THREE.PointLight(0xffffff, 0.5);
-    rim.position.set(0, 3, -5);
-    scene.add(rim);
+    const keyLight = new THREE.PointLight(0xff8844, 1.3);
+    keyLight.position.set(3, 4, 5);
+    scene.add(keyLight);
+    const fillLight = new THREE.PointLight(0xe63946, 0.8);
+    fillLight.position.set(-2, 1.5, 6);
+    scene.add(fillLight);
+    const rimLight = new THREE.PointLight(0xffb347, 0.9);
+    rimLight.position.set(1, 2.5, -6);
+    scene.add(rimLight);
+    const backRim = new THREE.PointLight(0xffffff, 0.5);
+    backRim.position.set(-1, 1, -5.5);
+    scene.add(backRim);
     
-    const particleCount = 1800;
+    // Atmospheric particles
+    const particleCount = 2000;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-        positions[i*3] = (Math.random() - 0.5) * 50;
-        positions[i*3+1] = (Math.random() - 0.5) * 28;
-        positions[i*3+2] = (Math.random() - 0.5) * 40 - 20;
+        positions[i*3] = (Math.random() - 0.5) * 55;
+        positions[i*3+1] = (Math.random() - 0.5) * 30;
+        positions[i*3+2] = (Math.random() - 0.5) * 45 - 20;
     }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMat = new THREE.PointsMaterial({ color: 0xe63946, size: 0.06, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
+    const particleMat = new THREE.PointsMaterial({ color: 0xe63946, size: 0.055, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
     
-    const knotGeo = new THREE.TorusKnotGeometry(1.0, 0.22, 200, 32, 3, 4);
-    const knotMat = new THREE.MeshStandardMaterial({ color: 0xe63946, emissive: 0x441111, roughness: 0.25, metalness: 0.85, emissiveIntensity: 0.6 });
-    const knot = new THREE.Mesh(knotGeo, knotMat);
-    scene.add(knot);
+    // ===== PHOTOREALISTIC, ARTISTIC BASKETBALL =====
+    // High-resolution sphere with realistic leather material
+    const basketballGeo = new THREE.SphereGeometry(1.05, 512, 512);
     
-    const ringGeo = new THREE.TorusGeometry(1.6, 0.04, 128, 300);
-    const ringMat = new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0x552200, metalness: 0.9, roughness: 0.2 });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    scene.add(ring);
+    // Realistic leather texture using MeshStandardMaterial with bump-like properties
+    const leatherMat = new THREE.MeshStandardMaterial({
+        color: 0xc45a1c,
+        roughness: 0.42,
+        metalness: 0.08,
+        emissive: 0x331100,
+        emissiveIntensity: 0.12,
+        flatShading: false
+    });
+    const basketball = new THREE.Mesh(basketballGeo, leatherMat);
+    scene.add(basketball);
+    
+    // Seam material — deep black/brown for realistic panel lines
+    const seamMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1008, roughness: 0.35, metalness: 0.05 });
+    
+    // Equator seam (horizontal)
+    const equatorSeam = new THREE.Mesh(new THREE.TorusGeometry(1.07, 0.028, 128, 400), seamMaterial);
+    equatorSeam.rotation.x = Math.PI / 2;
+    basketball.add(equatorSeam);
+    
+    // Prime meridian seam (vertical)
+    const verticalSeam = new THREE.Mesh(new THREE.TorusGeometry(1.07, 0.028, 128, 400), seamMaterial);
+    verticalSeam.rotation.y = Math.PI / 2;
+    basketball.add(verticalSeam);
+    
+    // Curved panel seams — 8 arcs for authentic basketball look
+    const arcConfigs = [
+        { rotY: 0, rotZ: 0, scaleX: 0.7, scaleY: 0.96, offsetZ: 0.73 },
+        { rotY: Math.PI, rotZ: 0, scaleX: 0.7, scaleY: 0.96, offsetZ: 0.73 },
+        { rotY: Math.PI/2, rotZ: 0.45, scaleX: 0.71, scaleY: 0.93, offsetZ: 0.72 },
+        { rotY: -Math.PI/2, rotZ: -0.45, scaleX: 0.71, scaleY: 0.93, offsetZ: 0.72 },
+        { rotY: Math.PI/2.8, rotZ: 0.65, scaleX: 0.68, scaleY: 0.9, offsetZ: 0.74 },
+        { rotY: -Math.PI/2.8, rotZ: -0.65, scaleX: 0.68, scaleY: 0.9, offsetZ: 0.74 },
+        { rotY: Math.PI/1.6, rotZ: -0.55, scaleX: 0.69, scaleY: 0.91, offsetZ: 0.73 },
+        { rotY: -Math.PI/1.6, rotZ: 0.55, scaleX: 0.69, scaleY: 0.91, offsetZ: 0.73 }
+    ];
+    
+    arcConfigs.forEach(cfg => {
+        const points = [];
+        for (let t = -Math.PI/2.2; t <= Math.PI/2.2; t += 0.065) {
+            const x = Math.cos(t) * cfg.scaleX;
+            const y = Math.sin(t) * cfg.scaleY;
+            const z = cfg.offsetZ;
+            points.push(new THREE.Vector3(x, y, z));
+        }
+        const curve = new THREE.CatmullRomCurve3(points);
+        const tubeGeo = new THREE.TubeGeometry(curve, 95, 0.024, 8, false);
+        const tube = new THREE.Mesh(tubeGeo, seamMaterial);
+        tube.rotation.y = cfg.rotY;
+        tube.rotation.z = cfg.rotZ;
+        basketball.add(tube);
+    });
+    
+    // Add subtle leather grain using tiny dots (artistic detail)
+    const grainCount = 800;
+    const grainPositions = new Float32Array(grainCount * 3);
+    for (let i = 0; i < grainCount; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        const r = 1.055;
+        grainPositions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+        grainPositions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+        grainPositions[i*3+2] = r * Math.cos(phi);
+    }
+    const grainGeo = new THREE.BufferGeometry();
+    grainGeo.setAttribute('position', new THREE.BufferAttribute(grainPositions, 3));
+    const grainMat = new THREE.PointsMaterial({ color: 0x8a4a1a, size: 0.0035, transparent: true, opacity: 0.35 });
+    const grainDots = new THREE.Points(grainGeo, grainMat);
+    basketball.add(grainDots);
+    
+    // Small floating particles around the ball (cinematic dust)
+    const dustCount = 400;
+    const dustPositions = new Float32Array(dustCount * 3);
+    for (let i = 0; i < dustCount; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const p = Math.acos(2 * Math.random() - 1);
+        const r = 1.28 + Math.random() * 0.2;
+        dustPositions[i*3] = r * Math.sin(p) * Math.cos(t);
+        dustPositions[i*3+1] = r * Math.sin(p) * Math.sin(t);
+        dustPositions[i*3+2] = r * Math.cos(p);
+    }
+    const dustGeo = new THREE.BufferGeometry();
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+    const dustMat = new THREE.PointsMaterial({ color: 0xffaa66, size: 0.008, transparent: true, blending: THREE.AdditiveBlending });
+    const dustParticles = new THREE.Points(dustGeo, dustMat);
+    basketball.add(dustParticles);
+    
+    // Orbiting mini basketballs for artistic composition
+    const orbitBalls = [];
+    const miniMat = new THREE.MeshStandardMaterial({ color: 0xb8521a, roughness: 0.5 });
+    for (let i = 0; i < 6; i++) {
+        const mini = new THREE.Mesh(new THREE.SphereGeometry(0.14, 64, 64), miniMat);
+        mini.userData = { angle: (i / 6) * Math.PI * 2, radius: 2.3, speed: 0.55 + i * 0.07 };
+        scene.add(mini);
+        // Add tiny seam to mini ball
+        const miniSeam = new THREE.Mesh(new THREE.TorusGeometry(0.155, 0.006, 32, 48), seamMaterial);
+        miniSeam.rotation.x = Math.PI/2;
+        mini.add(miniSeam);
+        orbitBalls.push(mini);
+    }
+    
+    // Decorative rings with emissive glow
+    const glowRingGeo = new THREE.TorusGeometry(1.7, 0.032, 128, 360);
+    const glowRingMat = new THREE.MeshStandardMaterial({ color: 0xff8844, emissive: 0xff4422, emissiveIntensity: 0.35, metalness: 0.6 });
+    const outerRing = new THREE.Mesh(glowRingGeo, glowRingMat);
+    scene.add(outerRing);
+    
+    const outerRing2Geo = new THREE.TorusGeometry(2.02, 0.022, 128, 360);
+    const ring2Mat = new THREE.MeshStandardMaterial({ color: 0xe63946, emissive: 0x661133, metalness: 0.7 });
+    const outerRing2 = new THREE.Mesh(outerRing2Geo, ring2Mat);
+    scene.add(outerRing2);
     
     let time = 0;
     function animate() {
         requestAnimationFrame(animate);
         time += 0.008;
-        knot.rotation.x = time * 0.5;
-        knot.rotation.y = time * 0.7;
-        knot.rotation.z = time * 0.3;
-        knot.material.emissiveIntensity = 0.5 + Math.sin(time * 2) * 0.2;
-        ring.rotation.x = Math.sin(time * 0.4) * 0.2;
-        ring.rotation.y = time * 0.5;
-        particles.rotation.y = time * 0.03;
-        particles.rotation.x = Math.sin(time * 0.1) * 0.05;
-        camera.position.x += (Math.sin(time * 0.2) * 0.06 - camera.position.x) * 0.02;
-        camera.position.y += (Math.sin(time * 0.5) * 0.04 - camera.position.y) * 0.03;
-        camera.lookAt(0, 0, 0);
+        
+        // Rotate main basketball smoothly
+        basketball.rotation.x = time * 0.42;
+        basketball.rotation.y = time * 0.58;
+        basketball.rotation.z = Math.sin(time * 0.6) * 0.08;
+        
+        // Rotate dust particles
+        dustParticles.rotation.y = time * 0.3;
+        dustParticles.rotation.x = time * 0.2;
+        
+        // Orbit mini balls
+        orbitBalls.forEach((ball, idx) => {
+            const ang = time * 0.85 + ball.userData.angle;
+            ball.position.x = Math.cos(ang) * ball.userData.radius;
+            ball.position.z = Math.sin(ang) * ball.userData.radius;
+            ball.position.y = Math.sin(ang * 1.6) * 0.65;
+            ball.rotation.x = time;
+            ball.rotation.z = time * 1.2;
+        });
+        
+        // Animate rings
+        outerRing.rotation.x = Math.sin(time * 0.32) * 0.15;
+        outerRing.rotation.y = time * 0.38;
+        outerRing2.rotation.x = Math.cos(time * 0.28) * 0.1;
+        outerRing2.rotation.z = time * 0.34;
+        
+        // Drifting particles
+        particles.rotation.y = time * 0.022;
+        particles.rotation.x = Math.sin(time * 0.1) * 0.04;
+        
+        // Gentle camera sway
+        camera.position.x += (Math.sin(time * 0.22) * 0.045 - camera.position.x) * 0.02;
+        camera.position.y += (Math.sin(time * 0.45) * 0.035 - camera.position.y) * 0.025;
+        camera.lookAt(0, 0.1, 0);
+        
         renderer.render(scene, camera);
     }
     animate();
