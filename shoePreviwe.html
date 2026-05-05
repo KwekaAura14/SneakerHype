@@ -472,7 +472,7 @@ function loadShoeFromURL() {
   imgElement.onerror = function() {
     this.onerror = null;
     this.src = 'https://placehold.co/600x600/1a1a2e/white?text=' + encodeURIComponent(currentShoe.name);
-    showToastMessage(`Local image not found, using placeholder`, true);
+    showToastMessage(`Local image not found: ${currentShoe.image}`, true);
   };
   
   // Reset size selection for the new shoe
