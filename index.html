@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | SMOOTH CRT GLITCH — Handwritten Graffiti</title>
+  <title>SNEAKER HYPE | ORIGINAL CRT GLITCH — Hard Cut Transition</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Glitch&display=swap" rel="stylesheet">
@@ -74,7 +74,7 @@
     .loading-percent { margin-top: 15px; font-size: 0.9rem; letter-spacing: 8px; color: #ffb347; font-family: monospace; }
     .loading-text { margin-top: 15px; font-size: 0.7rem; letter-spacing: 6px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-family: monospace; }
     
-    /* SMOOTH CRT GLITCH TRANSITION */
+    /* ORIGINAL CRT GLITCH TRANSITION - HARD CUT */
     .crt-transition {
       position: fixed;
       top: 0;
@@ -505,7 +505,7 @@
   
   for(let i = 0; i < 65; i++) createGraffitiWord();
   
-  // ========== SMOOTH CRT GLITCH TRANSITION ==========
+  // ========== ORIGINAL CRT GLITCH TRANSITION (HARD CUT) ==========
   function startCRTTransition(destinationUrl) {
     const transitionDiv = document.getElementById('crtTransition');
     const crtCanvas = document.getElementById('crtCanvas');
@@ -514,7 +514,6 @@
     const ctx = crtCanvas.getContext('2d');
     let glitchIntensity = 0;
     let interval;
-    let animationFrame;
     
     function resizeCRTCanvas() {
       crtCanvas.width = window.innerWidth;
@@ -531,11 +530,11 @@
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, w, h);
       
-      // High-intensity noise
-      for(let i = 0; i < 3500; i++) {
+      // Intense noise
+      for(let i = 0; i < 4000; i++) {
         const x = Math.random() * w;
         const y = Math.random() * h;
-        const size = 1 + Math.random() * 4;
+        const size = 1 + Math.random() * 5;
         const r = Math.random() * 255;
         const g = Math.random() * 100;
         const b = Math.random() * 150;
@@ -544,25 +543,25 @@
       }
       
       // Glitch bars
-      for(let i = 0; i < 15 + Math.floor(glitchIntensity * 25); i++) {
+      for(let i = 0; i < 20 + Math.floor(glitchIntensity * 30); i++) {
         const y = Math.random() * h;
-        const height = 4 + Math.random() * 20;
-        ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 100}, ${Math.random() * 150}, 0.8)`;
+        const height = 4 + Math.random() * 25;
+        ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 100}, ${Math.random() * 150}, 0.9)`;
         ctx.fillRect(0, y, w, height);
       }
       
       // RGB split
       if(glitchIntensity > 0.2) {
-        ctx.fillStyle = `rgba(255, 0, 0, ${glitchIntensity * 0.45})`;
-        ctx.fillRect(8, 0, w, h);
-        ctx.fillStyle = `rgba(0, 255, 0, ${glitchIntensity * 0.35})`;
-        ctx.fillRect(-8, 0, w, h);
-        ctx.fillStyle = `rgba(0, 0, 255, ${glitchIntensity * 0.4})`;
+        ctx.fillStyle = `rgba(255, 0, 0, ${glitchIntensity * 0.5})`;
+        ctx.fillRect(15, 0, w, h);
+        ctx.fillStyle = `rgba(0, 255, 0, ${glitchIntensity * 0.4})`;
+        ctx.fillRect(-15, 0, w, h);
+        ctx.fillStyle = `rgba(0, 0, 255, ${glitchIntensity * 0.45})`;
         ctx.fillRect(0, 0, w, h);
       }
       
       // Scanlines
-      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
       ctx.lineWidth = 1;
       for(let i = 0; i < h; i += 2) {
         ctx.beginPath();
@@ -572,11 +571,11 @@
       }
     }
     
-    // Animate intensity in then smoothly out
+    // Glitch intensity ramps up then HARD CUT
     gsap.to({val: 0}, {
       val: 1,
       duration: 0.5,
-      ease: "power2.inOut",
+      ease: "power2.in",
       onUpdate: function() {
         glitchIntensity = this.targets()[0].val;
       }
@@ -586,18 +585,11 @@
       drawCRTStatic();
     }, 7); // ~140fps
     
-    // Smooth fade out after peak intensity
+    // HARD CUT - no fade, just redirect after glitch peak
     setTimeout(() => {
-      gsap.to(transitionDiv, {
-        duration: 0.6,
-        opacity: 0,
-        ease: "power2.out",
-        onComplete: () => {
-          clearInterval(interval);
-          window.location.href = destinationUrl;
-        }
-      });
-    }, 500);
+      clearInterval(interval);
+      window.location.href = destinationUrl;
+    }, 600);
   }
   
   // ========== LOADING SIMULATION ==========
