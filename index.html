@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | REAL CRT GLITCH — Raining Graffiti</title>
+  <title>SNEAKER HYPE | REDSHIFT REALISM — SINGULARITY</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Glitch&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -70,12 +70,11 @@
     
     .loading-bar-container { width: 400px; position: relative; z-index: 10; }
     .loading-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.05); overflow: hidden; border-radius: 4px; }
-    .loading-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #e63946, #ffb347, #ffffff); transition: width 0.02s linear; box-shadow: 0 0 40px #e63946; }
+    .loading-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #e63946, #ffb347, #ffffff); transition: width 0.008s linear; box-shadow: 0 0 40px #e63946; }
     .loading-percent { margin-top: 15px; font-size: 0.9rem; letter-spacing: 8px; color: #ffb347; font-family: monospace; }
     .loading-text { margin-top: 15px; font-size: 0.7rem; letter-spacing: 6px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-family: monospace; }
     
-    /* REAL CRT GLITCH TRANSITION */
-    .crt-transition {
+    .crack-transition {
       position: fixed;
       top: 0;
       left: 0;
@@ -90,7 +89,7 @@
       justify-content: center;
     }
     
-    .crt-canvas {
+    .crack-canvas {
       position: absolute;
       top: 0;
       left: 0;
@@ -99,7 +98,6 @@
       pointer-events: none;
     }
     
-    /* RAINING GRAFFITI BACKGROUND */
     .floating-graffiti {
       position: fixed;
       top: 0;
@@ -117,7 +115,7 @@
       text-transform: uppercase;
       white-space: nowrap;
       opacity: 0;
-      font-family: 'Permanent Marker', 'Rubik Glitch', cursive;
+      font-family: 'Permanent Marker', cursive;
       filter: blur(0.5px);
       letter-spacing: 2px;
       text-shadow: 3px 3px 0px rgba(0,0,0,0.6);
@@ -285,12 +283,12 @@
       <div class="loading-bar"><div class="loading-bar-fill" id="loaderFill"></div></div>
       <div class="loading-percent" id="loaderPercent">0%</div>
     </div>
-    <div class="loading-text" id="loaderMsg">▶ LOADING HANDSTYLE ◀</div>
+    <div class="loading-text" id="loaderMsg">▶ REDSHIFT RENDER ◀</div>
   </div>
 </div>
 
-<div id="crtTransition" class="crt-transition">
-  <canvas id="crtCanvas" class="crt-canvas"></canvas>
+<div id="crackTransition" class="crack-transition">
+  <canvas id="crackCanvas" class="crack-canvas"></canvas>
 </div>
 
 <div class="floating-graffiti" id="floatingGraffiti"></div>
@@ -346,322 +344,247 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
-  // ========== 3D BASKETBALL WITH CORRECTLY INTERSECTING LINES ==========
+  // ========== PHOTOREALISTIC 3D CROSS (MAX DETAIL) ==========
   const canvas = document.getElementById('cinematicCanvas');
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
-  scene.fog = new THREE.FogExp2(0x000000, 0.015);
+  scene.fog = new THREE.FogExp2(0x000000, 0.003);
   
-  const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 1000);
-  camera.position.set(0, 0.3, 5.2);
+  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.01, 1000);
+  camera.position.set(0, 0.2, 5.5);
   
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "high-performance" });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   
-  // Perfect basketball texture - LINES INTERSECT CORRECTLY
-  const texCanvas = document.createElement('canvas');
-  texCanvas.width = 2048;
-  texCanvas.height = 2048;
-  const ctx = texCanvas.getContext('2d');
+  const crossGroup = new THREE.Group();
+  const woodColor = 0x9B6A3B;
+  const woodMat = new THREE.MeshStandardMaterial({ color: woodColor, roughness: 0.25, metalness: 0.04, emissive: 0x2a1a0a, emissiveIntensity: 0.1 });
   
-  ctx.fillStyle = '#e67e22';
-  ctx.fillRect(0, 0, texCanvas.width, texCanvas.height);
+  const vertical = new THREE.Mesh(new THREE.BoxGeometry(0.56, 3.45, 0.52), woodMat);
+  vertical.castShadow = true;
+  crossGroup.add(vertical);
   
-  for(let i = 0; i < 40000; i++) {
-    ctx.fillStyle = `rgba(150, 60, 15, ${Math.random() * 0.45})`;
-    ctx.fillRect(Math.random() * texCanvas.width, Math.random() * texCanvas.height, 2, 2);
-  }
+  const horizontal = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.56, 0.52), woodMat);
+  horizontal.position.y = 0.52;
+  horizontal.castShadow = true;
+  crossGroup.add(horizontal);
   
-  const centerX = texCanvas.width/2;
-  const centerY = texCanvas.height/2;
-  const radiusVal = texCanvas.width/2 - 60;
+  const goldMat = new THREE.MeshStandardMaterial({ color: 0xFFD700, metalness: 0.98, roughness: 0.12, emissive: 0x442200 });
+  const goldV = new THREE.Mesh(new THREE.BoxGeometry(0.6, 3.5, 0.06), goldMat);
+  goldV.position.z = 0.29;
+  crossGroup.add(goldV);
+  const goldH = new THREE.Mesh(new THREE.BoxGeometry(2.35, 0.6, 0.06), goldMat);
+  goldH.position.set(0, 0.52, 0.29);
+  crossGroup.add(goldH);
   
-  ctx.beginPath();
-  ctx.strokeStyle = '#1a0a00';
-  ctx.lineWidth = 36;
-  ctx.lineCap = 'round';
+  const glowCore = new THREE.Mesh(new THREE.SphereGeometry(0.34, 128, 128), new THREE.MeshStandardMaterial({ color: 0xff6644, emissive: 0xff3311, emissiveIntensity: 0.85 }));
+  glowCore.position.y = 0.22;
+  crossGroup.add(glowCore);
   
-  ctx.beginPath();
-  ctx.moveTo(centerX - radiusVal, centerY);
-  ctx.lineTo(centerX + radiusVal, centerY);
-  ctx.stroke();
+  scene.add(crossGroup);
   
-  ctx.beginPath();
-  ctx.moveTo(centerX, centerY - radiusVal);
-  ctx.lineTo(centerX, centerY + radiusVal);
-  ctx.stroke();
-  
-  ctx.beginPath();
-  ctx.ellipse(centerX - radiusVal * 0.48, centerY, radiusVal * 0.55, radiusVal * 0.85, 0, 0, Math.PI * 2);
-  ctx.stroke();
-  
-  ctx.beginPath();
-  ctx.ellipse(centerX + radiusVal * 0.48, centerY, radiusVal * 0.55, radiusVal * 0.85, 0, 0, Math.PI * 2);
-  ctx.stroke();
-  
-  ctx.fillStyle = '#1a0a00';
-  ctx.font = 'bold 88px "Permanent Marker"';
-  ctx.textAlign = "center";
-  ctx.fillText("EVOLUTION", centerX, centerY - 60);
-  ctx.font = '68px "Permanent Marker"';
-  ctx.fillStyle = '#e63946';
-  ctx.fillText("WILSON", centerX, centerY + 85);
-  
-  const ballTex = new THREE.CanvasTexture(texCanvas);
-  const ballGeo = new THREE.SphereGeometry(1.3, 512, 512);
-  const ballMat = new THREE.MeshStandardMaterial({ map: ballTex, roughness: 0.22, metalness: 0.06, emissive: 0x442200, emissiveIntensity: 0.2 });
-  const basketball = new THREE.Mesh(ballGeo, ballMat);
-  basketball.castShadow = true;
-  scene.add(basketball);
-  
-  const particleCount = 8000;
-  const particleGeo = new THREE.BufferGeometry();
-  const particlePos = new Float32Array(particleCount * 3);
-  for(let i = 0; i < particleCount; i++) {
-    const r = 1.6 + Math.random() * 0.9;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    particlePos[i*3] = r * Math.sin(phi) * Math.cos(theta);
-    particlePos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-    particlePos[i*3+2] = r * Math.cos(phi);
-  }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
-  const particleMat = new THREE.PointsMaterial({ color: 0xff6633, size: 0.014, transparent: true, blending: THREE.AdditiveBlending });
-  const particles = new THREE.Points(particleGeo, particleMat);
-  scene.add(particles);
-  
-  const ambient = new THREE.AmbientLight(0x222222);
+  const ambient = new THREE.AmbientLight(0x222222, 0.65);
   scene.add(ambient);
-  const keyLight = new THREE.DirectionalLight(0xffaa66, 1.6);
-  keyLight.position.set(2.5, 4, 4);
-  keyLight.castShadow = true;
-  scene.add(keyLight);
-  const fillLight = new THREE.PointLight(0x4488ff, 0.8);
-  fillLight.position.set(-2, 1.5, 3);
+  const mainLight = new THREE.DirectionalLight(0xffcc99, 1.6);
+  mainLight.position.set(2.5, 5, 3.5);
+  mainLight.castShadow = true;
+  scene.add(mainLight);
+  const fillLight = new THREE.PointLight(0x4488ff, 0.55);
+  fillLight.position.set(-2.2, 1.5, 3);
   scene.add(fillLight);
-  const rimLight = new THREE.PointLight(0xff6633, 1.0);
-  rimLight.position.set(1.2, 1.8, -3.8);
-  scene.add(rimLight);
+  const backLight = new THREE.PointLight(0xff6633, 0.85);
+  backLight.position.set(1.2, 1.8, -3.8);
+  scene.add(backLight);
+  const topGodRay = new THREE.SpotLight(0xffaa66, 0.65);
+  topGodRay.position.set(0, 4.2, 2.8);
+  topGodRay.angle = 0.4;
+  topGodRay.penumbra = 0.7;
+  scene.add(topGodRay);
   
-  let time = 0;
+  let animTime = 0;
   let loadPercent = 0;
   
-  function animateCinematic() {
-    requestAnimationFrame(animateCinematic);
-    time += 0.022;
-    basketball.rotation.y = time * 0.55;
-    basketball.rotation.x = Math.sin(time * 0.45) * 0.18;
-    particles.rotation.y = time * 0.15;
-    rimLight.intensity = 0.85 + Math.sin(time * 2.8) * 0.35;
-    camera.position.x = Math.sin(time * 0.18) * 0.12;
-    camera.position.y = 0.3 + Math.cos(time * 0.22) * 0.08;
-    camera.lookAt(0, 0, 0);
+  function animateCross() {
+    requestAnimationFrame(animateCross);
+    animTime += 0.016;
+    crossGroup.rotation.y = Math.sin(animTime * 0.2) * 0.04;
+    glowCore.material.emissiveIntensity = 0.7 + Math.sin(animTime * 4) * 0.25;
+    backLight.intensity = 0.7 + Math.sin(animTime * 2.2) * 0.2;
+    topGodRay.intensity = 0.55 + Math.sin(animTime * 1.6) * 0.2;
+    camera.position.x = Math.sin(animTime * 0.15) * 0.04;
+    camera.position.y = 0.2 + Math.cos(animTime * 0.2) * 0.03;
+    camera.lookAt(0, 0.26, 0);
     renderer.render(scene, camera);
   }
-  animateCinematic();
+  animateCross();
   
-  // ========== RAINING GRAFFITI + FLOATING WORDS ==========
-  const graffitiWords = [
-    "SNEAKER", "HYPE", "CULTURE", "RARE", "EXCLUSIVE", "LIMITED", 
-    "ARCHIVE", "STREET", "STYLE", "LEGEND", "GRAIL", "ICON", 
-    "BOUNCE", "COURT", "GAME", "FLOW", "CREW", "KING", "FRESH", "DOPE", "CROWN", "WILD"
-  ];
+  // ========== GRAFFITI BACKGROUND ==========
+  const graffitiWords = ["SNEAKER","HYPE","CULTURE","RARE","EXCLUSIVE","LIMITED","ARCHIVE","STREET","STYLE","LEGEND","GRAIL","ICON","BOUNCE","COURT","GAME","FLOW","CREW","KING","FRESH","DOPE","CROWN","WILD"];
+  const graffitiColors = ["#ff3366","#ff6633","#ffaa33","#33ff66","#33ccff","#ff33cc","#e63946","#ffb347","#ff6b4a","#ff88cc"];
+  const floatContainer = document.getElementById('floatingGraffiti');
   
-  const graffitiColors = [
-    "#ff3366", "#ff6633", "#ffaa33", "#33ff66", "#33ccff", "#ff33cc", "#e63946", "#ffb347", "#ff6b4a", "#ff88cc"
-  ];
-  
-  const floatingContainer = document.getElementById('floatingGraffiti');
-  
-  // Create floating graffiti words
-  function createGraffitiWord() {
+  for(let i = 0; i < 80; i++) {
     const word = document.createElement('div');
     word.className = 'graffiti-word';
     word.textContent = graffitiWords[Math.floor(Math.random() * graffitiWords.length)];
-    
-    const x = Math.random() * 95;
-    const y = Math.random() * 95;
-    const size = 28 + Math.random() * 55;
-    const rotation = (Math.random() - 0.5) * 25;
-    const color = graffitiColors[Math.floor(Math.random() * graffitiColors.length)];
-    const duration = 9 + Math.random() * 16;
-    const delay = Math.random() * 8;
-    
-    word.style.left = x + '%';
-    word.style.top = y + '%';
-    word.style.fontSize = size + 'px';
-    word.style.transform = `rotate(${rotation}deg)`;
-    word.style.color = color;
-    word.style.textShadow = `3px 3px 0px rgba(0,0,0,0.6), 0 0 15px ${color}60`;
-    word.style.opacity = '0';
-    
-    floatingContainer.appendChild(word);
-    
-    gsap.fromTo(word, 
-      { opacity: 0, y: 20, scale: 0.7, rotation: rotation - 5 },
-      {
-        opacity: 0.35,
-        y: -40,
-        scale: 1,
-        rotation: rotation + 3,
-        duration: duration,
-        delay: delay,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      }
-    );
+    word.style.left = Math.random() * 95 + '%';
+    word.style.top = Math.random() * 95 + '%';
+    word.style.fontSize = (28 + Math.random() * 60) + 'px';
+    word.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg)`;
+    word.style.color = graffitiColors[Math.floor(Math.random() * graffitiColors.length)];
+    word.style.textShadow = `3px 3px 0px rgba(0,0,0,0.6), 0 0 20px ${word.style.color}80`;
+    floatContainer.appendChild(word);
+    gsap.fromTo(word, { opacity: 0, y: 25, scale: 0.6 }, { opacity: 0.45, y: -55, scale: 1, duration: 10 + Math.random() * 18, delay: Math.random() * 10, repeat: -1, yoyo: true, ease: "sine.inOut" });
   }
   
-  for(let i = 0; i < 55; i++) createGraffitiWord();
-  
-  // RAIN EFFECT
   function createRain() {
     const rain = document.createElement('div');
     rain.className = 'rain-drop';
-    const height = 15 + Math.random() * 40;
+    const height = 15 + Math.random() * 50;
     rain.style.height = height + 'px';
     rain.style.left = Math.random() * 100 + '%';
     rain.style.top = -height + 'px';
-    rain.style.opacity = 0.3 + Math.random() * 0.5;
+    rain.style.opacity = 0.2 + Math.random() * 0.6;
     rain.style.backgroundColor = `rgba(230, 57, 70, ${0.3 + Math.random() * 0.5})`;
-    floatingContainer.appendChild(rain);
-    
-    gsap.to(rain, {
-      duration: 1.5 + Math.random() * 2,
-      y: window.innerHeight + height,
-      opacity: 0,
-      ease: "none",
-      onComplete: () => rain.remove()
-    });
+    floatContainer.appendChild(rain);
+    gsap.to(rain, { duration: 1.2 + Math.random() * 2.5, y: window.innerHeight + height, opacity: 0, ease: "none", onComplete: () => rain.remove() });
   }
+  setInterval(() => { for(let i = 0; i < 14; i++) createRain(); }, 100);
   
-  setInterval(() => {
-    for(let i = 0; i < 8; i++) createRain();
-  }, 150);
-  
-  // ========== REAL CRT GLITCH TRANSITION ==========
-  function startCRTTransition(destinationUrl) {
-    const transitionDiv = document.getElementById('crtTransition');
-    const crtCanvas = document.getElementById('crtCanvas');
+  // ========== REDSHIFT-REALISTIC BLACK HOLE COMPRESSION TRANSITION ==========
+  function startCrackTransition(destinationUrl) {
+    const transitionDiv = document.getElementById('crackTransition');
+    const crackCanvas = document.getElementById('crackCanvas');
     transitionDiv.style.visibility = 'visible';
     
-    const ctx = crtCanvas.getContext('2d');
-    let glitchIntensity = 0;
-    let jitterX = 0;
-    let interval;
+    const crackScene = new THREE.Scene();
+    crackScene.background = new THREE.Color(0x000000);
+    const crackCamera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 1000);
+    crackCamera.position.set(0, 0, 5.2);
+    const crackRenderer = new THREE.WebGLRenderer({ canvas: crackCanvas, alpha: false, antialias: true, powerPreference: "high-performance" });
+    crackRenderer.setSize(window.innerWidth, window.innerHeight);
+    crackRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     
-    function resizeCRTCanvas() {
-      crtCanvas.width = window.innerWidth;
-      crtCanvas.height = window.innerHeight;
+    // High-resolution particle field (stars + debris)
+    const pCount = 6000;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(pCount * 3);
+    for(let i = 0; i < pCount; i++) {
+      pPos[i*3] = (Math.random() - 0.5) * 14;
+      pPos[i*3+1] = (Math.random() - 0.5) * 10;
+      pPos[i*3+2] = (Math.random() - 0.5) * 12 - 6;
     }
-    resizeCRTCanvas();
-    window.addEventListener('resize', resizeCRTCanvas);
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0xff8866, size: 0.045, transparent: true, blending: THREE.AdditiveBlending });
+    const particleField = new THREE.Points(pGeo, pMat);
+    crackScene.add(particleField);
     
-    function drawRealCRT() {
-      if(!ctx) return;
-      const w = crtCanvas.width;
-      const h = crtCanvas.height;
-      
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, w, h);
-      
-      // Intense noise
-      for(let i = 0; i < 5000; i++) {
-        const x = Math.random() * w;
-        const y = Math.random() * h;
-        const size = 1 + Math.random() * 5;
-        const r = Math.random() * 255;
-        const g = Math.random() * 100;
-        const b = Math.random() * 150;
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${Math.random() * 0.9})`;
-        ctx.fillRect(x, y, size, size);
-      }
-      
-      // VHS tracking glitch bars
-      for(let i = 0; i < 25 + Math.floor(glitchIntensity * 35); i++) {
-        const y = Math.random() * h;
-        const height = 3 + Math.random() * 25;
-        ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 100}, ${Math.random() * 150}, 0.9)`;
-        ctx.fillRect(0, y, w, height);
-      }
-      
-      // Screen jitter (horizontal shift)
-      ctx.save();
-      if(glitchIntensity > 0.3) {
-        jitterX = (Math.random() - 0.5) * 20 * glitchIntensity;
-        ctx.translate(jitterX, 0);
-      }
-      
-      // RGB split / chromatic aberration
-      if(glitchIntensity > 0.15) {
-        ctx.fillStyle = `rgba(255, 0, 0, ${glitchIntensity * 0.55})`;
-        ctx.fillRect(12, 0, w, h);
-        ctx.fillStyle = `rgba(0, 255, 0, ${glitchIntensity * 0.4})`;
-        ctx.fillRect(-12, 0, w, h);
-        ctx.fillStyle = `rgba(0, 0, 255, ${glitchIntensity * 0.5})`;
-        ctx.fillRect(0, 0, w, h);
-      }
-      
-      // Scanlines
-      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-      ctx.lineWidth = 1;
-      for(let i = 0; i < h; i += 2) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(w, i);
-        ctx.stroke();
-      }
-      
-      // VHS tape roll effect
-      if(glitchIntensity > 0.5) {
-        for(let i = 0; i < 8; i++) {
-          const y = Math.random() * h;
-          ctx.drawImage(crtCanvas, 0, y, w, 15, (Math.random() - 0.5) * 80, y, w, 15);
-        }
-      }
-      
-      ctx.restore();
+    // Cross shards (realistic fracture, no pixels)
+    const panelCount = 160;
+    const panels = [];
+    for(let i = 0; i < panelCount; i++) {
+      const col = i % 20;
+      const row = Math.floor(i / 20);
+      const geo = new THREE.BoxGeometry(0.44, 0.44, 0.1);
+      const mat = new THREE.MeshStandardMaterial({ color: 0x9B6A3B, emissive: 0x552200, roughness: 0.3 });
+      const panel = new THREE.Mesh(geo, mat);
+      panel.userData = { ox: (col - 9.5) * 0.44, oy: (9.5 - row) * 0.44 };
+      panel.position.set(panel.userData.ox, panel.userData.oy, 0);
+      crackScene.add(panel);
+      panels.push(panel);
     }
     
-    // Glitch intensity ramps up aggressively
-    gsap.to({val: 0}, {
-      val: 1,
-      duration: 0.55,
-      ease: "power2.in",
-      onUpdate: function() {
-        glitchIntensity = this.targets()[0].val;
+    const explosionCore = new THREE.Mesh(new THREE.SphereGeometry(0.95, 128, 128), new THREE.MeshBasicMaterial({ color: 0xff8844, transparent: true, blending: THREE.AdditiveBlending }));
+    crackScene.add(explosionCore);
+    
+    // Black hole + event horizon (true singularity)
+    const blackHole = new THREE.Mesh(new THREE.SphereGeometry(0.18, 128, 128), new THREE.MeshBasicMaterial({ color: 0x000000 }));
+    crackScene.add(blackHole);
+    const eventHorizon = new THREE.Mesh(new THREE.SphereGeometry(0.38, 96, 96), new THREE.MeshBasicMaterial({ color: 0xff4422, transparent: true, opacity: 0.35, side: THREE.BackSide }));
+    crackScene.add(eventHorizon);
+    
+    const blastLight = new THREE.PointLight(0xff6633, 2.2);
+    crackScene.add(blastLight);
+    const redshiftLight = new THREE.PointLight(0xff2222, 0.6);
+    crackScene.add(redshiftLight);
+    
+    let t = 0;
+    let animFrame;
+    
+    function animateRedshiftTransition() {
+      t += 0.014;
+      const prog = Math.min(t, 1);
+      const ease = 1 - Math.pow(1 - prog, 2.5);
+      
+      // Fragments explode outward violently
+      panels.forEach(panel => {
+        const ang = Math.atan2(panel.userData.oy, panel.userData.ox);
+        const dist = ease * 7.5;
+        panel.position.x = panel.userData.ox + Math.cos(ang) * dist;
+        panel.position.y = panel.userData.oy + Math.sin(ang) * dist;
+        panel.position.z = ease * 4;
+        panel.rotation.x = ease * Math.PI * 2;
+        panel.rotation.y = ease * Math.PI * 1.5;
+      });
+      
+      explosionCore.scale.setScalar(1 + prog * 10);
+      explosionCore.material.opacity = 0.95 - prog * 0.85;
+      blastLight.intensity = 2.2 + prog * 16;
+      redshiftLight.intensity = 0.5 + prog * 2.5;
+      
+      particleField.rotation.y = prog * Math.PI * 6;
+      particleField.rotation.x = prog * Math.PI * 4;
+      particleField.material.size = 0.045 + prog * 0.15;
+      
+      // BLACK HOLE COMPRESSION PHASE (THE "COMPRESSED" PART)
+      if(prog > 0.55) {
+        const compT = (prog - 0.55) / 0.45;
+        const scaleComp = Math.pow(1 - compT, 1.3);
+        panels.forEach(p => p.scale.setScalar(scaleComp));
+        particleField.scale.setScalar(scaleComp);
+        eventHorizon.scale.setScalar(1 + compT * 5);
+        blackHole.scale.setScalar(1 + compT * 20);
+        // Camera dives into the singularity
+        crackCamera.position.z = 5.2 - compT * 5;
+        crackCamera.fov = 50 + compT * 25;
+        crackCamera.updateProjectionMatrix();
+        // Extreme redshift effect as everything gets crushed
+        redshiftLight.intensity = 2.5 + compT * 6;
       }
-    });
+      
+      crackCamera.lookAt(0, 0, 0);
+      crackRenderer.render(crackScene, crackCamera);
+      
+      if(prog >= 1) {
+        cancelAnimationFrame(animFrame);
+        window.location.href = destinationUrl;
+      } else {
+        animFrame = requestAnimationFrame(animateRedshiftTransition);
+      }
+    }
     
-    interval = setInterval(() => {
-      drawRealCRT();
-    }, 7); // ~140fps
-    
-    // HARD CUT redirect
-    setTimeout(() => {
-      clearInterval(interval);
-      window.location.href = destinationUrl;
-    }, 700);
+    animFrame = requestAnimationFrame(animateRedshiftTransition);
   }
   
-  // ========== LOADING SIMULATION ==========
+  // ========== LOADING ==========
   const fill = document.getElementById('loaderFill');
   const percentSpan = document.getElementById('loaderPercent');
   const loaderMsgSpan = document.getElementById('loaderMsg');
   const loadingScreen = document.getElementById('loadingScreen');
-  const msgs = ["▶ LOADING HANDSTYLE ◀", "▶ SPRAYING TAGS ◀", "▶ INTERSECTING LINES ◀", "▶ CRT GLITCH READY ◀", "▶ ENTER THE STREETS ◀"];
+  const msgs = ["▶ REDSHIFT RENDER ◀", "▶ VOLUMETRIC LIGHTING ◀", "▶ WOOD GRAIN SIM ◀", "▶ BLACK HOLE ACTIVE ◀", "▶ SINGULARITY REACHED ◀"];
   let mi = 0;
   
-  const msgInt = setInterval(() => { if(loadPercent < 100) { mi = (mi+1)%msgs.length; loaderMsgSpan.innerText = msgs[mi]; } }, 400);
+  const msgInt = setInterval(() => { if(loadPercent < 100) { mi = (mi+1)%msgs.length; loaderMsgSpan.innerText = msgs[mi]; } }, 360);
   const loadInt = setInterval(() => {
-    loadPercent += Math.floor(Math.random() * 6) + 2;
+    loadPercent += Math.floor(Math.random() * 7) + 2;
     if(loadPercent >= 100) { loadPercent = 100; clearInterval(loadInt); clearInterval(msgInt);
-      loaderMsgSpan.innerText = "▶ READY ◀";
+      loaderMsgSpan.innerText = "▶ SINGULARITY ◀";
       percentSpan.innerText = "100%";
-      gsap.to("#cinematicCanvas", { duration: 0.6, scale: 1.2, opacity: 0, ease: "power2.in" });
-      gsap.to(".loading-overlay", { duration: 0.4, y: -40, opacity: 0 });
+      gsap.to("#cinematicCanvas", { duration: 0.5, scale: 1.3, opacity: 0, ease: "power2.in" });
+      gsap.to(".loading-overlay", { duration: 0.4, y: -60, opacity: 0 });
       setTimeout(() => {
         loadingScreen.style.opacity = '0';
         setTimeout(() => { loadingScreen.style.display = 'none'; initMain(); }, 500);
@@ -669,11 +592,9 @@
     }
     fill.style.width = loadPercent + '%';
     percentSpan.innerText = loadPercent + '%';
-  }, 32);
+  }, 22);
   
-  function navigateToVision() {
-    startCRTTransition('vision.html');
-  }
+  function navigateToVision() { startCrackTransition('vision.html'); }
   
   function initMain() {
     const faders = document.querySelectorAll('.fade-in');
@@ -682,7 +603,7 @@
     document.getElementById('scrollHint').addEventListener('click', () => document.querySelector('section').scrollIntoView({ behavior: 'smooth' }));
     document.getElementById('archiveBtn').addEventListener('click', () => document.getElementById('contactSection').scrollIntoView({ behavior: 'smooth' }));
     document.getElementById('visionBtn').addEventListener('click', (e) => { e.preventDefault(); navigateToVision(); });
-    document.getElementById('discoverBtn').addEventListener('click', (e) => { e.preventDefault(); startCRTTransition('shop.html'); });
+    document.getElementById('discoverBtn').addEventListener('click', (e) => { e.preventDefault(); startCrackTransition('shop.html'); });
     window.addEventListener('scroll', () => { const nav = document.getElementById('nav'); if(window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
   }
 </script>
