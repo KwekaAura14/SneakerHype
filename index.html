@@ -1,294 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SNEAKER HYPE | REDSHIFT REALISM — SINGULARITY</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23e63946'/><stop offset='100%' stop-color='%23ffb347'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 65 L35 45 L45 50 L50 40 L55 50 L65 45 L70 65 L30 65Z' fill='url(%23g)'/><circle cx='50' cy='35' r='8' fill='%23e63946'/><path d='M35 65 L40 55 L45 65 L55 65 L60 55 L65 65' stroke='%23ffb347' stroke-width='2' fill='none'/><text x='50' y='85' text-anchor='middle' font-size='14' fill='%23e63946' font-weight='bold'>SH</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #000000;
-      font-family: 'Inter', sans-serif;
-      color: #ffffff;
-      overflow-x: hidden;
-    }
-    
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    
-    #cinematicCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      z-index: 1;
-    }
-    
-    .loading-overlay {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      pointer-events: none;
-    }
-    
-    .loading-brand {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 15px;
-      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347, #e63946);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: hyperShine 1.2s ease infinite;
-      margin-bottom: 30px;
-      font-family: 'Permanent Marker', cursive;
-    }
-    
-    @keyframes hyperShine {
-      0%, 100% { background-position: 0% 50%; letter-spacing: 15px; }
-      50% { background-position: 100% 50%; letter-spacing: 18px; }
-    }
-    
-    .loading-bar-container { width: 400px; position: relative; z-index: 10; }
-    .loading-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.05); overflow: hidden; border-radius: 4px; }
-    .loading-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #e63946, #ffb347, #ffffff); transition: width 0.008s linear; box-shadow: 0 0 40px #e63946; }
-    .loading-percent { margin-top: 15px; font-size: 0.9rem; letter-spacing: 8px; color: #ffb347; font-family: monospace; }
-    .loading-text { margin-top: 15px; font-size: 0.7rem; letter-spacing: 6px; color: rgba(255,255,255,0.6); text-transform: uppercase; font-family: monospace; }
-    
-    .crack-transition {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000;
-      z-index: 20000;
-      pointer-events: none;
-      visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .crack-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    
-    .floating-graffiti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    
-    .graffiti-word {
-      position: absolute;
-      font-weight: 900;
-      text-transform: uppercase;
-      white-space: nowrap;
-      opacity: 0;
-      font-family: 'Permanent Marker', cursive;
-      filter: blur(0.5px);
-      letter-spacing: 2px;
-      text-shadow: 3px 3px 0px rgba(0,0,0,0.6);
-      transform-origin: center;
-    }
-    
-    .rain-drop {
-      position: absolute;
-      background: linear-gradient(180deg, rgba(230,57,70,0.8), rgba(255,180,71,0.2));
-      width: 2px;
-      border-radius: 2px;
-      pointer-events: none;
-      filter: blur(1px);
-    }
-    
-    .nav-premium {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 2rem 5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      mix-blend-mode: difference;
-      transition: all 0.4s;
-    }
-    .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 5px; color: white; text-transform: uppercase; }
-    .logo-premium span { font-weight: 800; color: #e63946; }
-    .nav-links-premium { display: flex; gap: 3rem; }
-    .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; cursor: pointer; transition: opacity 0.3s; }
-    .nav-links-premium a:hover { opacity: 0.6; }
-    
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      background: transparent;
-      z-index: 2;
-    }
-    .hero-content { text-align: center; z-index: 2; padding: 2rem; }
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 7rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffffff, #e63946, #ffb347);
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: gradientShift 6s ease infinite;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Permanent Marker', cursive;
-    }
-    .hero-title:hover { transform: scale(1.05); text-shadow: 0 0 40px rgba(230,57,70,0.8); }
-    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-    .hero-subtitle { font-size: 1rem; opacity: 0.6; margin-top: 1rem; letter-spacing: 8px; text-transform: uppercase; }
-    .scroll-hint {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: bounce 2s infinite;
-      cursor: pointer;
-    }
-    @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
-    
-    section {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6rem 2rem;
-      background: rgba(5,5,5,0.7);
-      backdrop-filter: blur(10px);
-      position: relative;
-      z-index: 2;
-    }
-    .container { max-width: 1200px; width: 100%; margin: 0 auto; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-    .card {
-      background: rgba(15, 15, 25, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 28px;
-      padding: 2rem;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.08);
-      transition: all 0.4s;
-    }
-    .card:hover { transform: translateY(-12px); border-color: rgba(230,57,70,0.6); }
-    .card-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #e63946, #ffb347);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; }
-    .card p { opacity: 0.7; font-size: 0.9rem; }
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      text-align: center;
-      margin-bottom: 3rem;
-      font-weight: 700;
-    }
-    .section-title span { background: linear-gradient(135deg, #e63946, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    
-    .contact-section { background: linear-gradient(180deg, rgba(5,5,5,0.85) 0%, rgba(10,10,12,0.95) 100%); backdrop-filter: blur(8px); }
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-    .contact-card {
-      background: rgba(15, 15, 16, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(230,57,70,0.2);
-      border-radius: 28px;
-      padding: 1.8rem;
-      text-align: center;
-      transition: all 0.3s;
-    }
-    .contact-card:hover { transform: translateY(-8px); border-color: rgba(230,57,70,0.6); }
-    .contact-icon {
-      width: 60px;
-      height: 60px;
-      background: rgba(230,57,70,0.15);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.2rem;
-      font-size: 1.6rem;
-      color: #e63946;
-    }
-    .contact-info { color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.6; }
-    .social-links { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2.5rem; }
-    .social-link {
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1rem;
-      transition: all 0.3s;
-    }
-    .social-link:hover { background: #e63946; transform: translateY(-5px); }
-    .footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #333; background: rgba(5,5,5,0.9); z-index: 2; position: relative; }
-    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-    
-    @media (max-width: 768px) { .nav-links-premium { display: none; } .loading-brand { font-size: 1rem; letter-spacing: 8px; } .loading-bar-container { width: 250px; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>SNEAKER HYPE | PLANETARY EXTINCTION TRANSITION</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000000;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+  
+  /* Main content overlay */
+  .content {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    background: transparent;
+  }
+  
+  /* Floating Graffiti Background */
+  .floating-graffiti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  
+  .graffiti-word {
+    position: absolute;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    font-family: 'Permanent Marker', cursive;
+    filter: blur(0.5px);
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.6);
+    transform-origin: center;
+  }
+  
+  .rain-drop {
+    position: absolute;
+    background: linear-gradient(180deg, rgba(230,57,70,0.8), rgba(255,180,71,0.2));
+    width: 2px;
+    border-radius: 2px;
+    pointer-events: none;
+    filter: blur(1px);
+  }
+  
+  .nav-premium {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    mix-blend-mode: difference;
+    transition: all 0.4s;
+  }
+  .nav-premium.scrolled {
+    padding: 1rem 5rem;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    mix-blend-mode: normal;
+  }
+  .logo-premium { font-size: 1rem; font-weight: 400; letter-spacing: 5px; color: white; text-transform: uppercase; }
+  .logo-premium span { font-weight: 800; color: #e63946; }
+  .nav-links-premium { display: flex; gap: 3rem; }
+  .nav-links-premium a { color: white; text-decoration: none; font-size: 0.7rem; letter-spacing: 3px; cursor: pointer; transition: opacity 0.3s; }
+  .nav-links-premium a:hover { opacity: 0.6; }
+  
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: transparent;
+    z-index: 2;
+  }
+  .hero-content { text-align: center; z-index: 2; padding: 2rem; }
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #e63946, #ffb347);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 6s ease infinite;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Permanent Marker', cursive;
+  }
+  .hero-title:hover { transform: scale(1.05); text-shadow: 0 0 40px rgba(230,57,70,0.8); }
+  @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .hero-subtitle { font-size: 1rem; opacity: 0.6; margin-top: 1rem; letter-spacing: 8px; text-transform: uppercase; }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    cursor: pointer;
+  }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+  
+  section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem;
+    background: rgba(5,5,5,0.7);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
+  }
+  .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+  .card {
+    background: rgba(15, 15, 25, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.4s;
+  }
+  .card:hover { transform: translateY(-12px); border-color: rgba(230,57,70,0.6); }
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #e63946, #ffb347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; }
+  .card p { opacity: 0.7; font-size: 0.9rem; }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 700;
+  }
+  .section-title span { background: linear-gradient(135deg, #e63946, #ffb347); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  
+  .contact-section { background: linear-gradient(180deg, rgba(5,5,5,0.85) 0%, rgba(10,10,12,0.95) 100%); backdrop-filter: blur(8px); }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+  .contact-card {
+    background: rgba(15, 15, 16, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: 28px;
+    padding: 1.8rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .contact-card:hover { transform: translateY(-8px); border-color: rgba(230,57,70,0.6); }
+  .contact-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(230,57,70,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    font-size: 1.6rem;
+    color: #e63946;
+  }
+  .contact-info { color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.6; }
+  .social-links { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2.5rem; }
+  .social-link {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+  .social-link:hover { background: #e63946; transform: translateY(-5px); }
+  .footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.03); font-size: 0.6rem; color: #333; background: rgba(5,5,5,0.9); z-index: 2; position: relative; }
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  
+  /* Transition Container - hides the canvas when not active */
+  .transition-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20000;
+    visibility: hidden;
+  }
+  
+  .transition-container.active {
+    visibility: visible;
+  }
+  
+  #transitionCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  @media (max-width: 768px) { .nav-links-premium { display: none; } }
+</style>
 </head>
 <body>
 
-<div id="loadingScreen" class="loading-screen">
-  <canvas id="cinematicCanvas"></canvas>
-  <div class="loading-overlay">
-    <div class="loading-brand">SNEAKER HYPE</div>
-    <div class="loading-bar-container">
-      <div class="loading-bar"><div class="loading-bar-fill" id="loaderFill"></div></div>
-      <div class="loading-percent" id="loaderPercent">0%</div>
-    </div>
-    <div class="loading-text" id="loaderMsg">▶ REDSHIFT RENDER ◀</div>
-  </div>
-</div>
-
-<div id="crackTransition" class="crack-transition">
-  <canvas id="crackCanvas" class="crack-canvas"></canvas>
+<!-- Transition Canvas Container -->
+<div id="transitionContainer" class="transition-container">
+  <canvas id="transitionCanvas"></canvas>
 </div>
 
 <div class="floating-graffiti" id="floatingGraffiti"></div>
@@ -344,89 +290,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
-  // ========== PHOTOREALISTIC 3D CROSS (MAX DETAIL) ==========
-  const canvas = document.getElementById('cinematicCanvas');
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
-  scene.fog = new THREE.FogExp2(0x000000, 0.003);
-  
-  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.01, 1000);
-  camera.position.set(0, 0.2, 5.5);
-  
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "high-performance" });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  
-  const crossGroup = new THREE.Group();
-  const woodColor = 0x9B6A3B;
-  const woodMat = new THREE.MeshStandardMaterial({ color: woodColor, roughness: 0.25, metalness: 0.04, emissive: 0x2a1a0a, emissiveIntensity: 0.1 });
-  
-  const vertical = new THREE.Mesh(new THREE.BoxGeometry(0.56, 3.45, 0.52), woodMat);
-  vertical.castShadow = true;
-  crossGroup.add(vertical);
-  
-  const horizontal = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.56, 0.52), woodMat);
-  horizontal.position.y = 0.52;
-  horizontal.castShadow = true;
-  crossGroup.add(horizontal);
-  
-  const goldMat = new THREE.MeshStandardMaterial({ color: 0xFFD700, metalness: 0.98, roughness: 0.12, emissive: 0x442200 });
-  const goldV = new THREE.Mesh(new THREE.BoxGeometry(0.6, 3.5, 0.06), goldMat);
-  goldV.position.z = 0.29;
-  crossGroup.add(goldV);
-  const goldH = new THREE.Mesh(new THREE.BoxGeometry(2.35, 0.6, 0.06), goldMat);
-  goldH.position.set(0, 0.52, 0.29);
-  crossGroup.add(goldH);
-  
-  const glowCore = new THREE.Mesh(new THREE.SphereGeometry(0.34, 128, 128), new THREE.MeshStandardMaterial({ color: 0xff6644, emissive: 0xff3311, emissiveIntensity: 0.85 }));
-  glowCore.position.y = 0.22;
-  crossGroup.add(glowCore);
-  
-  scene.add(crossGroup);
-  
-  const ambient = new THREE.AmbientLight(0x222222, 0.65);
-  scene.add(ambient);
-  const mainLight = new THREE.DirectionalLight(0xffcc99, 1.6);
-  mainLight.position.set(2.5, 5, 3.5);
-  mainLight.castShadow = true;
-  scene.add(mainLight);
-  const fillLight = new THREE.PointLight(0x4488ff, 0.55);
-  fillLight.position.set(-2.2, 1.5, 3);
-  scene.add(fillLight);
-  const backLight = new THREE.PointLight(0xff6633, 0.85);
-  backLight.position.set(1.2, 1.8, -3.8);
-  scene.add(backLight);
-  const topGodRay = new THREE.SpotLight(0xffaa66, 0.65);
-  topGodRay.position.set(0, 4.2, 2.8);
-  topGodRay.angle = 0.4;
-  topGodRay.penumbra = 0.7;
-  scene.add(topGodRay);
-  
-  let animTime = 0;
-  let loadPercent = 0;
-  
-  function animateCross() {
-    requestAnimationFrame(animateCross);
-    animTime += 0.016;
-    crossGroup.rotation.y = Math.sin(animTime * 0.2) * 0.04;
-    glowCore.material.emissiveIntensity = 0.7 + Math.sin(animTime * 4) * 0.25;
-    backLight.intensity = 0.7 + Math.sin(animTime * 2.2) * 0.2;
-    topGodRay.intensity = 0.55 + Math.sin(animTime * 1.6) * 0.2;
-    camera.position.x = Math.sin(animTime * 0.15) * 0.04;
-    camera.position.y = 0.2 + Math.cos(animTime * 0.2) * 0.03;
-    camera.lookAt(0, 0.26, 0);
-    renderer.render(scene, camera);
-  }
-  animateCross();
-  
-  // ========== GRAFFITI BACKGROUND ==========
+  // ========== GRAFFITI BACKGROUND (Raining Words) ==========
   const graffitiWords = ["SNEAKER","HYPE","CULTURE","RARE","EXCLUSIVE","LIMITED","ARCHIVE","STREET","STYLE","LEGEND","GRAIL","ICON","BOUNCE","COURT","GAME","FLOW","CREW","KING","FRESH","DOPE","CROWN","WILD"];
   const graffitiColors = ["#ff3366","#ff6633","#ffaa33","#33ff66","#33ccff","#ff33cc","#e63946","#ffb347","#ff6b4a","#ff88cc"];
-  const floatContainer = document.getElementById('floatingGraffiti');
+  const floatingContainer = document.getElementById('floatingGraffiti');
   
-  for(let i = 0; i < 80; i++) {
+  for(let i = 0; i < 70; i++) {
     const word = document.createElement('div');
     word.className = 'graffiti-word';
     word.textContent = graffitiWords[Math.floor(Math.random() * graffitiWords.length)];
@@ -436,8 +305,8 @@
     word.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg)`;
     word.style.color = graffitiColors[Math.floor(Math.random() * graffitiColors.length)];
     word.style.textShadow = `3px 3px 0px rgba(0,0,0,0.6), 0 0 20px ${word.style.color}80`;
-    floatContainer.appendChild(word);
-    gsap.fromTo(word, { opacity: 0, y: 25, scale: 0.6 }, { opacity: 0.45, y: -55, scale: 1, duration: 10 + Math.random() * 18, delay: Math.random() * 10, repeat: -1, yoyo: true, ease: "sine.inOut" });
+    floatingContainer.appendChild(word);
+    gsap.fromTo(word, { opacity: 0, y: 25, scale: 0.6 }, { opacity: 0.4, y: -55, scale: 1, duration: 10 + Math.random() * 18, delay: Math.random() * 10, repeat: -1, yoyo: true, ease: "sine.inOut" });
   }
   
   function createRain() {
@@ -449,163 +318,213 @@
     rain.style.top = -height + 'px';
     rain.style.opacity = 0.2 + Math.random() * 0.6;
     rain.style.backgroundColor = `rgba(230, 57, 70, ${0.3 + Math.random() * 0.5})`;
-    floatContainer.appendChild(rain);
+    floatingContainer.appendChild(rain);
     gsap.to(rain, { duration: 1.2 + Math.random() * 2.5, y: window.innerHeight + height, opacity: 0, ease: "none", onComplete: () => rain.remove() });
   }
-  setInterval(() => { for(let i = 0; i < 14; i++) createRain(); }, 100);
+  setInterval(() => { for(let i = 0; i < 12; i++) createRain(); }, 120);
   
-  // ========== REDSHIFT-REALISTIC BLACK HOLE COMPRESSION TRANSITION ==========
-  function startCrackTransition(destinationUrl) {
-    const transitionDiv = document.getElementById('crackTransition');
-    const crackCanvas = document.getElementById('crackCanvas');
-    transitionDiv.style.visibility = 'visible';
-    
-    const crackScene = new THREE.Scene();
-    crackScene.background = new THREE.Color(0x000000);
-    const crackCamera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 1000);
-    crackCamera.position.set(0, 0, 5.2);
-    const crackRenderer = new THREE.WebGLRenderer({ canvas: crackCanvas, alpha: false, antialias: true, powerPreference: "high-performance" });
-    crackRenderer.setSize(window.innerWidth, window.innerHeight);
-    crackRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-    
-    // High-resolution particle field (stars + debris)
-    const pCount = 6000;
-    const pGeo = new THREE.BufferGeometry();
-    const pPos = new Float32Array(pCount * 3);
-    for(let i = 0; i < pCount; i++) {
-      pPos[i*3] = (Math.random() - 0.5) * 14;
-      pPos[i*3+1] = (Math.random() - 0.5) * 10;
-      pPos[i*3+2] = (Math.random() - 0.5) * 12 - 6;
+  // ========== FADE-IN ON SCROLL ==========
+  const fadeElements = document.querySelectorAll('.fade-in');
+  function checkFade() { fadeElements.forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); }); }
+  window.addEventListener('scroll', checkFade);
+  checkFade();
+  
+  // ========== PLANETARY EXTINCTION TRANSITION ==========
+  const transitionContainer = document.getElementById('transitionContainer');
+  const transitionCanvas = document.getElementById('transitionCanvas');
+  
+  // Audio Engine (optional, will auto-init on transition)
+  const AudioEngine = (() => {
+    let audioCtx = null;
+    function init() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const master = audioCtx.createGain();
+      master.gain.value = 0.3;
+      master.connect(audioCtx.destination);
     }
-    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-    const pMat = new THREE.PointsMaterial({ color: 0xff8866, size: 0.045, transparent: true, blending: THREE.AdditiveBlending });
-    const particleField = new THREE.Points(pGeo, pMat);
-    crackScene.add(particleField);
-    
-    // Cross shards (realistic fracture, no pixels)
-    const panelCount = 160;
-    const panels = [];
-    for(let i = 0; i < panelCount; i++) {
-      const col = i % 20;
-      const row = Math.floor(i / 20);
-      const geo = new THREE.BoxGeometry(0.44, 0.44, 0.1);
-      const mat = new THREE.MeshStandardMaterial({ color: 0x9B6A3B, emissive: 0x552200, roughness: 0.3 });
-      const panel = new THREE.Mesh(geo, mat);
-      panel.userData = { ox: (col - 9.5) * 0.44, oy: (9.5 - row) * 0.44 };
-      panel.position.set(panel.userData.ox, panel.userData.oy, 0);
-      crackScene.add(panel);
-      panels.push(panel);
+    function boom(freq, dur, vol) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + dur);
     }
+    return { init, boom };
+  })();
+  
+  function startPlanetaryTransition(destinationUrl) {
+    transitionContainer.classList.add('active');
+    AudioEngine.init();
     
-    const explosionCore = new THREE.Mesh(new THREE.SphereGeometry(0.95, 128, 128), new THREE.MeshBasicMaterial({ color: 0xff8844, transparent: true, blending: THREE.AdditiveBlending }));
-    crackScene.add(explosionCore);
+    // Setup Three.js scene for transition
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
     
-    // Black hole + event horizon (true singularity)
-    const blackHole = new THREE.Mesh(new THREE.SphereGeometry(0.18, 128, 128), new THREE.MeshBasicMaterial({ color: 0x000000 }));
-    crackScene.add(blackHole);
-    const eventHorizon = new THREE.Mesh(new THREE.SphereGeometry(0.38, 96, 96), new THREE.MeshBasicMaterial({ color: 0xff4422, transparent: true, opacity: 0.35, side: THREE.BackSide }));
-    crackScene.add(eventHorizon);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 5000);
+    camera.position.set(0, 0, 4.5);
     
-    const blastLight = new THREE.PointLight(0xff6633, 2.2);
-    crackScene.add(blastLight);
-    const redshiftLight = new THREE.PointLight(0xff2222, 0.6);
-    crackScene.add(redshiftLight);
+    const renderer = new THREE.WebGLRenderer({ canvas: transitionCanvas, alpha: false, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     
-    let t = 0;
+    // --- PLANET ---
+    const planetGeo = new THREE.SphereGeometry(1, 256, 256);
+    const planetMat = new THREE.MeshStandardMaterial({
+      color: 0x3a6ea5,
+      roughness: 0.5,
+      metalness: 0.1,
+      emissive: 0x113355,
+      emissiveIntensity: 0.3
+    });
+    const planet = new THREE.Mesh(planetGeo, planetMat);
+    scene.add(planet);
+    
+    // Atmosphere glow
+    const atmosGeo = new THREE.SphereGeometry(1.08, 128, 128);
+    const atmosMat = new THREE.MeshBasicMaterial({ color: 0x4488ff, transparent: true, opacity: 0.2, side: THREE.BackSide });
+    const atmosphere = new THREE.Mesh(atmosGeo, atmosMat);
+    scene.add(atmosphere);
+    
+    // Debris particles
+    const debrisCount = 800;
+    const debrisGeo = new THREE.BufferGeometry();
+    const debrisPos = new Float32Array(debrisCount * 3);
+    for(let i = 0; i < debrisCount; i++) {
+      const r = 1.2 + Math.random() * 0.5;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      debrisPos[i*3] = r * Math.sin(phi) * Math.cos(theta);
+      debrisPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+      debrisPos[i*3+2] = r * Math.cos(phi);
+    }
+    debrisGeo.setAttribute('position', new THREE.BufferAttribute(debrisPos, 3));
+    const debrisMat = new THREE.PointsMaterial({ color: 0xff6633, size: 0.02 });
+    const debris = new THREE.Points(debrisGeo, debrisMat);
+    scene.add(debris);
+    
+    // Starfield background
+    const starCount = 2000;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    for(let i = 0; i < starCount; i++) {
+      starPos[i*3] = (Math.random() - 0.5) * 400;
+      starPos[i*3+1] = (Math.random() - 0.5) * 200;
+      starPos[i*3+2] = (Math.random() - 150) - 50;
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15 });
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
+    
+    // Lighting
+    const sunLight = new THREE.DirectionalLight(0xffcc88, 1.5);
+    sunLight.position.set(3, 2, 4);
+    scene.add(sunLight);
+    const explosionLight = new THREE.PointLight(0xff4400, 0, 20);
+    scene.add(explosionLight);
+    const ambient = new THREE.AmbientLight(0x111122);
+    scene.add(ambient);
+    
+    let progress = 0;
+    let startTime = performance.now() / 1000;
     let animFrame;
     
-    function animateRedshiftTransition() {
-      t += 0.014;
-      const prog = Math.min(t, 1);
-      const ease = 1 - Math.pow(1 - prog, 2.5);
+    // Play explosion sound
+    AudioEngine.boom(40, 1.5, 0.8);
+    setTimeout(() => AudioEngine.boom(60, 1.2, 0.6), 200);
+    setTimeout(() => AudioEngine.boom(80, 1.0, 0.5), 400);
+    
+    function animateTransition() {
+      const now = performance.now() / 1000;
+      const elapsed = now - startTime;
+      progress = Math.min(elapsed / 4, 1); // 4 second transition
       
-      // Fragments explode outward violently
-      panels.forEach(panel => {
-        const ang = Math.atan2(panel.userData.oy, panel.userData.ox);
-        const dist = ease * 7.5;
-        panel.position.x = panel.userData.ox + Math.cos(ang) * dist;
-        panel.position.y = panel.userData.oy + Math.sin(ang) * dist;
-        panel.position.z = ease * 4;
-        panel.rotation.x = ease * Math.PI * 2;
-        panel.rotation.y = ease * Math.PI * 1.5;
-      });
+      const easeOut = 1 - Math.pow(1 - progress, 3);
       
-      explosionCore.scale.setScalar(1 + prog * 10);
-      explosionCore.material.opacity = 0.95 - prog * 0.85;
-      blastLight.intensity = 2.2 + prog * 16;
-      redshiftLight.intensity = 0.5 + prog * 2.5;
-      
-      particleField.rotation.y = prog * Math.PI * 6;
-      particleField.rotation.x = prog * Math.PI * 4;
-      particleField.material.size = 0.045 + prog * 0.15;
-      
-      // BLACK HOLE COMPRESSION PHASE (THE "COMPRESSED" PART)
-      if(prog > 0.55) {
-        const compT = (prog - 0.55) / 0.45;
-        const scaleComp = Math.pow(1 - compT, 1.3);
-        panels.forEach(p => p.scale.setScalar(scaleComp));
-        particleField.scale.setScalar(scaleComp);
-        eventHorizon.scale.setScalar(1 + compT * 5);
-        blackHole.scale.setScalar(1 + compT * 20);
-        // Camera dives into the singularity
-        crackCamera.position.z = 5.2 - compT * 5;
-        crackCamera.fov = 50 + compT * 25;
-        crackCamera.updateProjectionMatrix();
-        // Extreme redshift effect as everything gets crushed
-        redshiftLight.intensity = 2.5 + compT * 6;
+      // Planet destruction: crack and shrink
+      if(progress < 0.7) {
+        const crackIntensity = easeOut * 1.5;
+        planetMat.emissiveIntensity = 0.3 + crackIntensity * 1.5;
+        planetMat.color.setHex(0x8B3A3A);
+        planetMat.emissive.setHex(0xff3311);
+        atmosphere.material.opacity = 0.2 + crackIntensity * 0.3;
+      } else {
+        const shrinkT = (progress - 0.7) / 0.3;
+        const scaleVal = 1 - shrinkT * 0.95;
+        planet.scale.setScalar(Math.max(0.05, scaleVal));
+        atmosphere.scale.setScalar(scaleVal * 1.08);
+        debris.scale.setScalar(scaleVal);
       }
       
-      crackCamera.lookAt(0, 0, 0);
-      crackRenderer.render(crackScene, crackCamera);
+      // Explosion light pulse
+      explosionLight.intensity = easeOut * 8 * (1 - progress * 0.7);
       
-      if(prog >= 1) {
+      // Camera shake and pull back
+      if(progress < 0.8) {
+        camera.position.x = (Math.random() - 0.5) * 0.1 * easeOut;
+        camera.position.y = (Math.random() - 0.5) * 0.1 * easeOut;
+      }
+      camera.position.z = 4.5 + easeOut * 3;
+      
+      // Rotate planet and debris
+      planet.rotation.y += 0.02;
+      debris.rotation.y += 0.03;
+      debris.rotation.x += 0.02;
+      
+      // Flash effect at climax
+      if(progress > 0.7 && progress < 0.9) {
+        const flash = Math.sin((progress - 0.7) * 30) * 0.5;
+        explosionLight.intensity += flash * 5;
+      }
+      
+      renderer.render(scene, camera);
+      
+      if(progress >= 1) {
         cancelAnimationFrame(animFrame);
         window.location.href = destinationUrl;
       } else {
-        animFrame = requestAnimationFrame(animateRedshiftTransition);
+        animFrame = requestAnimationFrame(animateTransition);
       }
     }
     
-    animFrame = requestAnimationFrame(animateRedshiftTransition);
+    animFrame = requestAnimationFrame(animateTransition);
   }
   
-  // ========== LOADING ==========
-  const fill = document.getElementById('loaderFill');
-  const percentSpan = document.getElementById('loaderPercent');
-  const loaderMsgSpan = document.getElementById('loaderMsg');
-  const loadingScreen = document.getElementById('loadingScreen');
-  const msgs = ["▶ REDSHIFT RENDER ◀", "▶ VOLUMETRIC LIGHTING ◀", "▶ WOOD GRAIN SIM ◀", "▶ BLACK HOLE ACTIVE ◀", "▶ SINGULARITY REACHED ◀"];
-  let mi = 0;
-  
-  const msgInt = setInterval(() => { if(loadPercent < 100) { mi = (mi+1)%msgs.length; loaderMsgSpan.innerText = msgs[mi]; } }, 360);
-  const loadInt = setInterval(() => {
-    loadPercent += Math.floor(Math.random() * 7) + 2;
-    if(loadPercent >= 100) { loadPercent = 100; clearInterval(loadInt); clearInterval(msgInt);
-      loaderMsgSpan.innerText = "▶ SINGULARITY ◀";
-      percentSpan.innerText = "100%";
-      gsap.to("#cinematicCanvas", { duration: 0.5, scale: 1.3, opacity: 0, ease: "power2.in" });
-      gsap.to(".loading-overlay", { duration: 0.4, y: -60, opacity: 0 });
-      setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => { loadingScreen.style.display = 'none'; initMain(); }, 500);
-      }, 500);
-    }
-    fill.style.width = loadPercent + '%';
-    percentSpan.innerText = loadPercent + '%';
-  }, 22);
-  
-  function navigateToVision() { startCrackTransition('vision.html'); }
-  
-  function initMain() {
-    const faders = document.querySelectorAll('.fade-in');
-    function checkFade() { faders.forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); }); }
-    window.addEventListener('scroll', checkFade); checkFade();
-    document.getElementById('scrollHint').addEventListener('click', () => document.querySelector('section').scrollIntoView({ behavior: 'smooth' }));
-    document.getElementById('archiveBtn').addEventListener('click', () => document.getElementById('contactSection').scrollIntoView({ behavior: 'smooth' }));
-    document.getElementById('visionBtn').addEventListener('click', (e) => { e.preventDefault(); navigateToVision(); });
-    document.getElementById('discoverBtn').addEventListener('click', (e) => { e.preventDefault(); startCrackTransition('shop.html'); });
-    window.addEventListener('scroll', () => { const nav = document.getElementById('nav'); if(window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
+  function navigateToVision() {
+    startPlanetaryTransition('vision.html');
   }
+  
+  function navigateToShop() {
+    startPlanetaryTransition('shop.html');
+  }
+  
+  // ========== NAVIGATION ==========
+  document.getElementById('scrollHint').addEventListener('click', () => {
+    document.querySelector('section').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('archiveBtn').addEventListener('click', () => {
+    document.getElementById('contactSection').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('visionBtn').addEventListener('click', (e) => { 
+    e.preventDefault(); 
+    navigateToVision(); 
+  });
+  document.getElementById('discoverBtn').addEventListener('click', (e) => { 
+    e.preventDefault(); 
+    navigateToShop(); 
+  });
+  
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('nav');
+    if(window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
 </script>
 </body>
 </html>
